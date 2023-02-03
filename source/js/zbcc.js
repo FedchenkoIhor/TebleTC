@@ -1,199 +1,186 @@
-class zbccElementHTML {
-    constructor(params) {
-        this.htmlTemplateName = params.htmlTemplateName ?? ''
+class zbccForm {
+    constructor(htmlTemplates) {
+        this.dataBlocks = {}
+
+        this.htmlTemplates = htmlTemplates
+
+        this.declareDataBlocks()
     }
 
-    init(params) {
-        this.document = params.document
-        this.htmlTemplates = params.htmlTemplates
+    declareDataBlocks() {
+        this.dataBlocks['initialData'] = {
+            inputs: {
+                totalTokensAmount: new NumberInput({ element: $('#zbcc .data-block#initial-data #total-tokens-amount')[0] }),
+                initialTokenPrice: new NumberInput({ element: $('#zbcc .data-block#initial-data #initial-token-price')[0] }),
+                exchangeType: new SelectInput({ element: $('#zbcc .data-block#initial-data #exchange-type')[0], allowedValues: ['decentralized', 'centralized'] }),
+                tradingFunction: new SelectInput({ element: $('#zbcc .data-block#initial-data #trading-function')[0], allowedValues: ['increasing', 'decreasing', 'volatility'] }),
+                duration: new NumberInput({ element: $('#zbcc .data-block#initial-data #duration')[0] })
+            }
+        }
 
-        this.htmlTemplate = this.htmlTemplates[this.htmlTemplateName]
+        this.dataBlocks['investmentRounds'] = {
+            tables: {
+                rounds: new NumerableTable({
+                    element: $('#zbcc .data-block#investment-rounds #rounds')[0],
+                    numerableInput: new NumberInput({ element: $('#zbcc .data-block#investment-rounds #rounds-number')[0] }),
 
-    }
+                    rowHtmlTemplate: this.htmlTemplates.trInvestmentRound,
 
-    createElement() {
-        this.element = params.document.createElement('div')
-        this.element.innerHTML = this.htmlTemplate
-    }
-}
+                    rows: [
+                        {
+                            id: 0,
+                            roundTitle: new TextInput({ element: $('#zbcc .data-block#investment-rounds table#rounds tr#0 #round-title')[0] }),
+                            fiat: new TextInput({ element: $('#zbcc .data-block#investment-rounds table#rounds tr#0 #fiat')[0] }),
+                            tokenPrice: new TextInput({ element: $('#zbcc .data-block#investment-rounds table#rounds tr#0 #token-price')[0] }),
+                            tokensAmount: new TextInput({ element: $('#zbcc .data-block#investment-rounds table#rounds tr#0 #tokens-amount')[0] }),
+                            investorShare: new TextInput({ element: $('#zbcc .data-block#investment-rounds table#rounds tr#0 #investor-share')[0] })
+                        },
+                        {
+                            id: 1,
+                            roundTitle: new TextInput({ element: $('#zbcc .data-block#investment-rounds table#rounds tr#1 #round-title')[0] }),
+                            fiat: new TextInput({ element: $('#zbcc .data-block#investment-rounds table#rounds tr#1 #fiat')[0] }),
+                            tokenPrice: new TextInput({ element: $('#zbcc .data-block#investment-rounds table#rounds tr#1 #token-price')[0] }),
+                            tokensAmount: new TextInput({ element: $('#zbcc .data-block#investment-rounds table#rounds tr#1 #tokens-amount')[0] }),
+                            investorShare: new TextInput({ element: $('#zbcc .data-block#investment-rounds table#rounds tr#1 #investor-share')[0] })
+                        }
+                    ]
+                })
+            }
+        }
 
-//
+        this.dataBlocks['agents'] = {
+            tables: {
+                ahents: new NumerableTable({
+                    element: $('#zbcc .data-block#agents table#agents')[0],
+                    numerableInput: new NumberInput({ element: $('#zbcc .data-block#agents #agents-number')[0] }),
 
-class zbccForm extends zbccElementHTML {
-    /* params = {
-        element: @HTMLelement
-        dataBlock: Array< zbccDataBlock >
-    } */
-    constructor(params) {
-        super(params)
+                    rowHtmlTemplate: this.htmlTemplates.trAgent,
 
-        this.parentElement = params.parentElement
-        // this.element = params.element
+                    rows: [
+                        {
+                            id: 0,
+                            agentName: new TextInput({ element: $('#zbcc .data-block#agents table#agents tr#0 #agent-name')[0] }),
+                            agenShare: new TextInput({ element: $('#zbcc .data-block#agents table#agents tr#0 #agent-share')[0] }),
+                            tokensAmount: new TextInput({ element: $('#zbcc .data-block#agents table#agents tr#0 #tokens-amount')[0] }),
+                        },
+                        {
+                            id: 1,
+                            agentName: new TextInput({ element: $('#zbcc .data-block#agents table#agents tr#1 #agent-name')[0] }),
+                            agenShare: new TextInput({ element: $('#zbcc .data-block#agents table#agents tr#1 #agent-share')[0] }),
+                            tokensAmount: new TextInput({ element: $('#zbcc .data-block#agents table#agents tr#1 #tokens-amount')[0] }),
+                        }
+                    ],
+                })
+            }
+        }
 
-        this.document = params.document
-        this.htmlTemplates = params.htmlTemplates
+        this.dataBlocks['pools'] = {
+            tables: {
+                poolTypes: new CalcableTable({
+                    element: $('#zbcc .data-block#pools table#pool-types')[0],
+                    calcAppendBtnSelector: 'button.calc#append-row',
+                    calcRemoveBtnSelector: 'button.calc#remove-row',
 
-        this.dataBlocks = params.dataBlocks
-    }
+                    rowHtmlTemplate: this.htmlTemplates.trPoolType,
 
-    render() {
-        this.parentElement.append(this.element)
-        // const dataBlocksKeys = Object.keys(this.dataBlocks)
+                    rows: [
+                        {
+                            id: 0,
+                            poolNumber: new TextInput({ element: $('#zbcc .data-block#pools table#pool-types tr#0 #pool-number')[0] }),
+                            poolType: new TextInput({ element: $('#zbcc .data-block#pools table#pool-types tr#0 #pool-type')[0] }),
+                        }
+                    ],
+                }),
+                pools: new CalcableTable({
+                    element: $('#zbcc .data-block#pools table#pools')[0],
+                    calcAppendBtnSelector: 'button.calc#append-row',
+                    calcRemoveBtnSelector: 'button.calc#remove-row',
 
-        // dataBlocksKeys.forEach(key => {
-        //     const dataBlock = this.dataBlocks[key]
+                    rowHtmlTemplate: this.htmlTemplates.trPool,
 
-        //     dataBlock.init({
-        //         document: this.document,
-        //         htmlTemplates: this.htmlTemplates
-        //     })
+                    rows: [
+                        {
+                            id: 0,
+                            poolTitle: new TextInput({ element: $('#zbcc .data-block#pools table#pools tr#0 #pool-title')[0] }),
+                            poolType: new TextInput({ element: $('#zbcc .data-block#pools table#pools tr#0 #pool-type')[0] }),
+                            poolShare: new TextInput({ element: $('#zbcc .data-block#pools table#pools tr#0 #pool-share')[0] }),
+                            amount: new TextInput({ element: $('#zbcc .data-block#pools table#pools tr#0 #amount')[0] }),
+                        },
+                        {
+                            id: 1,
+                            poolTitle: new TextInput({ element: $('#zbcc .data-block#pools table#pools tr#1 #pool-title')[0] }),
+                            poolType: new TextInput({ element: $('#zbcc .data-block#pools table#pools tr#1 #pool-type')[0] }),
+                            poolShare: new TextInput({ element: $('#zbcc .data-block#pools table#pools tr#1 #pool-share')[0] }),
+                            amount: new TextInput({ element: $('#zbcc .data-block#pools table#pools tr#1 #amount')[0] }),
+                        }
+                    ],
+                })
+            }
+        },
 
-        //     this.element.insertAdjacentHTML(
-        //         'beforeend',
-        //         dataBlock.render()
-        //     )
-        // })
-    }
+        this.dataBlocks['vestingAndUnlocking'] = {
+            tables: {
+                vesting: new CalcableTable({
+                    element: $('#zbcc .data-block#vesting-and-unlocking table#vesting')[0],
+                    calcAppendBtnSelector: 'button.calc#append-row',
+                    calcRemoveBtnSelector: 'button.calc#remove-row',
 
-    collectData() {
+                    unhidderSectionSelector: '#zbcc .data-block#vesting-and-unlocking',
+                    unhidderBtnSelector: 'button.unhidder#show-vesting',
+                    simpleTablesSelector: '#zbcc .data-block#vesting-and-unlocking table',
+                    unhidderTableCssClass: 'unhidden',
 
-    }
+                    rowHtmlTemplate: this.htmlTemplates.trVesting,
 
-    composeData() {
-        this.collectData()
+                    rows: [
+                        {
+                            id: 0,
+                            agentName: $('#zbcc .data-block#vesting-and-unlocking table#vesting tr#0 #agent-name')[0].value,
+                            pool: $('#zbcc .data-block#vesting-and-unlocking table#vesting tr#0 #pool')[0].value,
+                            startVesting: $('#zbcc .data-block#vesting-and-unlocking table#vesting tr#0 #start-vesting')[0].value,
+                            endVesting: $('#zbcc .data-block#vesting-and-unlocking table#vesting tr#0 #end-vesting')[0].value,
+                            vestingCoefficient: $('#zbcc .data-block#vesting-and-unlocking table#vesting tr#0 #vesting-coefficient')[0].value
+                        },
+                        {
+                            id: 1,
+                            agentName: $('#zbcc .data-block#vesting-and-unlocking table#vesting tr#1 #agent-name')[0].value,
+                            pool: $('#zbcc .data-block#vesting-and-unlocking table#vesting tr#1 #pool')[0].value,
+                            startVesting: $('#zbcc .data-block#vesting-and-unlocking table#vesting tr#1 #start-vesting')[0].value,
+                            endVesting: $('#zbcc .data-block#vesting-and-unlocking table#vesting tr#1 #end-vesting')[0].value,
+                            vestingCoefficient: $('#zbcc .data-block#vesting-and-unlocking table#vesting tr#1 #vesting-coefficient')[0].value
+                        }
+                    ]
+                }),
+                unlocking: new CalcableTable({
+                    element: $('#zbcc .data-block#vesting-and-unlocking table#unlocking')[0],
+                    calcAppendBtnSelector: 'button.calc#append-row',
+                    calcRemoveBtnSelector: 'button.calc#remove-row',
 
-        return JSON.stringify(this.data)
-    }
-}
+                    unhidderSectionSelector: '#zbcc .data-block#vesting-and-unlocking',
+                    unhidderBtnSelector: 'button.unhidder#show-unlocking',
+                    simpleTablesSelector: '#zbcc .data-block#vesting-and-unlocking table',
+                    unhidderTableCssClass: 'unhidden',
 
-//
+                    rowHtmlTemplate: this.htmlTemplates.trUnlocking,
 
-class zbccFormDataBlock extends zbccElementHTML {
-    constructor(params) {
-        super(params)
-
-        this.name = params.name
-        this.htmlTemplateName = params.htmlTemplateName
-
-        this.title = params.title
-        this.description = params.description
-
-        this.inputs = params.inputs
-    }
-
-    render() {
-        this.inputs.init({
-            document: this.document,
-            htmlTemplates: this.htmlTemplates
-        })
-
-        this.element.innerHTML = this.element.innerHTML
-            .replace('{id}', this.name.replace(/([A-Z])/g, "-$1").toLowerCase())
-            .replace('{title}', this.title)
-            .replace('{description}', this.description)
-            .replace('{inputs}', this.inputs.render())
-
-        return this.element
-    }
-}
-
-//
-
-class zbccDataBlockInputs extends zbccElementHTML {
-    constructor(params) {
-        super(params)
-
-        this.htmlTemplateName = params.htmlTemplateName
-        this.inputs = params.inputs
-    }
-
-    render() {
-        let html = ''
-
-        this.inputs.forEach(input => {
-            input.init({
-                document: this.document,
-                htmlTemplates: this.htmlTemplates
-            })
-
-            html += input.render()
-        })
-
-        return html
-    }
-}
-
-//
-
-class zbccInputsRow extends zbccElementHTML {
-    constructor(params) {
-        super(params)
-
-        this.htmlTemplateName = params.htmlTemplateName
-        this.inputs = params.inputs
-    }
-
-    render() {
-        this.element.innerHTML = this.element.innerHTML
-            .replace('{id}', this.name.replace(/([A-Z])/g, "-$1").toLowerCase())
-            .replace('{title}', this.title)
-            .replace('{description}', this.description)
-            .replace('{inputs}', this.inputs.render())
-
-        return this.element
-
-        let html = '<div>'
-
-        this.inputs.forEach(input => {
-            html += input.render()
-        })
-
-        return '</div>' + html
-    }
-}
-
-class zbccInputsTable extends zbccElementHTML {
-    constructor(params) {}
-
-    render() {
-        return 'asd11'
-    }
-}
-
-//
-
-class zbccInput extends zbccElementHTML {
-    constructor(params, type) {
-        super(params)
-
-        this.title = params.title ?? ''
-        this.value = params.value
-        this.type = type
-        this.htmlTemplateName = params.htmlTemplateName
-    }
-
-    render() {
-        return htmlTemplates[this.htmlTemplateName]
-            .replace('{title}', this.title)
-            .replace('{type}', this.type)
-            .replace('{value}', this.value)
-    }
-}
-
-class zbccStringInput extends zbccInput {
-    constructor(params) {
-        super(params)
-    }
-}
-
-class zbccNumberInput extends zbccInput {
-    constructor(params) {
-        super(params, 'number')
-    }
-}
-
-class zbccCalcInput extends zbccInput {
-    constructor(params) {
-        super(params, 'calc')
+                    rows: [
+                        {
+                            id: 0,
+                            agentName: $('#zbcc .data-block#vesting-and-unlocking table#unlocking tr#0 #agent-name')[0].value,
+                            startUnlocking: $('#zbcc .data-block#vesting-and-unlocking table#unlocking tr#0 #start-unlocking')[0].value,
+                            endUnlocking: $('#zbcc .data-block#vesting-and-unlocking table#unlocking tr#0 #end-unlocking')[0].value,
+                            initialUnlocking: $('#zbcc .data-block#vesting-and-unlocking table#unlocking tr#0 #initial-unlocking')[0].value
+                        },
+                        {
+                            id: 1,
+                            agentName: $('#zbcc .data-block#vesting-and-unlocking table#unlocking tr#1 #agent-name')[0].value,
+                            startUnlocking: $('#zbcc .data-block#vesting-and-unlocking table#unlocking tr#1 #start-unlocking')[0].value,
+                            endUnlocking: $('#zbcc .data-block#vesting-and-unlocking table#unlocking tr#1 #end-unlocking')[0].value,
+                            initialUnlocking: $('#zbcc .data-block#vesting-and-unlocking table#unlocking tr#1 #initial-unlocking')[0].value
+                        }
+                    ]
+                })
+            }
+        }
     }
 }
