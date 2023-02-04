@@ -44,7 +44,7 @@ const htmlTemplates = {
     '    <td><input type="text" id="pool-title" value="Pool {number}"></td>' +
     '    <td>' +
     '        <select name="pool-type" id="pool-type">' +
-    '            <option value="Pool type">Pool type</option>' +
+    '            {pool-types-options}' +
     '        </select>' +
     '    </td>' +
     '    <td><input type="text" id="pool-share" value="" placeholder="%"></td>' +
@@ -121,4 +121,6 @@ const htmlTemplates = {
     '</tr>' +
     '' +
     '',
+
+    selectOption: '<option id="{id}" value="{value}">{text}</option>',
 }

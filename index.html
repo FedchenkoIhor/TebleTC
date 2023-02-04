@@ -26,35 +26,41 @@
                     </header>
 
                     <div class="inputs base-inputs">
-                        <table class="inputs-table" id="initial-data">
-                            <tr>
-                                <th>Total Tokens Amount</th>
-                                <th>Initial Token Price</th>
-                                <th>Exchange Type</th>
-                                <th>Trading Function</th>
-                                <th>Duration</th>
-                            </tr>
-                            <tr>
-                                <td><input type="number" id="total-tokens-amount" value="" placeholder="x"></td>
-                                <td><input type="number" id="initial-token-price" value="" placeholder="x"></td>
-                                <!-- <td><input type="text" id="exchange-type" value="Decentralized"></td> -->
-                                <td>
-                                    <select name="exchange-type" id="exchange-type">
-                                        <option value="decentralized">Decentralized</option>
-                                        <option value="centralized">Centralized</option>
-                                    </select>
-                                </td>
-                                <!-- <td><input type="text" id="trading-function" value="Increasing"></td> -->
-                                <td>
-                                    <select name="trading-function" id="trading-function">
-                                        <option value="increasing">Increasing</option>
-                                        <option value="decreasing">Decreasing</option>
-                                        <option value="volatility">Volatility</option>
-                                    </select>
-                                </td>
-                                <td><input type="number" id="duration" value="" placeholder="x"></td>
-                            </tr>
-                        </table>
+                        <div class="inputs-table" id="initial-data">
+                            <header>
+                                <h3 class="table-title"></h3>
+                                <div class="table-description"></div>
+                            </header>
+                            <table>
+                                <tr>
+                                    <th>Total Tokens Amount</th>
+                                    <th>Initial Token Price</th>
+                                    <th>Exchange Type</th>
+                                    <th>Trading Function</th>
+                                    <th>Duration</th>
+                                </tr>
+                                <tr>
+                                    <td><input type="number" id="total-tokens-amount" value="" placeholder="x"></td>
+                                    <td><input type="number" id="initial-token-price" value="" placeholder="x"></td>
+                                    <!-- <td><input type="text" id="exchange-type" value="Decentralized"></td> -->
+                                    <td>
+                                        <select name="exchange-type" id="exchange-type">
+                                            <option value="decentralized">Decentralized</option>
+                                            <option value="centralized">Centralized</option>
+                                        </select>
+                                    </td>
+                                    <!-- <td><input type="text" id="trading-function" value="Increasing"></td> -->
+                                    <td>
+                                        <select name="trading-function" id="trading-function">
+                                            <option value="increasing">Increasing</option>
+                                            <option value="decreasing">Decreasing</option>
+                                            <option value="volatility">Volatility</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" id="duration" value="" placeholder="x"></td>
+                                </tr>
+                            </table>
+                        </div>
                         <button class="submit" id="build-initial-data">Build Scheme</button>
                     </div>
                 </section>
@@ -77,29 +83,35 @@
                     </div>
 
                     <div class="inputs base-inputs">
-                        <table class="inputs-table" id="rounds">
-                            <tr>
-                                <th>Round Title</th>
-                                <th>Fiat</th>
-                                <th>Token Price</th>
-                                <th>Tokens amount</th>
-                                <th>Investor share</th>
-                            </tr>
-                            <tr id="0">
-                                <td><input type="text" id="round-title" value="Round 1"></td>
-                                <td><input type="number" id="fiat" value="1000"></td>
-                                <td><input type="number" id="token-price" value="10000"></td>
-                                <td><input type="number" id="tokens-amount" value="1000"></td>
-                                <td><input type="number" id="investor-share" value="" placeholder="%"></td>
-                            </tr>
-                            <tr id="1">
-                                <td><input type="text" id="round-title" value="Round 2"></td>
-                                <td><input type="number" id="fiat" value="1000"></td>
-                                <td><input type="number" id="token-price" value="10000"></td>
-                                <td><input type="number" id="tokens-amount" value="1000"></td>
-                                <td><input type="number" id="investor-share" value="" placeholder="%"></td>
-                            </tr>
-                        </table>
+                        <div class="inputs-table" id="rounds">
+                            <header>
+                                <h3 class="table-title"></h3>
+                                <div class="table-description"></div>
+                            </header>
+                            <table>
+                                <tr>
+                                    <th>Round Title</th>
+                                    <th>Fiat</th>
+                                    <th>Token Price</th>
+                                    <th>Tokens amount</th>
+                                    <th>Investor share</th>
+                                </tr>
+                                <tr id="0">
+                                    <td><input type="text" id="round-title" value="Round 1"></td>
+                                    <td><input type="number" id="fiat" value="1000"></td>
+                                    <td><input type="number" id="token-price" value="10000"></td>
+                                    <td><input type="number" id="tokens-amount" value="1000"></td>
+                                    <td><input type="number" id="investor-share" value="" placeholder="%"></td>
+                                </tr>
+                                <tr id="1">
+                                    <td><input type="text" id="round-title" value="Round 2"></td>
+                                    <td><input type="number" id="fiat" value="1000"></td>
+                                    <td><input type="number" id="token-price" value="10000"></td>
+                                    <td><input type="number" id="tokens-amount" value="1000"></td>
+                                    <td><input type="number" id="investor-share" value="" placeholder="%"></td>
+                                </tr>
+                            </table>
+                        </div>
                         <button class="submit" id="build-investment-rounds">Build Scheme</button>
                     </div>
                 </section>
@@ -118,28 +130,34 @@
                     <div class="inputs extra-inputs">
                         <label>
                             <p>Agents Number</p>
-                            <input type="number" id="agents-number" value="2">
+                            <input type="number" id="agents-number" min="1" value="2">
                         </label>
                     </div>
 
                     <div class="inputs base-inputs">
-                        <table class="inputs-table" id="agents">
-                            <tr>
-                                <th>Agent Name</th>
-                                <th>Agent Share</th>
-                                <th>Tokens Amount</th>
-                            </tr>
-                            <tr id="0">
-                                <td><input type="text" id="agent-name" value="Agent 1"></td>
-                                <td><input type="number" id="agent-share" value="" placeholder="%"></td>
-                                <td><input type="number" id="tokens-amount" value="10000"></td>
-                            </tr>
-                            <tr id="1">
-                                <td><input type="text" id="agent-name" value="Agent 2"></td>
-                                <td><input type="number" id="agent-share" value="" placeholder="%"></td>
-                                <td><input type="number" id="tokens-amount" value="10000"></td>
-                            </tr>
-                        </table>
+                        <div class="inputs-table" id="agents">
+                            <header>
+                                <h3 class="table-title"></h3>
+                                <div class="table-description"></div>
+                            </header>
+                            <table>
+                                <tr>
+                                    <th>Agent Name</th>
+                                    <th>Agent Share</th>
+                                    <th>Tokens Amount</th>
+                                </tr>
+                                <tr id="0">
+                                    <td><input type="text" id="agent-name" value="Agent 1"></td>
+                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
+                                    <td><input type="number" id="tokens-amount" value="10000"></td>
+                                </tr>
+                                <tr id="1">
+                                    <td><input type="text" id="agent-name" value="Agent 2"></td>
+                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
+                                    <td><input type="number" id="tokens-amount" value="10000"></td>
+                                </tr>
+                            </table>
+                        </div>
                         <button class="submit" id="build-agents">Build Scheme</button>
                     </div>
                 </section>
@@ -155,69 +173,77 @@
                     </header>
 
                     <div class="inputs extra-inputs">
-                        <table id="pool-types">
-                            <tr>
-                                <th>№</th>
-                                <th>Pool Type</th>
-                                <th></th>
-                            </tr>
-                            <tr id="0">
-                                <td><input type="text" id="pool-number" value="1"></td>
-                                <td>
-                                    <input type="text" id="pool-type" value="Pool type">
-                                </td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="inputs-table" id="pool-types">
+                            <table>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Pool Type</th>
+                                    <th></th>
+                                </tr>
+                                <tr id="0">
+                                    <td><input type="text" id="pool-number" value="1"></td>
+                                    <td>
+                                        <input type="text" id="pool-type" value="Pool type">
+                                    </td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
 
                     <div class="inputs base-inputs">
-                        <table class="inputs-table" id="pools">
-                            <tr>
-                                <th>Pool Title</th>
-                                <th>Pool Type</th>
-                                <th>Pool Share</th>
-                                <th>Amount</th>
-                                <th></th>
-                            </tr>
-                            <tr id="0">
-                                <td><input type="text" id="pool-title" value="Pool 1"></td>
-                                <td>
-                                    <select name="pool-type" id="pool-type">
-                                        <option value="Pool type">Pool type</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="pool-share" value="" placeholder="%"></td>
-                                <td><input type="text" id="amount" value="10000"></td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr id="1">
-                                <td><input type="text" id="pool-title" value="Pool 2"></td>
-                                <td>
-                                    <select name="pool-type" id="pool-type">
-                                        <option value="Pool type">Pool type</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="pool-share" value="" placeholder="%"></td>
-                                <td><input type="text" id="amount" value="10000"></td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="inputs-table" id="pools">
+                            <header>
+                                <h3 class="table-title"></h3>
+                                <div class="table-description"></div>
+                            </header>
+                            <table>
+                                <tr>
+                                    <th>Pool Title</th>
+                                    <th>Pool Type</th>
+                                    <th>Pool Share</th>
+                                    <th>Amount</th>
+                                    <th></th>
+                                </tr>
+                                <tr id="0">
+                                    <td><input type="text" id="pool-title" value="Pool 1"></td>
+                                    <td>
+                                        <select name="pool-type" id="pool-type">
+                                            <option id="0" value="Pool type">Pool type</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" id="pool-share" value="" placeholder="%"></td>
+                                    <td><input type="text" id="amount" value="10000"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="1">
+                                    <td><input type="text" id="pool-title" value="Pool 2"></td>
+                                    <td>
+                                        <select name="pool-type" id="pool-type">
+                                            <option id="0" value="Pool type">Pool type</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" id="pool-share" value="" placeholder="%"></td>
+                                    <td><input type="text" id="amount" value="10000"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                         <button class="submit" id="build-pools">Build Scheme</button>
                     </div>
                 </section>
@@ -244,96 +270,107 @@
                     </div>
 
                     <div class="inputs base-inputs">
-                        <!-- <p>Vesting</p> -->
-                        <table class="inputs-table" id="vesting">
-                            <tr>
-                                <th>Agent Name</th>
-                                <th>Pool</th>
-                                <th>Start Vesting</th>
-                                <th>End Vesting</th>
-                                <th>Vesting Coefficient</th>
-                            </tr>
-                            <tr id="0">
-                                <td>
-                                    <select name="agent-name" id="agent-name">
-                                        <option value="Agent 1">Agent 1</option>
-                                        <option value="Agent 2">Agent 2</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="pool" value="" placeholder="x"></td>
-                                <td><input type="text" id="start-vesting" value="" placeholder="x"></td>
-                                <td><input type="text" id="end-vesting" value="" placeholder="x"></td>
-                                <td><input type="text" id="vesting-coefficient" value="" placeholder="%"></td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr id="1">
-                                <td>
-                                    <select name="agent-name" id="agent-name">
-                                        <option value="Agent 1">Agent 1</option>
-                                        <option value="Agent 2">Agent 2</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="pool" value="" placeholder="x"></td>
-                                <td><input type="text" id="start-vesting" value="" placeholder="x"></td>
-                                <td><input type="text" id="end-vesting" value="" placeholder="x"></td>
-                                <td><input type="text" id="vesting-coefficient" value="" placeholder="%"></td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <table class="inputs-table" id="unlocking">
-                            <!-- <p>Unlocking Schedule</p> -->
-                            <tr>
-                                <th>Agent Name</th>
-                                <th>Start Unlocking</th>
-                                <th>End Unlocking</th>
-                                <th>Initial Unlocking</th>
-                                <th></th>
-                            </tr>
-                            <tr id="0">
-                                <td>
-                                    <select name="agent-name" id="agent-name">
-                                        <option value="Agent 1">Agent 1</option>
-                                        <option value="Agent 2">Agent 2</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
-                                <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
-                                <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr id="1">
-                                <td>
-                                    <select name="agent-name" id="agent-name">
-                                        <option value="Agent 1">Agent 1</option>
-                                        <option value="Agent 2">Agent 2</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
-                                <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
-                                <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="inputs-table unhiddable" id="vesting">
+                            <header>
+                                <h3 class="table-title">Vesting</h3>
+                                <div class="table-description"></div>
+                            </header>
+                            <table>
+                                <tr>
+                                    <th>Agent Name</th>
+                                    <th>Pool</th>
+                                    <th>Start Vesting</th>
+                                    <th>End Vesting</th>
+                                    <th>Vesting Coefficient</th>
+                                </tr>
+                                <tr id="0">
+                                    <td>
+                                        <select name="agent-name" id="agent-name">
+                                            <option id="0" value="Agent 1">Agent 1</option>
+                                            <option id="1" value="Agent 2">Agent 2</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" id="pool" value="" placeholder="x"></td>
+                                    <td><input type="text" id="start-vesting" value="" placeholder="x"></td>
+                                    <td><input type="text" id="end-vesting" value="" placeholder="x"></td>
+                                    <td><input type="text" id="vesting-coefficient" value="" placeholder="%"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="1">
+                                    <td>
+                                        <select name="agent-name" id="agent-name">
+                                            <option id="0" value="Agent 1">Agent 1</option>
+                                            <option id="1" value="Agent 2">Agent 2</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" id="pool" value="" placeholder="x"></td>
+                                    <td><input type="text" id="start-vesting" value="" placeholder="x"></td>
+                                    <td><input type="text" id="end-vesting" value="" placeholder="x"></td>
+                                    <td><input type="text" id="vesting-coefficient" value="" placeholder="%"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="inputs-table unhiddable" id="unlocking">
+                            <header>
+                                <h3 class="table-title">Unlocking Schedule</h3>
+                                <div class="table-description"></div>
+                            </header>
+                            <table>
+                                <tr>
+                                    <th>Agent Name</th>
+                                    <th>Start Unlocking</th>
+                                    <th>End Unlocking</th>
+                                    <th>Initial Unlocking</th>
+                                    <th></th>
+                                </tr>
+                                <tr id="0">
+                                    <td>
+                                        <select name="agent-name" id="agent-name">
+                                            <option id="0" value="Agent 1">Agent 1</option>
+                                            <option id="1" value="Agent 2">Agent 2</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="1">
+                                    <td>
+                                        <select name="agent-name" id="agent-name">
+                                            <option id="0" value="Agent 1">Agent 1</option>
+                                            <option id="1" value="Agent 2">Agent 2</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                         <button class="submit" id="build-vesting-and-unlocking">Build Scheme</button>
                     </div>
                 </section>
@@ -364,70 +401,75 @@
                     </div>
 
                     <div class="inputs base-inputs">
-                        <p>"Service name" Income</p>
-                        <p>(Incomes - marketing functions for planned project services)</p>
-                        <table class="inputs-table" id="project-services">
-                            <tr>
-                                <th>Curve №</th>
-                                <th>Sales Start</th>
-                                <th>Sales End</th>
-                                <th>Sales Min (USD)</th>
-                                <th>Sales Max (USD)</th>
-                                <th>Choose Algorithm</th>
-                                <th>Angular Coefficient</th>
-                                <th>Rising's Coefficient</th>
-                                <th></th>
-                            </tr>
-                            <tr id="0">
-                                <td><input type="number" id="curve-number" value="1"></td>
-                                <td><input type="number" id="sales-start" value="4"></td>
-                                <td><input type="number" id="sales-end" value="7"></td>
-                                <td><input type="number" id="sales-min" value="10000"></td>
-                                <td><input type="number" id="sales-max" value="10000"></td>
-                                <td><input type="text" id="choose-algorithm" value="Linear/Exponential"></td>
-                                <td><input type="number" id="angular-coefficient" value="0.9"></td>
-                                <td><input type="number" id="risings-coefficient" value="0.7"></td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr id="1">
-                                <td><input type="number" id="curve-number" value="1"></td>
-                                <td><input type="number" id="sales-start" value="4"></td>
-                                <td><input type="number" id="sales-end" value="7"></td>
-                                <td><input type="number" id="sales-min" value="10000"></td>
-                                <td><input type="number" id="sales-max" value="10000"></td>
-                                <td><input type="text" id="choose-algorithm" value="Linear/Exponential"></td>
-                                <td><input type="number" id="angular-coefficient" value="0.9"></td>
-                                <td><input type="number" id="risings-coefficient" value="0.7"></td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr id="2">
-                                <td><input type="number" id="curve-number" value="1"></td>
-                                <td><input type="number" id="sales-start" value="4"></td>
-                                <td><input type="number" id="sales-end" value="7"></td>
-                                <td><input type="number" id="sales-min" value="10000"></td>
-                                <td><input type="number" id="sales-max" value="10000"></td>
-                                <td><input type="text" id="choose-algorithm" value="Linear/Exponential"></td>
-                                <td><input type="number" id="angular-coefficient" value="0.9"></td>
-                                <td><input type="number" id="risings-coefficient" value="0.7"></td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <button class="submit" id="build-project-services">Build Scheme</button>
+                        <div class="inputs-table" id="project-services">
+                            <header>
+                                <h3 class="table-title">"Service name" Income</h3>
+                                <div class="table-description">(Incomes - marketing functions for planned project services)</div>
+                            </header>
+                            <table>
+                                <tr>
+                                    <th>Curve №</th>
+                                    <th>Sales Start</th>
+                                    <th>Sales End</th>
+                                    <th>Sales Min (USD)</th>
+                                    <th>Sales Max (USD)</th>
+                                    <th>Choose Algorithm</th>
+                                    <th>Angular Coefficient</th>
+                                    <th>Rising's Coefficient</th>
+                                    <th></th>
+                                </tr>
+                                <tr id="0">
+                                    <td><input type="number" id="curve-number" value="1"></td>
+                                    <td><input type="number" id="sales-start" value="4"></td>
+                                    <td><input type="number" id="sales-end" value="7"></td>
+                                    <td><input type="number" id="sales-min" value="10000"></td>
+                                    <td><input type="number" id="sales-max" value="10000"></td>
+                                    <td><input type="text" id="choose-algorithm" value="Linear/Exponential"></td>
+                                    <td><input type="number" id="angular-coefficient" value="0.9"></td>
+                                    <td><input type="number" id="risings-coefficient" value="0.7"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="1">
+                                    <td><input type="number" id="curve-number" value="1"></td>
+                                    <td><input type="number" id="sales-start" value="4"></td>
+                                    <td><input type="number" id="sales-end" value="7"></td>
+                                    <td><input type="number" id="sales-min" value="10000"></td>
+                                    <td><input type="number" id="sales-max" value="10000"></td>
+                                    <td><input type="text" id="choose-algorithm" value="Linear/Exponential"></td>
+                                    <td><input type="number" id="angular-coefficient" value="0.9"></td>
+                                    <td><input type="number" id="risings-coefficient" value="0.7"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="2">
+                                    <td><input type="number" id="curve-number" value="1"></td>
+                                    <td><input type="number" id="sales-start" value="4"></td>
+                                    <td><input type="number" id="sales-end" value="7"></td>
+                                    <td><input type="number" id="sales-min" value="10000"></td>
+                                    <td><input type="number" id="sales-max" value="10000"></td>
+                                    <td><input type="text" id="choose-algorithm" value="Linear/Exponential"></td>
+                                    <td><input type="number" id="angular-coefficient" value="0.9"></td>
+                                    <td><input type="number" id="risings-coefficient" value="0.7"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <button class="submit" id="build-project-services">Build Scheme</button>
+                        </div>
                     </div>
                 </section>
 
@@ -448,64 +490,71 @@
                     <div class="inputs extra-inputs">
                         <label>
                             <p>ADD ACTION</p>
-                            <input type="number" id="actions-number" value="3">
+                            <button class="unhidder" id="show-actions">+</button>
                         </label>
                     </div>
 
                     <div class="inputs base-inputs">
-                        <table class="inputs-table" id="token-circulation">
-                            <tr>
-                                <th>Action №</th>
-                                <th>Source</th>
-                                <th>Currency Type</th>
-                                <th>Value % (per month)</th>
-                                <th>Destination</th>
-                                <th>Pre-Condition</th>
-                                <th></th>
-                            </tr>
-                            <tr id="0">
-                                <td><input type="text" id="action-number" value="Action 1"></td>
-                                <td><input type="text" id="source" value=""></td>
-                                <td><input type="text" id="currency-type" value=""></td>
-                                <td><input type="text" id="value-percents" value="" placeholder="%"></td>
-                                <td><input type="text" id="destination" value=""></td>
-                                <td><input type="text" id="pre-condition" value="Yes/No"></td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr id="1">
-                                <td><input type="text" id="action-number" value="Action 2"></td>
-                                <td><input type="text" id="source" value=""></td>
-                                <td><input type="text" id="currency-type" value=""></td>
-                                <td><input type="text" id="value-percents" value="" placeholder="%"></td>
-                                <td><input type="text" id="destination" value=""></td>
-                                <td><input type="text" id="pre-condition" value="Yes/No"></td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr id="2">
-                                <td><input type="text" id="action-number" value="Action 3"></td>
-                                <td><input type="text" id="source" value=""></td>
-                                <td><input type="text" id="currency-type" value=""></td>
-                                <td><input type="text" id="value-percents" value="" placeholder="%"></td>
-                                <td><input type="text" id="destination" value=""></td>
-                                <td><input type="text" id="pre-condition" value="Yes/No"></td>
-                                <td>
-                                    <div class="calc-buttons">
-                                        <button class="calc" id="remove-row">–</button>
-                                        <button class="calc" id="append-row">+</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="inputs-table unhiddable" id="actions">
+                            <header>
+                                <h3 class="table-title"></h3>
+                                <div class="table-description"></div>
+                            </header>
+
+                            <table>
+                                <tr>
+                                    <th>Action №</th>
+                                    <th>Source</th>
+                                    <th>Currency Type</th>
+                                    <th>Value % (per month)</th>
+                                    <th>Destination</th>
+                                    <th>Pre-Condition</th>
+                                    <th></th>
+                                </tr>
+                                <tr id="0">
+                                    <td><input type="text" id="action-number" value="Action 1"></td>
+                                    <td><input type="text" id="source" value=""></td>
+                                    <td><input type="text" id="currency-type" value=""></td>
+                                    <td><input type="text" id="value-percents" value="" placeholder="%"></td>
+                                    <td><input type="text" id="destination" value=""></td>
+                                    <td><input type="text" id="pre-condition" value="Yes/No"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="1">
+                                    <td><input type="text" id="action-number" value="Action 2"></td>
+                                    <td><input type="text" id="source" value=""></td>
+                                    <td><input type="text" id="currency-type" value=""></td>
+                                    <td><input type="text" id="value-percents" value="" placeholder="%"></td>
+                                    <td><input type="text" id="destination" value=""></td>
+                                    <td><input type="text" id="pre-condition" value="Yes/No"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="2">
+                                    <td><input type="text" id="action-number" value="Action 3"></td>
+                                    <td><input type="text" id="source" value=""></td>
+                                    <td><input type="text" id="currency-type" value=""></td>
+                                    <td><input type="text" id="value-percents" value="" placeholder="%"></td>
+                                    <td><input type="text" id="destination" value=""></td>
+                                    <td><input type="text" id="pre-condition" value="Yes/No"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                         <button class="submit" id="build-token-circulation">Build Scheme</button>
                     </div>
                 </section>

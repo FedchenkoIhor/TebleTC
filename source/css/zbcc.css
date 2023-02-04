@@ -98,15 +98,24 @@ form#zbcc section.data-block > .inputs button.calc {
 }
 
 form#zbcc section.data-block > .inputs button.unhidder {
+    /* content: "+"; */
+    /* line-height: 100px; */
+    /* display: block; */
+    /* margin: 0 auto; */
+
 
     padding: 4px 10px;
 }
 
-form#zbcc section.data-block#vesting-and-unlocking > .inputs table {
+form#zbcc section.data-block > .inputs button.unhidder.unhidden {
+    content: '–';
+}
+
+form#zbcc section.data-block > .inputs .inputs-table.unhiddable {
     display: none;
 }
 
-form#zbcc section.data-block#vesting-and-unlocking > .inputs table.unhidden {
+form#zbcc section.data-block > .inputs .inputs-table.unhiddable.unhidden {
     display: inherit !important;
 }
 
