@@ -1,49 +1,41 @@
 class Input {
-    /**
-     * element
-     *
-     * type
-     * allowedValues
-     * dataType
-     * defaultValue
-     */
     constructor(params) {
         this.element = params.element
         this.type = params.type
 
-        this.listeners = {}
+        this.dataType = { 'text': String, 'number': Number }[params.dataType]
+        this.isUnic = params.isUnic
 
-        this.syncValue()
+        this.listeners = {
+            change: []
+        }
 
-        this.setAltParams(params)
+        this.value = this.element.value
+        this.prevValue = this.value
+        this.defaultValue = this.value
+
+        this.setOptionalParams(params)
         this.listenOnChange()
     }
 
-    setAltParams(params) {
+    setOptionalParams(params) {
         if (params.allowedValues !== undefined)
             this.allowedValues = params.allowedValues
 
-        if (params.dataType !== undefined)
-            this.dataType = params.dataType
-        else if (params.allowedValues === undefined && this.type !== 'select')
-            this.dataType = { 'text': String, 'number': Number }[params.type]
-
-        this.defaultValue = this.value
+        if (params.isUnic)
+            this.linkToUnics = params.isUnic
     }
 
     addEventListener(event, callback) {
         if (this.listeners[event] === undefined)
-            this.listeners[event] = [callback]
-        else
-            this.listeners[event].push(callback)
+            this.listeners[event] = []
+
+        this.listeners[event].push(callback)
     }
 
     listenOnChange() {
         $(this.element).on('change', e => {
             this.syncValue()
-
-            if (this.listeners['change'] === undefined)
-                this.listeners['change'] = []
 
             this.listeners['change'].forEach(func => {
                 func(e, this)
@@ -52,23 +44,37 @@ class Input {
     }
 
     syncValue() {
-        if (this.value !== undefined)
+        if ( this.verifyValue(this.element.value) ) {
             this.prevValue = this.value
-        else
-            $(this.element)[0].value
-
-        this.value = $(this.element)[0].value
+            this.value = this.dataType(this.element.value)
+        } else {
+            this.element.value = this.prevValue
+        }
     }
 
-    verifyDataType() {}
-
-    // get value() {
-    //     return this.value
-    // }
-
-    // set value(value) {
-    //     $(this.element).val(value)
-    // }
+    verifyValue(value) {
+        if (typeof this.dataType() === typeof value || typeof this.dataType() === typeof this.dataType(value)) {
+            if (this.allowedValues !== undefined) {
+                if (this.allowedValues.includes(value)) {
+                    if (this.isUnic) {
+                        if (this.linkToUnics.includes(value)) {
+                            return false
+                        } else {
+                            return true
+                        }
+                    } else {
+                        return true
+                    }
+                } else {
+                    return false
+                }
+            } else {
+                return true
+            }
+        } else {
+            return false
+        }
+    }
 }
 
 
@@ -84,10 +90,6 @@ class TextInput extends Input {
 class NumberInput extends Input {
     constructor(params) {
         super(Object.assign(params, { type: 'number' } ))
-    }
-
-    addEventListener(event, callback) {
-        super.addEventListener(event, callback)
     }
 }
 
@@ -108,58 +110,137 @@ class SelectInput extends Input {
 class Table {
     constructor(params) {
         this.element = params.element
+
         this.rowHtmlTemplate = params.rowHtmlTemplate
 
-        this.rows = params.rows
+        this.rowTrsSelector = params.rowTrsSelector
+        this.rowSelectors = params.rowSelectors
 
-        this.setAltParams(params)
+        this.rowUnicInputs = params.rowUnicInputs
+        this.rowInputTypes = params.rowInputTypes
+
+        this.unicValues = []
+        this.rows = []
+
+
+        // this.eatParams(params)
+        this.initAltParams(params)
+
+        this.initRows()
     }
 
-    setAltParams(params) {
-        this.isUnhiddable = false
+    eatParams(params) {
+        Object.keys(params).forEach(key => {
+            this[key] = params[key]
+        })
+    }
 
-        if (
-            params.unhidderBtnSelector !== undefined &&
-            params.simpleTablesSelector !== undefined &&
-            params.unhidderTableCssClass !== undefined &&
-            params.unhidderSectionSelector !== undefined) {
+    initAltParams(params) {
 
-            this.unhidderBtnSelector = params.unhidderBtnSelector
-            this.simpleTablesSelector = params.simpleTablesSelector
-            this.unhidderTableCssClass = params.unhidderTableCssClass
-            this.unhidderSectionSelector = params.unhidderSectionSelector
+    }
 
-            this.isUnhiddable = true
+    initRows() {
+        Array.from( $(this.rowTrsSelector) ).forEach(tr => {
+            this.rows[tr.id] = this.getRowBySelectors(tr.id)
+        })
+    }
+
+    getRowBySelectors(id) {
+        let row = { id: Number(id) }
+
+        Object.keys(this.rowSelectors).forEach(key => {
+            let input
+
+            switch (this.rowInputTypes[key]) {
+                case 'text':
+                    input = new TextInput({ element: $(this.rowSelectors[key].replace('{tr-id}', id))[0], dataType: this.rowInputTypes[key] })
+                    break
+
+                case 'number':
+                    input = new NumberInput({ element: $(this.rowSelectors[key].replace('{tr-id}', id))[0], dataType: this.rowInputTypes[key] })
+                    break
+
+                case 'select':
+                    input = new SelectInput({ element: $(this.rowSelectors[key].replace('{tr-id}', id))[0], dataType: this.rowInputTypes[key] })
+                    break
+
+                default:
+                    input = new TextInput({ element: $(this.rowSelectors[key].replace('{tr-id}', id))[0], dataType: this.rowInputTypes[key] })
+                    break
+            }
+
+            if (this.rowUnicInputs !== undefined )
+                input.isUnic = this.rowUnicInputs.includes(key)
+
+            row[key] = input
+        })
+
+        console.log(row)
+        return row
+    }
+
+    appendRow(id) {
+        console.log('')
+        console.log('———')
+        console.log('id:', id)
+        if (id === undefined) {
+            let ids = []
+            let max = 0
+
+            this.rows.forEach(row => {
+                ids.push(row.id)
+
+                if (row.id > max)
+                    max = row.id
+            })
+
+            console.log('ids:', ids)
+
+            console.log('max:', max)
+
+            for(let i = 0; i < max; i++) {
+                if (!ids.includes(i)) {
+                    id = i
+                    console.log('id:', id)
+                    break
+                }
+            }
+
+            if (id === undefined)
+                id = this.rows.length
+
+            console.log('fid:', id)
         }
+
+        $(this.element).append(
+            this.rowHtmlTemplate
+            .replaceAll('{id}', id)
+            .replaceAll('{number}', id + 1)
+        )
+
+        this.rows.push( this.getRowBySelectors(id) )
     }
 
-    listenForUnhidderBtn() {
+    removeRow(id) {
 
-    }
+        let rowId
 
-    listenForChangesInNumOfRows() {
+        this.rows.forEach((row, index) => {
+            console.log('log:', id, row.id, index,)
+            if (row.id === Number(id)) {
+                rowId = index
+                console.log('removing:', id, row.id, index)
+            }
+        })
 
+        $(this.element).find('tr#' + (id)).remove()
+        this.rows.splice(rowId ?? id, 1)
     }
 
     listenForChangesInDataRows() {
         $(this.element).on('change', e => {
 
         })
-    }
-
-    appendRow() {
-        $(this.element).append(
-            this.rowHtmlTemplate
-            .replaceAll('{id}', this.rows.length)
-            .replaceAll('{number}', this.rows.length + 1)
-        )
-
-        this.rows.push({})
-    }
-
-    removeRow(id) {
-        $(this.element).find('tr#' + (id)).remove()
-        this.rows.splice(id, 1)
     }
 }
 
@@ -172,13 +253,12 @@ class NumerableTable extends Table {
         this.numerableInput = params.numerableInput
 
         this.listenForChangesInNumOfRows()
-        this.listenForChangesInDataRows()
     }
 
     listenForChangesInNumOfRows() {
         this.numerableInput.addEventListener('change', (e, input) => {
             while (Number(input.prevValue) < Number(input.value)) {
-                this.appendRow()
+                this.appendRow(Number(input.prevValue))
                 input.prevValue++
             }
 
@@ -200,19 +280,6 @@ class CalcableTable extends Table {
         this.calcRemoveBtnSelector = params.calcRemoveBtnSelector
 
         this.listenForChangesInNumOfRows()
-        this.listenForChangesInDataRows()
-
-        if (this.isUnhiddable) {
-            this.listenForUnhidderBtn()
-        }
-    }
-
-    listenForUnhidderBtn() {
-        $(this.unhidderSectionSelector).on('click', this.unhidderBtnSelector, e => {
-            console.log(1)
-            $(this.simpleTablesSelector).removeClass(this.unhidderTableCssClass)
-            $(this.element).addClass(this.unhidderTableCssClass)
-        })
     }
 
     listenForChangesInNumOfRows() {
@@ -221,7 +288,47 @@ class CalcableTable extends Table {
         })
 
         $(this.element).on('click', this.calcRemoveBtnSelector, e => {
-            this.removeRow(e.currentTarget.parentNode.parentNode.parentNode.id)
+            this.removeRow(Number(e.currentTarget.parentNode.parentNode.parentNode.id))
+        })
+    }
+}
+
+
+
+//
+
+
+
+class UnhiddableTables {
+    constructor(params) {
+        this.unhidders = params.unhidders
+        this.tables = params.tables
+
+        this.cssClass = params.cssClass
+
+        this.listenOnUnhidderClick()
+    }
+
+    listenOnUnhidderClick() {
+        let unhiddersList = Object.keys(this.unhidders)
+
+        unhiddersList.forEach(key => {
+            $(this.unhidders[key]).on('click', e => {
+                if ( $(e.currentTarget).hasClass(this.cssClass) ) {
+                    $(this.unhidders[key]).html('+').removeClass(this.cssClass)
+                    $(this.tables[key].element.parentNode).removeClass(this.cssClass)
+                } else {
+                    $(this.unhidders[key]).html('-').addClass(this.cssClass)
+                    $(this.tables[key].element.parentNode).addClass(this.cssClass)
+
+                    unhiddersList.forEach(key2 => {
+                        if (key !== key2) {
+                            $(this.unhidders[key2]).html('+').removeClass(this.cssClass)
+                            $(this.tables[key2].element.parentNode).removeClass(this.cssClass)
+                        }
+                    })
+                }
+            })
         })
     }
 }

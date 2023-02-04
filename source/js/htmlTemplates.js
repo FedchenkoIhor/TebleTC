@@ -19,6 +19,8 @@ const htmlTemplates = {
     '' +
     '',
 
+    optionAgentName: '<option value="{replace}">{replace}</option>',
+
     trPoolType:
     '<tr id="{id}">' +
     '    <td><input type="text" id="pool-number" value="{number}"></td>' +
@@ -34,6 +36,8 @@ const htmlTemplates = {
     '</tr>' +
     '' +
     '',
+
+    optionPoolType: '<option value="{replace}">{replace}</option>',
 
     trPool:
     '<tr id="{id}">' +
@@ -54,6 +58,8 @@ const htmlTemplates = {
     '</tr>' +
     '' +
     '',
+
+    optionPoolName: '<option value="{replace}">{replace}</option>',
 
     trVesting:
     '<tr id="{id}"> ' +
@@ -103,10 +109,15 @@ const htmlTemplates = {
     '    <td><input type="text" id="action-number" value="Action {number}"></td>' +
     '    <td><input type="text" id="source" value=""></td>' +
     '    <td><input type="text" id="currency-type" value=""></td>' +
-    '    <td><input type="text" id="value-percents" value="%"></td>' +
+    '    <td><input type="text" id="value-percents" value="" placeholder="%"></td>' +
     '    <td><input type="text" id="destination" value=""></td>' +
     '    <td><input type="text" id="pre-condition" value="Yes/No"></td>' +
-    '    <td><button>-</button><button>+</button></td>' +
+    '    <td>' +
+    '        <div class="calc-buttons">' +
+    '            <button class="calc" id="remove-row">–</button>' +
+    '            <button class="calc" id="append-row">+</button>' +
+    '        </div>' +
+    '    </td>' +
     '</tr>' +
     '' +
     '',
