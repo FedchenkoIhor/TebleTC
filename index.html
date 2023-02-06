@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tocenomics Constructor</title>
+    <title>Document</title>
     <link rel="stylesheet" href="source/css/base.css">
     <link rel="stylesheet" href="source/css/zbcc.css">
 </head>
@@ -12,7 +13,179 @@
 <body>
     <main>
         <div id="crypto-constructor">
-            <form id="zbcc">
+            <form id="zbcc-popup">
+                <section class="data-block">
+                    <header>
+                        <h3 class="block-title">Add pre-condition</h3>
+                        <div class="block-description">
+                            <p></p>
+                        </div>
+                    </header>
+
+                    <div class="inputs base-inputs">
+
+                        <div id="time">
+                            <h3>
+                                <label for="">
+                                    <input type="checkbox" id="select-time">
+                                    Time
+                                </label>
+                            </h3>
+                            <ul>
+                                <li><label for="">
+                                    <input type="checkbox" name="" id="">monthly
+                                </label></li>
+                                <li><label for="">
+                                    <input type="radio" name="month-params" id="">
+                                    when month is <select name="" id="">
+                                        <option value="<"><</option>
+                                        <option value="<="><=</option>
+                                        <option value=">=">>=</option>
+                                        <option value=">">></option>
+                                        <option value="=">=</option>
+                                        <option value="!=">!=</option>
+                                    </select>
+                                    <input type="number">
+                                </label></li>
+                                <li><label for="">
+                                        <input type="radio" name="month-params" id="">
+                                        when month is <select name="" id="">
+                                            <option value="<"><</option>
+                                            <option value="<="><=</option>
+                                            <option value=">=">>=</option>
+                                            <option value=">">></option>
+                                            <option value="=">=</option>
+                                            <option value="!=">!=</option>
+                                        </select>
+                                        <input type="number">and
+                                        <select name="" id="">
+                                            <option value="<"><</option>
+                                            <option value="<="><=</option>
+                                            <option value=">=">>=</option>
+                                            <option value=">">></option>
+                                            <option value="=">=</option>
+                                            <option value="!=">!=</option>
+                                        </select>
+                                        <input type="number">
+                                </label></li>
+                            </ul>
+                        </div>
+
+                        <div id="token-price">
+                            <select name="" id="" >
+                                <option value="" disabled selected>AND / OR</option>
+                                <option value="AND">AND</option>
+                                <option value="OR">OR</option>
+                            </select>
+                            <h3>
+                                <label for="">
+                                    <input type="checkbox">
+                                    Token price threshold values
+                                </label>
+                            </h3>
+                            <ul>
+                                <li><label for="">
+                                    <input type="radio" name="token-price-params" id="">
+                                    when Token price is <select name="" id="">
+                                        <option value="<"><</option>
+                                        <option value="<="><=</option>
+                                        <option value=">=">>=</option>
+                                        <option value=">">></option>
+                                        <option value="=">=</option>
+                                        <option value="!=">!=</option>
+                                    </select>
+                                    <input type="number">
+                                </label></li>
+                                <li><label for="">
+                                        <input type="radio" name="token-price-params" id="">
+                                        when Token price is <select name="" id="">
+                                            <option value="<"><</option>
+                                            <option value="<="><=</option>
+                                            <option value=">=">>=</option>
+                                            <option value=">">></option>
+                                            <option value="=">=</option>
+                                            <option value="!=">!=</option>
+                                        </select>
+                                        <input type="number">and
+                                        <select name="" id="">
+                                            <option value="<"><</option>
+                                            <option value="<="><=</option>
+                                            <option value=">=">>=</option>
+                                            <option value=">">></option>
+                                            <option value="=">=</option>
+                                            <option value="!=">!=</option>
+                                        </select>
+                                        <input type="number">
+                                </label></li>
+                            </ul>
+                        </div>
+
+                        <div id="pool-threshold">
+                            <select name="" id="">
+                                <option value="" disabled selected>AND / OR</option>
+                                <option value="AND">AND</option>
+                                <option value="OR">OR</option>
+                            </select>
+                            <h3>
+                                <label for="">
+                                    <input type="checkbox">
+                                    Pool threshold values
+                                </label>
+                            </h3>
+                            <ul>
+                                <li><label for="">
+                                    <input type="radio" name="token-price-params" id="">
+                                    when <select name="" id="">
+                                        <option value="Pool 1">Pool 1</option>
+                                        <option value="Pool 2">Pool 2</option>
+                                    </select>
+                                    is <select name="" id="">
+                                        <option value="<"><</option>
+                                        <option value="<="><=</option>
+                                        <option value=">=">>=</option>
+                                        <option value=">">></option>
+                                        <option value="=">=</option>
+                                        <option value="!=">!=</option>
+                                    </select>
+                                    <input type="number">
+                                </label></li>
+                                <li><label for="">
+                                        <input type="radio" name="token-price-params" id="">
+                                        when <select name="" id="">
+                                            <option value="Pool 1">Pool 1</option>
+                                            <option value="Pool 2">Pool 2</option>
+                                        </select>
+                                        is <select name="" id="">
+                                            <option value="<"><</option>
+                                            <option value="<="><=</option>
+                                            <option value=">=">>=</option>
+                                            <option value=">">></option>
+                                            <option value="=">=</option>
+                                            <option value="!=">!=</option>
+                                        </select>
+                                        <input type="number">and
+                                        <select name="" id="">
+                                            <option value="<"><</option>
+                                            <option value="<="><=</option>
+                                            <option value=">=">>=</option>
+                                            <option value=">">></option>
+                                            <option value="=">=</option>
+                                            <option value="!=">!=</option>
+                                        </select>
+                                        <input type="number">
+                                </label></li>
+                            </ul>
+                        </div>
+                        <button class="submit" id="apply-pre-condition">Apply</button>
+                    </div>
+                </section>
+            </form>
+
+
+
+
+
+            <form id="zbcc-inputs">
 
                 <!--  -->
 
@@ -387,11 +560,11 @@
                     <div class="inputs extra-inputs">
                         <label>
                             <p>STAKING</p>
-                            <input type="text" id="staking" value="+">
+                            <button class="unhidder" id="show-staking">+</button>
                         </label>
                         <label>
                             <p>FARMING</p>
-                            <input type="text" id="farming" value="+">
+                            <button class="unhidder" id="show-farming">+</button>
                         </label>
                         <label>
                             <p>CHOOSE / ADD NEW SERVICE</p>
@@ -400,6 +573,218 @@
                     </div>
 
                     <div class="inputs base-inputs">
+                        <div class="inputs-table unhiddable" id="staking">
+                            <header>
+                                <h3 class="table-title">Staking</h3>
+                                <div class="table-description"></div>
+                            </header>
+                            <table>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Agent Name</th>
+                                    <th>Agent Share</th>
+                                    <th>Unstaking Factor</th>
+                                    <th>Reward Coefficient</th>
+                                    <th>Pool (For Rewards)</th>
+                                    <th></th>
+                                </tr>
+                                <tr id="0">
+                                    <td><input type="number" value="1" id="number"></td>
+                                    <td>
+                                        <select name="agent-name" id="agent-name">
+                                            <option id="0" value="Agent 1">Agent 1</option>
+                                            <option id="1" value="Agent 2">Agent 2</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
+                                    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>
+                                    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>
+                                    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->
+                                    <td>
+                                        <select name="pool-for-rewards" id="pool-for-rewards">
+                                            <option id="0" value="Pool 1">Pool 1</option>
+                                            <option id="1" value="Pool 2">Pool 2</option>
+                                        </select>
+                                    </td>
+
+                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="1">
+                                    <td><input type="number" value="2" id="number"></td>
+                                    <td>
+                                        <select name="agent-name" id="agent-name">
+                                            <option id="0" value="Agent 1">Agent 1</option>
+                                            <option id="1" value="Agent 2">Agent 2</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
+                                    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>
+                                    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>
+                                    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->
+                                    <td>
+                                        <select name="pool-for-rewards" id="pool-for-rewards">
+                                            <option id="0" value="Pool 1">Pool 1</option>
+                                            <option id="1" value="Pool 2">Pool 2</option>
+                                        </select>
+                                    </td>
+
+                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="2">
+                                    <td><input type="number" value="3" id="number"></td>
+                                    <td>
+                                        <select name="agent-name" id="agent-name">
+                                            <option id="0" value="Agent 1">Agent 1</option>
+                                            <option id="1" value="Agent 2">Agent 2</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
+                                    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>
+                                    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>
+                                    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->
+                                    <td>
+                                        <select name="pool-for-rewards" id="pool-for-rewards">
+                                            <option id="0" value="Pool 1">Pool 1</option>
+                                            <option id="1" value="Pool 2">Pool 2</option>
+                                        </select>
+                                    </td>
+
+                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                        <div class="inputs-table unhiddable" id="farming">
+                            <header>
+                                <h3 class="table-title">Farming</h3>
+                                <div class="table-description"></div>
+                            </header>
+                            <table>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Agent Name</th>
+                                    <th>Agent Share</th>
+                                    <th>Unstaking Factor</th>
+                                    <th>Reward Coefficient</th>
+                                    <th>Pool (For Rewards)</th>
+                                    <th></th>
+                                </tr>
+                                <tr id="0">
+                                    <td><input type="number" value="1" id="number"></td>
+                                    <td>
+                                        <select name="agent-name" id="agent-name">
+                                            <option id="0" value="Agent 1">Agent 1</option>
+                                            <option id="1" value="Agent 2">Agent 2</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
+                                    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>
+                                    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>
+                                    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->
+                                    <td>
+                                        <select name="pool-for-rewards" id="pool-for-rewards">
+                                            <option id="0" value="Pool 1">Pool 1</option>
+                                            <option id="1" value="Pool 2">Pool 2</option>
+                                        </select>
+                                    </td>
+
+                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="1">
+                                    <td><input type="number" value="2" id="number"></td>
+                                    <td>
+                                        <select name="agent-name" id="agent-name">
+                                            <option id="0" value="Agent 1">Agent 1</option>
+                                            <option id="1" value="Agent 2">Agent 2</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
+                                    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>
+                                    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>
+                                    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->
+                                    <td>
+                                        <select name="pool-for-rewards" id="pool-for-rewards">
+                                            <option id="0" value="Pool 1">Pool 1</option>
+                                            <option id="1" value="Pool 2">Pool 2</option>
+                                        </select>
+                                    </td>
+
+                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="2">
+                                    <td><input type="number" value="3" id="number"></td>
+                                    <td>
+                                        <select name="agent-name" id="agent-name">
+                                            <option id="0" value="Agent 1">Agent 1</option>
+                                            <option id="1" value="Agent 2">Agent 2</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
+                                    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>
+                                    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>
+                                    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->
+                                    <td>
+                                        <select name="pool-for-rewards" id="pool-for-rewards">
+                                            <option id="0" value="Pool 1">Pool 1</option>
+                                            <option id="1" value="Pool 2">Pool 2</option>
+                                        </select>
+                                    </td>
+
+                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
+                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
+                                    <td>
+                                        <div class="calc-buttons">
+                                            <button class="calc" id="remove-row">–</button>
+                                            <button class="calc" id="append-row">+</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
                         <div class="inputs-table" id="project-services">
                             <header>
                                 <h3 class="table-title">"Service name" Income</h3>
@@ -423,7 +808,12 @@
                                     <td><input type="number" id="sales-end" value="7"></td>
                                     <td><input type="number" id="sales-min" value="10000"></td>
                                     <td><input type="number" id="sales-max" value="10000"></td>
-                                    <td><input type="text" id="choose-algorithm" value="Linear/Exponential"></td>
+                                    <td>
+                                        <select name="choose-algorithm" id="choose-algorithm">
+                                            <option value="Linear">Linear</option>
+                                            <option value="Exponential">Exponential</option>
+                                        </select>
+                                    </td>
                                     <td><input type="number" id="angular-coefficient" value="0.9"></td>
                                     <td><input type="number" id="risings-coefficient" value="0.7"></td>
                                     <td>
@@ -439,7 +829,12 @@
                                     <td><input type="number" id="sales-end" value="7"></td>
                                     <td><input type="number" id="sales-min" value="10000"></td>
                                     <td><input type="number" id="sales-max" value="10000"></td>
-                                    <td><input type="text" id="choose-algorithm" value="Linear/Exponential"></td>
+                                    <td>
+                                        <select name="choose-algorithm" id="choose-algorithm">
+                                            <option value="Linear">Linear</option>
+                                            <option value="Exponential">Exponential</option>
+                                        </select>
+                                    </td>
                                     <td><input type="number" id="angular-coefficient" value="0.9"></td>
                                     <td><input type="number" id="risings-coefficient" value="0.7"></td>
                                     <td>
@@ -455,7 +850,12 @@
                                     <td><input type="number" id="sales-end" value="7"></td>
                                     <td><input type="number" id="sales-min" value="10000"></td>
                                     <td><input type="number" id="sales-max" value="10000"></td>
-                                    <td><input type="text" id="choose-algorithm" value="Linear/Exponential"></td>
+                                    <td>
+                                        <select name="choose-algorithm" id="choose-algorithm">
+                                            <option value="Linear">Linear</option>
+                                            <option value="Exponential">Exponential</option>
+                                        </select>
+                                    </td>
                                     <td><input type="number" id="angular-coefficient" value="0.9"></td>
                                     <td><input type="number" id="risings-coefficient" value="0.7"></td>
                                     <td>
@@ -569,9 +969,16 @@
     <script src="source/js/structs.js"></script>
     <script src="source/js/zbcc.js"></script>
     <script>
-        $('form').on('submit', e => {
+        $('#zbcc-inputs').on('submit', e => {
             e.preventDefault()
             e.stopImmediatePropagation()
+        })
+
+        $('#zbcc-popup').on('submit', e => {
+            e.preventDefault()
+            $('#zbcc-popup').hide()
+
+            $('#zbcc-popup .inputs div#time input#select-time').prop('checked', false)
         })
 
         const form = new zbccForm(htmlTemplates)

@@ -1,4 +1,4 @@
-form#zbcc {
+form {
     width: 100%;
     margin: 200px 0;
 
@@ -13,7 +13,7 @@ form#zbcc {
 /*  */
 
 
-form#zbcc section.data-block {
+form section.data-block {
     width: 80%;
     margin: auto;
 
@@ -29,7 +29,7 @@ form#zbcc section.data-block {
 /*  */
 
 
-form#zbcc section.data-block > header {
+form section.data-block > header {
     padding: 50px;
 
     display: flex;
@@ -41,11 +41,11 @@ form#zbcc section.data-block > header {
 }
 
 
-form#zbcc section.data-block > header h3.block-title {
+form section.data-block > header h3.block-title {
     /* font-weight: bold; */
 }
 
-form#zbcc section.data-block > header .block-description {
+form section.data-block > header .block-description {
     width: 70%;
 }
 
@@ -53,18 +53,18 @@ form#zbcc section.data-block > header .block-description {
 /*  */
 
 
-form#zbcc section.data-block > .inputs .calc-buttons {
+form section.data-block > .inputs .calc-buttons {
     width: fit-content;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-form#zbcc section.data-block > .inputs table th {
+form section.data-block > .inputs table th {
     text-align: left;
 }
 
-form#zbcc section.data-block > .inputs input {
+form input[type="text"] {
     padding: 4px 10px;
 
     border: 0;
@@ -73,31 +73,36 @@ form#zbcc section.data-block > .inputs input {
     text-align: center;
 }
 
-form#zbcc section.data-block > .inputs input[type="number"] {
+form input[type="number"] {
     padding: 4px 0px 4px 14px;
+
+    border: 0;
+    border-radius: 5px;
+    appearance: none;
+    text-align: center;
 }
 
-form#zbcc section.data-block > .inputs select {
+form select {
     padding: 4px 20px 4px 25px;
     border: 0;
     border-radius: 5px;
     text-align: center;
 }
 
-form#zbcc section.data-block > .inputs button {
+form button {
     border: 0;
 }
 
-form#zbcc section.data-block > .inputs button:active {
+form button:active {
     opacity: 0.75;
 }
 
-form#zbcc section.data-block > .inputs button.calc {
+form section.data-block > .inputs button.calc {
 
     padding: 4px 10px;
 }
 
-form#zbcc section.data-block > .inputs button.unhidder {
+form section.data-block > .inputs button.unhidder {
     /* content: "+"; */
     /* line-height: 100px; */
     /* display: block; */
@@ -107,15 +112,15 @@ form#zbcc section.data-block > .inputs button.unhidder {
     padding: 4px 10px;
 }
 
-form#zbcc section.data-block > .inputs button.unhidder.unhidden {
+form section.data-block > .inputs button.unhidder.unhidden {
     content: '–';
 }
 
-form#zbcc section.data-block > .inputs .inputs-table.unhiddable {
+form section.data-block > .inputs .inputs-table.unhiddable {
     display: none;
 }
 
-form#zbcc section.data-block > .inputs .inputs-table.unhiddable.unhidden {
+form section.data-block > .inputs .inputs-table.unhiddable.unhidden {
     display: inherit !important;
 }
 
@@ -123,7 +128,7 @@ form#zbcc section.data-block > .inputs .inputs-table.unhiddable.unhidden {
 /*  */
 
 
-form#zbcc section.data-block > .extra-inputs {
+form section.data-block > .extra-inputs {
     width: fit-content;
     padding: 0 20px 20px 80px;
 
@@ -137,26 +142,26 @@ form#zbcc section.data-block > .extra-inputs {
     color: white;
 }
 
-form#zbcc section.data-block > .extra-inputs input {
+form section.data-block > .extra-inputs input {
     background-color: #262627;
     color: #f5f5f5;
 }
 
-form#zbcc section.data-block > .extra-inputs select {
+form section.data-block > .extra-inputs select {
     background-color: #262627;
     color: #f5f5f5;
 }
 
-form#zbcc section.data-block > .extra-inputs button.calc {
+form section.data-block > .extra-inputs button.calc {
     background-color: black;
     color: white;
 }
 
-form#zbcc section.data-block > .extra-inputs button.calc:hover {
+form section.data-block > .extra-inputs button.calc:hover {
     background-color: #262627;
 }
 
-form#zbcc section.data-block > .extra-inputs button.unhidder {
+form section.data-block > .extra-inputs button.unhidder {
     width: 100%;
     min-width: 100px;
     margin-top: 2px;
@@ -175,7 +180,7 @@ form#zbcc section.data-block > .extra-inputs button.unhidder {
 /*  */
 
 
-form#zbcc section.data-block > .base-inputs {
+form section.data-block > .base-inputs {
     padding: 50px;
 
     overflow-x: auto;
@@ -185,30 +190,30 @@ form#zbcc section.data-block > .base-inputs {
     color: black;
 }
 
-form#zbcc section.data-block > .base-inputs table {
+form section.data-block > .base-inputs table {
     width: 100%;
     margin: auto;
 }
 
-form#zbcc section.data-block > .base-inputs input {
+form section.data-block > .base-inputs input {
     background-color: #dee1e3;
     color: #0c0c0c;
 }
 
-form#zbcc section.data-block > .base-inputs select {
+form section.data-block > .base-inputs select {
     background-color: #dee1e3;
     color: #0c0c0c;
 }
 
-form#zbcc section.data-block > .base-inputs button.calc {
+form section.data-block > .base-inputs button.calc {
     background-color: white;
     color: black;
 }
-form#zbcc section.data-block > .base-inputs button.calc:hover {
+form section.data-block > .base-inputs button.calc:hover {
     background-color: #dee1e3;
 }
 
-form#zbcc section.data-block > .base-inputs button.submit {
+form section.data-block > .base-inputs button.submit {
     padding: 10px 50px;
     margin: auto;
     margin-top: 30px;
@@ -221,4 +226,25 @@ form#zbcc section.data-block > .base-inputs button.submit {
     background-color: black;
 
     color: white;
+}
+
+
+
+form#zbcc-popup .inputs {
+    width: 100%;
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    gap: 40px;
+}
+
+form#zbcc-popup .inputs input, form#zbcc-popup .inputs select {
+    margin: 0 5px;
+}
+
+form#zbcc-popup .inputs ul {
+    list-style-type: none;
 }

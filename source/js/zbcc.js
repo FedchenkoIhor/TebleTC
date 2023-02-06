@@ -10,11 +10,11 @@ class zbccForm {
     declareDataBlocks() {
         this.dataBlocks['initialData'] = {
             inputs: {
-                totalTokensAmount: new NumberInput({ element: $('#zbcc .data-block#initial-data #total-tokens-amount')[0], dataType: 'number', isUnic: false }),
-                initialTokenPrice: new NumberInput({ element: $('#zbcc .data-block#initial-data #initial-token-price')[0], dataType: 'number', isUnic: false }),
-                exchangeType: new SelectInput({ element: $('#zbcc .data-block#initial-data #exchange-type')[0], dataType: 'select', isUnic: false, allowedValues: ['decentralized', 'centralized'] }),
-                tradingFunction: new SelectInput({ element: $('#zbcc .data-block#initial-data #trading-function')[0], dataType: 'select', isUnic: false, allowedValues: ['increasing', 'decreasing', 'volatility'] }),
-                duration: new NumberInput({ element: $('#zbcc .data-block#initial-data #duration')[0], dataType: 'number', isUnic: false })
+                totalTokensAmount: new NumberInput({ element: $('#zbcc-inputs .data-block#initial-data #total-tokens-amount')[0], dataType: 'number', isUnic: false }),
+                initialTokenPrice: new NumberInput({ element: $('#zbcc-inputs .data-block#initial-data #initial-token-price')[0], dataType: 'number', isUnic: false }),
+                exchangeType: new SelectInput({ element: $('#zbcc-inputs .data-block#initial-data #exchange-type')[0], dataType: 'select', isUnic: false, allowedValues: ['decentralized', 'centralized'] }),
+                tradingFunction: new SelectInput({ element: $('#zbcc-inputs .data-block#initial-data #trading-function')[0], dataType: 'select', isUnic: false, allowedValues: ['increasing', 'decreasing', 'volatility'] }),
+                duration: new NumberInput({ element: $('#zbcc-inputs .data-block#initial-data #duration')[0], dataType: 'number', isUnic: false })
             }
         }
 
@@ -22,18 +22,18 @@ class zbccForm {
             optionsForSelectInputs: {},
             tables: {
                 rounds: new NumerableTable({
-                    element: $('#zbcc .data-block#investment-rounds .inputs-table#rounds table')[0],
-                    numerableInput: new NumberInput({ element: $('#zbcc .data-block#investment-rounds #rounds-number')[0], dataType: 'number', isUnic: false }),
+                    element: $('#zbcc-inputs .data-block#investment-rounds .inputs-table#rounds table')[0],
+                    numerableInput: new NumberInput({ element: $('#zbcc-inputs .data-block#investment-rounds #rounds-number')[0], dataType: 'number', isUnic: false }),
 
                     row: {
                         htmlTemplate: this.htmlTemplates.trInvestmentRound,
-                        trsSelector: '#zbcc .data-block#investment-rounds .inputs-table#rounds table tr[id]',
+                        trsSelector: '#zbcc-inputs .data-block#investment-rounds .inputs-table#rounds table tr[id]',
                         inputsSelectors: {
-                            roundTitle: '#zbcc .data-block#investment-rounds .inputs-table#rounds table tr#{tr-id} #round-title',
-                            fiat: '#zbcc .data-block#investment-rounds .inputs-table#rounds table tr#{tr-id} #fiat',
-                            tokenPrice: '#zbcc .data-block#investment-rounds .inputs-table#rounds table tr#{tr-id} #token-price',
-                            tokensAmount: '#zbcc .data-block#investment-rounds .inputs-table#rounds table tr#{tr-id} #tokens-amount',
-                            investorShare: '#zbcc .data-block#investment-rounds .inputs-table#rounds table tr#{tr-id} #investor-share',
+                            roundTitle: '#zbcc-inputs .data-block#investment-rounds .inputs-table#rounds table tr#{tr-id} #round-title',
+                            fiat: '#zbcc-inputs .data-block#investment-rounds .inputs-table#rounds table tr#{tr-id} #fiat',
+                            tokenPrice: '#zbcc-inputs .data-block#investment-rounds .inputs-table#rounds table tr#{tr-id} #token-price',
+                            tokensAmount: '#zbcc-inputs .data-block#investment-rounds .inputs-table#rounds table tr#{tr-id} #tokens-amount',
+                            investorShare: '#zbcc-inputs .data-block#investment-rounds .inputs-table#rounds table tr#{tr-id} #investor-share',
                         },
                         inputsTypes: {
                             roundTitle: 'text',
@@ -53,17 +53,17 @@ class zbccForm {
         this.dataBlocks['agents'] = {
             tables: {
                 agents: new NumerableTable({
-                    element: $('#zbcc .data-block#agents .inputs-table#agents table')[0],
+                    element: $('#zbcc-inputs .data-block#agents .inputs-table#agents table')[0],
 
-                    numerableInput: new NumberInput({ element: $('#zbcc .data-block#agents #agents-number')[0], dataType: 'number', isUnic: false }),
+                    numerableInput: new NumberInput({ element: $('#zbcc-inputs .data-block#agents #agents-number')[0], dataType: 'number', isUnic: false }),
 
                     row: {
                         htmlTemplate: this.htmlTemplates.trAgent,
-                        trsSelector: '#zbcc .data-block#agents .inputs-table#agents table tr[id]',
+                        trsSelector: '#zbcc-inputs .data-block#agents .inputs-table#agents table tr[id]',
                         inputsSelectors: {
-                            agentName: '#zbcc .data-block#agents .inputs-table#agents table tr#{tr-id} #agent-name',
-                            agenShare: '#zbcc .data-block#agents .inputs-table#agents table tr#{tr-id} #agent-share',
-                            tokensAmount: '#zbcc .data-block#agents .inputs-table#agents table tr#{tr-id} #tokens-amount',
+                            agentName: '#zbcc-inputs .data-block#agents .inputs-table#agents table tr#{tr-id} #agent-name',
+                            agenShare: '#zbcc-inputs .data-block#agents .inputs-table#agents table tr#{tr-id} #agent-share',
+                            tokensAmount: '#zbcc-inputs .data-block#agents .inputs-table#agents table tr#{tr-id} #tokens-amount',
                         },
                         inputsTypes: {
                             agentName: 'text',
@@ -79,8 +79,8 @@ class zbccForm {
                                 optionHtmlTemplate: this.htmlTemplates.selectOption,
                                 optionPrevSelector: 'option[value="{value}"][id={id}]',
                                 selects: [
-                                    '#zbcc .data-block#vesting-and-unlocking .inputs-table#vesting table tr[id] #agent-name',
-                                    '#zbcc .data-block#vesting-and-unlocking .inputs-table#unlocking table tr[id] #agent-name'
+                                    '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr[id] #agent-name',
+                                    '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#unlocking table tr[id] #agent-name'
                                 ]
                             }
                         }
@@ -92,17 +92,17 @@ class zbccForm {
         this.dataBlocks['pools'] = {
             tables: {
                 poolTypes: new CalcableTable({
-                    element: $('#zbcc .data-block#pools .inputs-table#pool-types table')[0],
+                    element: $('#zbcc-inputs .data-block#pools .inputs-table#pool-types table')[0],
 
                     calcAppendBtnSelector: 'button.calc#append-row',
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
                         htmlTemplate: this.htmlTemplates.trPoolType,
-                        trsSelector: '#zbcc .data-block#pools .inputs-table#pool-types table tr[id]',
+                        trsSelector: '#zbcc-inputs .data-block#pools .inputs-table#pool-types table tr[id]',
                         inputsSelectors: {
-                            poolNumber: '#zbcc .data-block#pools .inputs-table#pool-types table tr#{tr-id} #pool-number',
-                            poolType: '#zbcc .data-block#pools .inputs-table#pool-types table tr#{tr-id} #pool-type',
+                            poolNumber: '#zbcc-inputs .data-block#pools .inputs-table#pool-types table tr#{tr-id} #pool-number',
+                            poolType: '#zbcc-inputs .data-block#pools .inputs-table#pool-types table tr#{tr-id} #pool-type',
                         },
                         inputsTypes: {
                             poolNumber: 'number',
@@ -117,26 +117,26 @@ class zbccForm {
                                 optionHtmlTemplate: this.htmlTemplates.selectOption,
                                 optionPrevSelector: 'option[value="{value}"][id="{id}"]',
                                 selects: [
-                                    '#zbcc .data-block#pools .inputs-table#pools table tr[id] #pool-type'
+                                    '#zbcc-inputs .data-block#pools .inputs-table#pools table tr[id] #pool-type'
                                 ]
                             }
                         }
                     }
                 }),
                 pools: new CalcableTable({
-                    element: $('#zbcc .data-block#pools .inputs-table#pools table')[0],
+                    element: $('#zbcc-inputs .data-block#pools .inputs-table#pools table')[0],
 
                     calcAppendBtnSelector: 'button.calc#append-row',
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
                         htmlTemplate: this.htmlTemplates.trPool,
-                        trsSelector: '#zbcc .data-block#pools .inputs-table#pools table tr[id]',
+                        trsSelector: '#zbcc-inputs .data-block#pools .inputs-table#pools table tr[id]',
                         inputsSelectors: {
-                            poolTitle: '#zbcc .data-block#pools .inputs-table#pools table tr#{tr-id} #pool-title',
-                            poolType: '#zbcc .data-block#pools .inputs-table#pools table tr#{tr-id} #pool-type',
-                            poolShare: '#zbcc .data-block#pools .inputs-table#pools table tr#{tr-id} #pool-share',
-                            amount: '#zbcc .data-block#pools .inputs-table#pools table tr#{tr-id} #amount',
+                            poolTitle: '#zbcc-inputs .data-block#pools .inputs-table#pools table tr#{tr-id} #pool-title',
+                            poolType: '#zbcc-inputs .data-block#pools .inputs-table#pools table tr#{tr-id} #pool-type',
+                            poolShare: '#zbcc-inputs .data-block#pools .inputs-table#pools table tr#{tr-id} #pool-share',
+                            amount: '#zbcc-inputs .data-block#pools .inputs-table#pools table tr#{tr-id} #amount',
                         },
                         inputsTypes: {
                             poolTitle: 'text',
@@ -151,7 +151,7 @@ class zbccForm {
                             poolTypes: {
                                 replaceInTrPool: '{pool-types-options}',
                                 optionHtmlTemplate: this.htmlTemplates.selectOption,
-                                byOptionsUsingSelector: '#zbcc .data-block#pools .inputs-table#pool-types table tr[id] #pool-type'
+                                byOptionsUsingSelector: '#zbcc-inputs .data-block#pools .inputs-table#pool-types table tr[id] #pool-type'
                             }
                         }
                     }
@@ -163,25 +163,25 @@ class zbccForm {
             cssClass: 'unhidden',
 
             unhidders: {
-                vesting: $('#zbcc .data-block#vesting-and-unlocking button.unhidder#show-vesting')[0],
-                unlocking: $('#zbcc .data-block#vesting-and-unlocking button.unhidder#show-unlocking')[0],
+                vesting: $('#zbcc-inputs .data-block#vesting-and-unlocking button.unhidder#show-vesting')[0],
+                unlocking: $('#zbcc-inputs .data-block#vesting-and-unlocking button.unhidder#show-unlocking')[0],
             },
             tables: {
                 vesting: new CalcableTable({
-                    element: $('#zbcc .data-block#vesting-and-unlocking .inputs-table#vesting table')[0],
+                    element: $('#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table')[0],
 
                     calcAppendBtnSelector: 'button.calc#append-row',
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
                         htmlTemplate: this.htmlTemplates.trVesting,
-                        trsSelector: '#zbcc .data-block#vesting-and-unlocking .inputs-table#vesting table tr[id]',
+                        trsSelector: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr[id]',
                         inputsSelectors: {
-                            agentName: '#zbcc .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #agent-name',
-                            pool: '#zbcc .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #pool',
-                            startVesting: '#zbcc .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #start-vesting',
-                            endVesting: '#zbcc .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #end-vesting',
-                            vestingCoefficient: '#zbcc .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #vesting-coefficient',
+                            agentName: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #agent-name',
+                            pool: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #pool',
+                            startVesting: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #start-vesting',
+                            endVesting: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #end-vesting',
+                            vestingCoefficient: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #vesting-coefficient',
                         },
                         inputsTypes: {
                             agentName: 'text',
@@ -194,18 +194,18 @@ class zbccForm {
                     }
                 }),
                 unlocking: new CalcableTable({
-                    element: $('#zbcc .data-block#vesting-and-unlocking .inputs-table#unlocking table')[0],
+                    element: $('#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#unlocking table')[0],
                     calcAppendBtnSelector: 'button.calc#append-row',
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
                         htmlTemplate: this.htmlTemplates.trUnlocking,
-                        trsSelector: '#zbcc .data-block#vesting-and-unlocking .inputs-table#unlocking table tr[id]',
+                        trsSelector: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#unlocking table tr[id]',
                         inputsSelectors: {
-                            agentName: '#zbcc .data-block#vesting-and-unlocking .inputs-table#unlocking table tr#{tr-id} #agent-name',
-                            startUnlocking: '#zbcc .data-block#vesting-and-unlocking .inputs-table#unlocking table tr#{tr-id} #start-unlocking',
-                            endUnlocking: '#zbcc .data-block#vesting-and-unlocking .inputs-table#unlocking table tr#{tr-id} #end-unlocking',
-                            initialUnlocking: '#zbcc .data-block#vesting-and-unlocking .inputs-table#unlocking table tr#{tr-id} #initial-unlocking',
+                            agentName: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#unlocking table tr#{tr-id} #agent-name',
+                            startUnlocking: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#unlocking table tr#{tr-id} #start-unlocking',
+                            endUnlocking: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#unlocking table tr#{tr-id} #end-unlocking',
+                            initialUnlocking: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#unlocking table tr#{tr-id} #initial-unlocking',
                         },
                         inputsTypes: {
                             agentName: 'text',
@@ -219,57 +219,46 @@ class zbccForm {
         })
 
         // this.dataBlocks['tokenCirculation'] = new UnhiddableTables({
-        //     cssClass: 'unhidden',
-        //     unhidders: {
-        //         actions: $('#zbcc .data-block#token-circulation button.unhidder#show-actions')[0],
-        //     },
-        //     tables: {
-        //         actions: new CalcableTable({
-        //             element: $('#zbcc .data-block#token-circulation .inputs-table#actions table')[0],
 
-        //             calcAppendBtnSelector: 'button.calc#append-row',
-        //             calcRemoveBtnSelector: 'button.calc#remove-row',
-
-        //             htmlTemplate: this.htmlTemplates.trAction,
-        //             inputsSelectors: {
-        //                 actionNumber: '#zbcc .data-block#token-circulation .inputs-table#actions table tr#{tr-id} #action-number',
-        //                 source: '#zbcc .data-block#token-circulation .inputs-table#actions table tr#{tr-id} #source',
-        //                 currencyType: '#zbcc .data-block#token-circulation .inputs-table#actions table tr#{tr-id} #currency-type',
-        //                 valuePercents: '#zbcc .data-block#token-circulation .inputs-table#actions table tr#{tr-id} #value-percents',
-        //                 destionation: '#zbcc .data-block#token-circulation .inputs-table#actions table tr#{tr-id} #destination',
-        //                 preCondition: '#zbcc .data-block#token-circulation .inputs-table#actions table tr#{tr-id} #pre-condition',
-        //             },
-        //             rows: [
-        //                 {
-        //                     id: 0,
-        //                     actionNumber: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#0 #action-number'),
-        //                     source: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#0 #source'),
-        //                     currencyType: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#0 #currency-type'),
-        //                     valuePercents: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#0 #value-percents'),
-        //                     destionation: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#0 #destination'),
-        //                     preCondition: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#0 #pre-condition'),
-        //                 },
-        //                 {
-        //                     id: 1,
-        //                     actionNumber: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#1 #action-number'),
-        //                     source: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#1 #source'),
-        //                     currencyType: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#1 #currency-type'),
-        //                     valuePercents: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#1 #value-percents'),
-        //                     destionation: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#1 #destination'),
-        //                     preCondition: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#1 #pre-condition'),
-        //                 },
-        //                 {
-        //                     id: 2,
-        //                     actionNumber: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#2 #action-number'),
-        //                     source: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#2 #source'),
-        //                     currencyType: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#2 #currency-type'),
-        //                     valuePercents: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#2 #value-percents'),
-        //                     destionation: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#2 #destination'),
-        //                     preCondition: $('#zbcc .data-block#token-circulation .inputs-table#actions table tr#2 #pre-condition'),
-        //                 }
-        //             ],
-        //         })
-        //     }
         // })
+
+        this.dataBlocks['tokenCirculation'] = new UnhiddableTables({
+            cssClass: 'unhidden',
+            unhidders: {
+                actions: $('#zbcc-inputs .data-block#token-circulation button.unhidder#show-actions')[0],
+            },
+            tables: {
+                actions: new CalcableTable({
+                    element: $('#zbcc-inputs .data-block#token-circulation .inputs-table#actions table')[0],
+
+                    calcAppendBtnSelector: 'button.calc#append-row',
+                    calcRemoveBtnSelector: 'button.calc#remove-row',
+
+                    row: {
+                        htmlTemplate: this.htmlTemplates.trAction,
+                        trsSelector: '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr[id]',
+                        inputsSelectors: {
+                            actionNumber: '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr#{tr-id} #action-number',
+                            source: '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr#{tr-id} #source',
+                            currencyType: '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr#{tr-id} #currency-type',
+                            valuePercents: '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr#{tr-id} #value-percents',
+                            destionation: '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr#{tr-id} #destination',
+                            preCondition: '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr#{tr-id} #pre-condition',
+                        },
+                        inputsTypes: {
+                            actionNumber: 'text',
+                            source: 'text',
+                            currencyType: 'text',
+                            valuePercents: 'text',
+                            destionation: 'text',
+                            preCondition: 'text',
+                        },
+                        unicInputs: [
+                            'actionNumber'
+                        ]
+                    }
+                })
+            }
+        })
     }
 }
