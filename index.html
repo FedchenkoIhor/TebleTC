@@ -27,29 +27,18 @@
                         <div id="time">
                             <h3>
                                 <label for="">
-                                    <input type="checkbox" id="select-time">
+                                    <input type="checkbox" id="time-select">
                                     Time
                                 </label>
                             </h3>
                             <ul>
                                 <li><label for="">
-                                    <input type="checkbox" name="" id="">monthly
+                                    <input disabled type="checkbox" name="" id="time-monthly">monthly
                                 </label></li>
                                 <li><label for="">
-                                    <input type="radio" name="month-params" id="">
-                                    when month is <select name="" id="">
-                                        <option value="<"><</option>
-                                        <option value="<="><=</option>
-                                        <option value=">=">>=</option>
-                                        <option value=">">></option>
-                                        <option value="=">=</option>
-                                        <option value="!=">!=</option>
-                                    </select>
-                                    <input type="number">
-                                </label></li>
-                                <li><label for="">
-                                        <input type="radio" name="month-params" id="">
-                                        when month is <select name="" id="">
+                                    <input disabled type="radio" name="month-params" id="time-monthly-easier">
+                                        when month is <select disabled name="" id="time-monthly-easier-cb1">
+                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
@@ -57,8 +46,12 @@
                                             <option value="=">=</option>
                                             <option value="!=">!=</option>
                                         </select>
-                                        <input type="number">and
-                                        <select name="" id="">
+                                    <input disabled type="number" id="time-monthly-harder-inpx">
+                                </label></li>
+                                <li><label for="">
+                                        <input disabled type="radio" name="month-params" id="time-monthly-harder">
+                                        when month is <select disabled name="" id="time-monthly-harder-cb1">
+                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
@@ -66,27 +59,38 @@
                                             <option value="=">=</option>
                                             <option value="!=">!=</option>
                                         </select>
-                                        <input type="number">
+                                        <input disabled type="number" id="time-monthly-harder-inpx">and
+                                        <select disabled name="" id="time-monthly-harder-cb1">
+                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
+                                            <option value="<"><</option>
+                                            <option value="<="><=</option>
+                                            <option value=">=">>=</option>
+                                            <option value=">">></option>
+                                            <option value="=">=</option>
+                                            <option value="!=">!=</option>
+                                        </select>
+                                        <input disabled type="number" id="time-monthly-harder-inpy">
                                 </label></li>
                             </ul>
                         </div>
 
                         <div id="token-price">
-                            <select name="" id="" >
-                                <option value="" disabled selected>AND / OR</option>
+                            <select disabled name="" id="token-price-andor">
+                                <option value="0" disabled selected>AND / OR</option>
                                 <option value="AND">AND</option>
                                 <option value="OR">OR</option>
                             </select>
                             <h3>
                                 <label for="">
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="token-price-select">
                                     Token price threshold values
                                 </label>
                             </h3>
                             <ul>
                                 <li><label for="">
-                                    <input type="radio" name="token-price-params" id="">
-                                    when Token price is <select name="" id="">
+                                    <input disabled type="radio" name="token-price-params" id="token-price-easier">
+                                    when Token price is <select disabled name="" id="token-price-easier-cb1">
+                                        <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
                                         <option value="<"><</option>
                                         <option value="<="><=</option>
                                         <option value=">=">>=</option>
@@ -94,11 +98,12 @@
                                         <option value="=">=</option>
                                         <option value="!=">!=</option>
                                     </select>
-                                    <input type="number">
+                                    <input disabled type="number" id="token-price-easier-inpx">
                                 </label></li>
                                 <li><label for="">
-                                        <input type="radio" name="token-price-params" id="">
-                                        when Token price is <select name="" id="">
+                                        <input disabled type="radio" name="token-price-params" id="token-price-harder">
+                                        when Token price is <select disabled name="" id="token-price-harder-cb1">
+                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
@@ -106,8 +111,9 @@
                                             <option value="=">=</option>
                                             <option value="!=">!=</option>
                                         </select>
-                                        <input type="number">and
-                                        <select name="" id="">
+                                        <input disabled type="number" id="token-price-harder-inpx">and
+                                        <select disabled name="" id="token-price-harder-cb2">
+                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
@@ -115,31 +121,33 @@
                                             <option value="=">=</option>
                                             <option value="!=">!=</option>
                                         </select>
-                                        <input type="number">
+                                        <input disabled type="number" id="token-price-harder-inpy">
                                 </label></li>
                             </ul>
                         </div>
 
                         <div id="pool-threshold">
-                            <select name="" id="">
-                                <option value="" disabled selected>AND / OR</option>
+                            <select disabled name="" id="pool-threshold-andor">
+                                <option value="0" disabled selected>AND / OR</option>
                                 <option value="AND">AND</option>
                                 <option value="OR">OR</option>
                             </select>
                             <h3>
                                 <label for="">
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="pool-threshold-select">
                                     Pool threshold values
                                 </label>
                             </h3>
                             <ul>
                                 <li><label for="">
-                                    <input type="radio" name="token-price-params" id="">
-                                    when <select name="" id="">
+                                    <input disabled type="radio" name="pool-threshold-params" id="pool-threshold-easier">
+                                    when <select disabled name="" id="pool-threshold-easier-pool">
+                                        <option value="0" disabled selected>Pool #</option>
                                         <option value="Pool 1">Pool 1</option>
                                         <option value="Pool 2">Pool 2</option>
                                     </select>
-                                    is <select name="" id="">
+                                    is <select disabled name="" id="pool-threshold-easier-cb1">
+                                        <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
                                         <option value="<"><</option>
                                         <option value="<="><=</option>
                                         <option value=">=">>=</option>
@@ -147,15 +155,17 @@
                                         <option value="=">=</option>
                                         <option value="!=">!=</option>
                                     </select>
-                                    <input type="number">
+                                    <input disabled type="number" id="pool-threshold-easier-inpx">
                                 </label></li>
                                 <li><label for="">
-                                        <input type="radio" name="token-price-params" id="">
-                                        when <select name="" id="">
+                                        <input disabled type="radio" name="pool-threshold-params" id="pool-threshold-harder">
+                                        when <select disabled name="" id="pool-threshold-harder-pool">
+                                            <option value="0" disabled selected>Pool #</option>
                                             <option value="Pool 1">Pool 1</option>
                                             <option value="Pool 2">Pool 2</option>
                                         </select>
-                                        is <select name="" id="">
+                                        is <select disabled name="" id="pool-threshold-harder-cb1">
+                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
@@ -163,8 +173,9 @@
                                             <option value="=">=</option>
                                             <option value="!=">!=</option>
                                         </select>
-                                        <input type="number">and
-                                        <select name="" id="">
+                                        <input disabled type="number" id="pool-threshold-harder-inpx">and
+                                        <select disabled name="" id="pool-threshold-harder-cb2">
+                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
@@ -172,7 +183,7 @@
                                             <option value="=">=</option>
                                             <option value="!=">!=</option>
                                         </select>
-                                        <input type="number">
+                                        <input disabled type="number" id="pool-threshold-harder-inpy">
                                 </label></li>
                             </ul>
                         </div>
@@ -978,7 +989,148 @@
             e.preventDefault()
             $('#zbcc-popup').hide()
 
-            $('#zbcc-popup .inputs div#time input#select-time').prop('checked', false)
+            $('#zbcc-popup .inputs div#time #time-select').prop('checked', false)
+
+            $('#zbcc-popup .inputs div#time #time-monthly').prop('checked', false)
+            $('#zbcc-popup .inputs div#time #time-monthly-easier').prop('checked', false)
+            $('#zbcc-popup .inputs div#time #time-monthly-easier-cb1').val('0')
+            $('#zbcc-popup .inputs div#time #time-monthly-easier-inpx').val('')
+
+            $('#zbcc-popup .inputs div#time #time-monthly-harder').prop('checked', false)
+            $('#zbcc-popup .inputs div#time #time-monthly-harder-cb1').val('0')
+            $('#zbcc-popup .inputs div#time #time-monthly-harder-inpx').val('')
+            $('#zbcc-popup .inputs div#time #time-monthly-harder-cb2').val('0')
+            $('#zbcc-popup .inputs div#time #time-monthly-harder-inpy').val('')
+
+            //
+
+            $('#zbcc-popup .inputs div#token-price #token-price-select').prop('checked', false)
+            $('#zbcc-popup .inputs div#token-price #token-price-andor').val('0')
+
+            $('#zbcc-popup .inputs div#token-price #token-price').prop('checked', false)
+            $('#zbcc-popup .inputs div#token-price #token-price-easier').prop('checked', false)
+            $('#zbcc-popup .inputs div#token-price #token-price-easier-cb1').val('0')
+            $('#zbcc-popup .inputs div#token-price #token-price-easier-inpx').val('')
+
+            $('#zbcc-popup .inputs div#token-price #token-price-harder').prop('checked', false)
+            $('#zbcc-popup .inputs div#token-price #token-price-harder-cb1').val('0')
+            $('#zbcc-popup .inputs div#token-price #token-price-harder-inpx').val('')
+            $('#zbcc-popup .inputs div#token-price #token-price-harder-cb2').val('0')
+            $('#zbcc-popup .inputs div#token-price #token-price-harder-inpy').val('')
+
+            //
+
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-select').prop('checked', false)
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-andor').val('0')
+
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold').prop('checked', false)
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier').prop('checked', false)
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-cb1').val('0')
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-inpx').val('')
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-pool').val('0')
+
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder').prop('checked', false)
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-cb1').val('0')
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-inpx').val('')
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-cb2').val('0')
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-inpy').val('')
+            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-pool').val('0')
+        })
+
+        $('#zbcc-popup .inputs div#time #time-select').on('change', e => {
+            if (e.currentTarget.checked) {
+                $('#zbcc-popup .inputs div#time #time-monthly').prop('disabled', false)
+            } else {
+                $('#zbcc-popup .inputs div#time #time-monthly').prop('disabled', true)
+            }
+        })
+
+        $('#zbcc-popup .inputs div#time #time-monthly').on('change', e => {
+            if (e.currentTarget.checked) {
+                $('#zbcc-popup .inputs div#time #time-monthly-easier').prop('disabled', false)
+                $('#zbcc-popup .inputs div#time #time-monthly-easier-cb1').prop('disabled', false)
+                $('#zbcc-popup .inputs div#time #time-monthly-easier-inpx').prop('disabled', false)
+
+                $('#zbcc-popup .inputs div#time #time-monthly-harder').prop('disabled', false)
+                $('#zbcc-popup .inputs div#time #time-monthly-harder-cb1').prop('disabled', false)
+                $('#zbcc-popup .inputs div#time #time-monthly-harder-inpx').prop('disabled', false)
+                $('#zbcc-popup .inputs div#time #time-monthly-harder-cb2').prop('disabled', false)
+                $('#zbcc-popup .inputs div#time #time-monthly-harder-inpy').prop('disabled', false)
+            } else {
+                $('#zbcc-popup .inputs div#time #time-monthly-easier').prop('disabled', true)
+                $('#zbcc-popup .inputs div#time #time-monthly-easier-cb1').prop('disabled', true)
+                $('#zbcc-popup .inputs div#time #time-monthly-easier-inpx').prop('disabled', true)
+
+                $('#zbcc-popup .inputs div#time #time-monthly-harder').prop('disabled', true)
+                $('#zbcc-popup .inputs div#time #time-monthly-harder-cb1').prop('disabled', true)
+                $('#zbcc-popup .inputs div#time #time-monthly-harder-inpx').prop('disabled', true)
+                $('#zbcc-popup .inputs div#time #time-monthly-harder-cb2').prop('disabled', true)
+                $('#zbcc-popup .inputs div#time #time-monthly-harder-inpy').prop('disabled', true)
+            }
+        })
+
+        $('#zbcc-popup .inputs div#token-price #token-price-select').on('change', e => {
+            if (e.currentTarget.checked) {
+                $('#zbcc-popup .inputs div#token-price #token-price-andor').prop('disabled', false)
+
+                $('#zbcc-popup .inputs div#token-price #token-price').prop('disabled', false)
+                $('#zbcc-popup .inputs div#token-price #token-price-easier').prop('disabled', false)
+                $('#zbcc-popup .inputs div#token-price #token-price-easier-cb1').prop('disabled', false)
+                $('#zbcc-popup .inputs div#token-price #token-price-easier-inpx').prop('disabled', false)
+
+                $('#zbcc-popup .inputs div#token-price #token-price-harder').prop('disabled', false)
+                $('#zbcc-popup .inputs div#token-price #token-price-harder-cb1').prop('disabled', false)
+                $('#zbcc-popup .inputs div#token-price #token-price-harder-inpx').prop('disabled', false)
+                $('#zbcc-popup .inputs div#token-price #token-price-harder-cb2').prop('disabled', false)
+                $('#zbcc-popup .inputs div#token-price #token-price-harder-inpy').prop('disabled', false)
+            } else {
+                $('#zbcc-popup .inputs div#token-price #token-price-andor').prop('disabled', true)
+
+                $('#zbcc-popup .inputs div#token-price #token-price').prop('disabled', true)
+                $('#zbcc-popup .inputs div#token-price #token-price-easier').prop('disabled', true)
+                $('#zbcc-popup .inputs div#token-price #token-price-easier-cb1').prop('disabled', true)
+                $('#zbcc-popup .inputs div#token-price #token-price-easier-inpx').prop('disabled', true)
+
+                $('#zbcc-popup .inputs div#token-price #token-price-harder').prop('disabled', true)
+                $('#zbcc-popup .inputs div#token-price #token-price-harder-cb1').prop('disabled', true)
+                $('#zbcc-popup .inputs div#token-price #token-price-harder-inpx').prop('disabled', true)
+                $('#zbcc-popup .inputs div#token-price #token-price-harder-cb2').prop('disabled', true)
+                $('#zbcc-popup .inputs div#token-price #token-price-harder-inpy').prop('disabled', true)
+            }
+        })
+
+        $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-select').on('change', e => {
+            if (e.currentTarget.checked) {
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-andor').prop('disabled', false)
+
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold').prop('disabled', false)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier').prop('disabled', false)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-cb1').prop('disabled', false)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-inpx').prop('disabled', false)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-pool').prop('disabled', false)
+
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder').prop('disabled', false)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-cb1').prop('disabled', false)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-inpx').prop('disabled', false)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-cb2').prop('disabled', false)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-inpy').prop('disabled', false)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-pool').prop('disabled', false)
+            } else {
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-andor').prop('disabled', true)
+
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold').prop('disabled', true)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier').prop('disabled', true)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-cb1').prop('disabled', true)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-inpx').prop('disabled', true)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-pool').prop('disabled', true)
+
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder').prop('disabled', true)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-cb1').prop('disabled', true)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-inpx').prop('disabled', true)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-cb2').prop('disabled', true)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-inpy').prop('disabled', true)
+                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-pool').prop('disabled', true)
+            }
         })
 
         const form = new zbccForm(htmlTemplates)

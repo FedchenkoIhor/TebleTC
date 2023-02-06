@@ -204,6 +204,12 @@ form section.data-block > .base-inputs select {
     background-color: #dee1e3;
     color: #0c0c0c;
 }
+form section.data-block > .base-inputs input:disabled {
+    opacity: 0.5;
+}
+form section.data-block > .base-inputs select:disabled {
+    opacity: 0.5;
+}
 
 form section.data-block > .base-inputs button.calc {
     background-color: white;
