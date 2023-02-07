@@ -26,7 +26,7 @@ class zbccForm {
                     numerableInput: new NumberInput({ element: $('#zbcc-inputs .data-block#investment-rounds #rounds-number')[0], dataType: 'number', isUnic: false }),
 
                     row: {
-                        minNumberOf: 2,
+                        minNumberOf: 1,
                         htmlTemplate: this.htmlTemplates.trInvestmentRound,
                         trsSelector: '#zbcc-inputs .data-block#investment-rounds .inputs-table#rounds table tr[id]',
                         inputsSelectors: {
@@ -59,7 +59,7 @@ class zbccForm {
                     numerableInput: new NumberInput({ element: $('#zbcc-inputs .data-block#agents #agents-number')[0], dataType: 'number', isUnic: false }),
 
                     row: {
-                        minNumberOf: 2,
+                        minNumberOf: 1,
                         htmlTemplate: this.htmlTemplates.trAgent,
                         trsSelector: '#zbcc-inputs .data-block#agents .inputs-table#agents table tr[id]',
                         inputsSelectors: {
@@ -102,7 +102,7 @@ class zbccForm {
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
-                        minNumberOf: 2,
+                        minNumberOf: 1,
                         htmlTemplate: this.htmlTemplates.trPoolType,
                         trsSelector: '#zbcc-inputs .data-block#pools .inputs-table#pool-types table tr[id]',
                         inputsSelectors: {
@@ -124,7 +124,6 @@ class zbccForm {
                                 selects: [
                                     '#zbcc-inputs .data-block#pools .inputs-table#pools table tr[id] #pool-type',
                                     '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr[id] #currency-type',
-                                    '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr[id] #currency-type',
                                 ]
                             },
                         }
@@ -137,7 +136,7 @@ class zbccForm {
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
-                        minNumberOf: 2,
+                        minNumberOf: 1,
                         htmlTemplate: this.htmlTemplates.trPool,
                         trsSelector: '#zbcc-inputs .data-block#pools .inputs-table#pools table tr[id]',
                         inputsSelectors: {
@@ -194,7 +193,7 @@ class zbccForm {
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
-                        minNumberOf: 2,
+                        minNumberOf: 1,
                         htmlTemplate: this.htmlTemplates.trVesting,
                         trsSelector: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr[id]',
                         inputsSelectors: {
@@ -231,7 +230,7 @@ class zbccForm {
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
-                        minNumberOf: 2,
+                        minNumberOf: 1,
                         htmlTemplate: this.htmlTemplates.trUnlocking,
                         trsSelector: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#unlocking table tr[id]',
                         inputsSelectors: {
@@ -272,7 +271,7 @@ class zbccForm {
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
-                        minNumberOf: 2,
+                        minNumberOf: 1,
                         htmlTemplate: this.htmlTemplates.trStaking,
                         trsSelector: '#zbcc-inputs .data-block#project-services .inputs-table#staking table tr[id]',
                         inputsSelectors: {
@@ -312,7 +311,7 @@ class zbccForm {
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
-                        minNumberOf: 2,
+                        minNumberOf: 1,
                         htmlTemplate: this.htmlTemplates.trFarming,
                         trsSelector: '#zbcc-inputs .data-block#project-services .inputs-table#farming table tr[id]',
                         inputsSelectors: {
@@ -361,7 +360,7 @@ class zbccForm {
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
-                        minNumberOf: 2,
+                        minNumberOf: 1,
                         htmlTemplate: this.htmlTemplates.trAction,
                         trsSelector: '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr[id]',
                         inputsSelectors: {

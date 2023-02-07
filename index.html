@@ -34,10 +34,10 @@
                             </h3>
                             <ul>
                                 <li><label>
-                                    <input disabled type="checkbox" name="" id="time-monthly">monthly
+                                    <input disabled type="radio" name="time-params" id="time-monthly">monthly
                                 </label></li>
                                 <li><label>
-                                    <input disabled type="radio" name="month-params" id="time-monthly-easier">
+                                    <input disabled type="radio" name="time-params" id="time-monthly-easier">
                                         when month is <select disabled name="" id="time-monthly-easier-cb1">
                                             <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                             <option value="<"><</option>
@@ -50,7 +50,7 @@
                                     <input disabled type="number" id="time-monthly-harder-inpx">
                                 </label></li>
                                 <li><label>
-                                        <input disabled type="radio" name="month-params" id="time-monthly-harder">
+                                        <input disabled type="radio" name="time-params" id="time-monthly-harder">
                                         when month is <select disabled name="" id="time-monthly-harder-cb1">
                                             <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                             <option value="<"><</option>
@@ -145,7 +145,6 @@
                                     when <select disabled name="" id="pool-threshold-easier-pool">
                                         <option value="0" disabled selected>Pool #</option>
                                         <option value="Pool 1">Pool 1</option>
-                                        <option value="Pool 2">Pool 2</option>
                                     </select>
                                     is <select disabled name="" id="pool-threshold-easier-cb1">
                                         <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
@@ -163,7 +162,6 @@
                                         when <select disabled name="" id="pool-threshold-harder-pool">
                                             <option value="0" disabled selected>Pool #</option>
                                             <option value="Pool 1">Pool 1</option>
-                                            <option value="Pool 2">Pool 2</option>
                                         </select>
                                         is <select disabled name="" id="pool-threshold-harder-cb1">
                                             <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
@@ -188,7 +186,10 @@
                                 </label></li>
                             </ul>
                         </div>
-                        <button class="submit" id="apply-pre-condition">Apply</button>
+                        <div style="display: flex; flex-direction: row; justify-content: space-around">
+                            <button class="submit" id="apply-pre-condition">Ok</button>
+                            <button class="submit" id="dismiss-pre-condition">Cancel</button>
+                        </div>
                     </div>
                 </section>
             </form>
@@ -287,13 +288,6 @@
                                     <td><input type="number" id="tokens-amount" value="1000"></td>
                                     <td><input type="number" id="investor-share" value="" placeholder="%"></td>
                                 </tr>
-                                <tr id="1">
-                                    <td><input type="text" id="round-title" value="Round 2"></td>
-                                    <td><input type="number" id="fiat" value="1000"></td>
-                                    <td><input type="number" id="token-price" value="10000"></td>
-                                    <td><input type="number" id="tokens-amount" value="1000"></td>
-                                    <td><input type="number" id="investor-share" value="" placeholder="%"></td>
-                                </tr>
                             </table>
                         </div>
                         <button class="submit" id="build-investment-rounds">Build Scheme</button>
@@ -332,11 +326,6 @@
                                 </tr>
                                 <tr id="0">
                                     <td><input type="text" id="agent-name" value="Agent 1"></td>
-                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
-                                    <td><input type="number" id="tokens-amount" value="10000"></td>
-                                </tr>
-                                <tr id="1">
-                                    <td><input type="text" id="agent-name" value="Agent 2"></td>
                                     <td><input type="number" id="agent-share" value="" placeholder="%"></td>
                                     <td><input type="number" id="tokens-amount" value="10000"></td>
                                 </tr>
@@ -410,22 +399,6 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr id="1">
-                                    <td><input type="text" id="pool-title" value="Pool 2"></td>
-                                    <td>
-                                        <select name="pool-type" id="pool-type">
-                                            <option id="0" value="Pool type">Pool type</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="text" id="pool-share" value="" placeholder="%"></td>
-                                    <td><input type="text" id="amount" value="10000"></td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
                             </table>
                         </div>
                         <button class="submit" id="build-pools">Build Scheme</button>
@@ -471,36 +444,11 @@
                                     <td>
                                         <select name="agent-name" id="agent-name">
                                             <option id="0" value="Agent 1">Agent 1</option>
-                                            <option id="1" value="Agent 2">Agent 2</option>
                                         </select>
                                     </td>
                                     <td>
                                         <select name="pool-title" id="pool-title">
                                             <option id="0" value="Pool 1">Pool 1</option>
-                                            <option id="1" value="Pool 2">Pool 2</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="text" id="start-vesting" value="" placeholder="x"></td>
-                                    <td><input type="text" id="end-vesting" value="" placeholder="x"></td>
-                                    <td><input type="text" id="vesting-coefficient" value="" placeholder="%"></td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr id="1">
-                                    <td>
-                                        <select name="agent-name" id="agent-name">
-                                            <option id="0" value="Agent 1">Agent 1</option>
-                                            <option id="1" value="Agent 2">Agent 2</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select name="pool-title" id="pool-title">
-                                            <option id="0" value="Pool 1">Pool 1</option>
-                                            <option id="1" value="Pool 2">Pool 2</option>
                                         </select>
                                     </td>
                                     <td><input type="text" id="start-vesting" value="" placeholder="x"></td>
@@ -533,24 +481,6 @@
                                     <td>
                                         <select name="agent-name" id="agent-name">
                                             <option id="0" value="Agent 1">Agent 1</option>
-                                            <option id="1" value="Agent 2">Agent 2</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr id="1">
-                                    <td>
-                                        <select name="agent-name" id="agent-name">
-                                            <option id="0" value="Agent 1">Agent 1</option>
-                                            <option id="1" value="Agent 2">Agent 2</option>
                                         </select>
                                     </td>
                                     <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
@@ -615,7 +545,6 @@
                                     <td>
                                         <select name="agent-name" id="agent-name">
                                             <option id="0" value="Agent 1">Agent 1</option>
-                                            <option id="1" value="Agent 2">Agent 2</option>
                                         </select>
                                     </td>
                                     <td><input type="number" id="agent-share" value="" placeholder="%"></td>
@@ -625,59 +554,6 @@
                                     <td>
                                         <select name="pool-for-rewards" id="pool-for-rewards">
                                             <option id="0" value="Pool 1">Pool 1</option>
-                                            <option id="1" value="Pool 2">Pool 2</option>
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr id="1">
-                                    <td><input type="number" value="2" id="number"></td>
-                                    <td>
-                                        <select name="agent-name" id="agent-name">
-                                            <option id="0" value="Agent 1">Agent 1</option>
-                                            <option id="1" value="Agent 2">Agent 2</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
-                                    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>
-                                    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>
-                                    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->
-                                    <td>
-                                        <select name="pool-for-rewards" id="pool-for-rewards">
-                                            <option id="0" value="Pool 1">Pool 1</option>
-                                            <option id="1" value="Pool 2">Pool 2</option>
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr id="2">
-                                    <td><input type="number" value="3" id="number"></td>
-                                    <td>
-                                        <select name="agent-name" id="agent-name">
-                                            <option id="0" value="Agent 1">Agent 1</option>
-                                            <option id="1" value="Agent 2">Agent 2</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
-                                    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>
-                                    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>
-                                    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->
-                                    <td>
-                                        <select name="pool-for-rewards" id="pool-for-rewards">
-                                            <option id="0" value="Pool 1">Pool 1</option>
-                                            <option id="1" value="Pool 2">Pool 2</option>
                                         </select>
                                     </td>
 
@@ -712,7 +588,6 @@
                                     <td>
                                         <select name="agent-name" id="agent-name">
                                             <option id="0" value="Agent 1">Agent 1</option>
-                                            <option id="1" value="Agent 2">Agent 2</option>
                                         </select>
                                     </td>
                                     <td><input type="number" id="agent-share" value="" placeholder="%"></td>
@@ -722,59 +597,6 @@
                                     <td>
                                         <select name="pool-for-rewards" id="pool-for-rewards">
                                             <option id="0" value="Pool 1">Pool 1</option>
-                                            <option id="1" value="Pool 2">Pool 2</option>
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr id="1">
-                                    <td><input type="number" value="2" id="number"></td>
-                                    <td>
-                                        <select name="agent-name" id="agent-name">
-                                            <option id="0" value="Agent 1">Agent 1</option>
-                                            <option id="1" value="Agent 2">Agent 2</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
-                                    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>
-                                    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>
-                                    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->
-                                    <td>
-                                        <select name="pool-for-rewards" id="pool-for-rewards">
-                                            <option id="0" value="Pool 1">Pool 1</option>
-                                            <option id="1" value="Pool 2">Pool 2</option>
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr id="2">
-                                    <td><input type="number" value="3" id="number"></td>
-                                    <td>
-                                        <select name="agent-name" id="agent-name">
-                                            <option id="0" value="Agent 1">Agent 1</option>
-                                            <option id="1" value="Agent 2">Agent 2</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
-                                    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>
-                                    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>
-                                    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->
-                                    <td>
-                                        <select name="pool-for-rewards" id="pool-for-rewards">
-                                            <option id="0" value="Pool 1">Pool 1</option>
-                                            <option id="1" value="Pool 2">Pool 2</option>
                                         </select>
                                     </td>
 
@@ -807,48 +629,6 @@
                                     <th></th>
                                 </tr>
                                 <tr id="0">
-                                    <td><input type="number" id="curve-number" value="1"></td>
-                                    <td><input type="number" id="sales-start" value="4"></td>
-                                    <td><input type="number" id="sales-end" value="7"></td>
-                                    <td><input type="number" id="sales-min" value="10000"></td>
-                                    <td><input type="number" id="sales-max" value="10000"></td>
-                                    <td>
-                                        <select name="choose-algorithm" id="choose-algorithm">
-                                            <option value="Linear">Linear</option>
-                                            <option value="Exponential">Exponential</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" id="angular-coefficient" value="0.9"></td>
-                                    <td><input type="number" id="risings-coefficient" value="0.7"></td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr id="1">
-                                    <td><input type="number" id="curve-number" value="1"></td>
-                                    <td><input type="number" id="sales-start" value="4"></td>
-                                    <td><input type="number" id="sales-end" value="7"></td>
-                                    <td><input type="number" id="sales-min" value="10000"></td>
-                                    <td><input type="number" id="sales-max" value="10000"></td>
-                                    <td>
-                                        <select name="choose-algorithm" id="choose-algorithm">
-                                            <option value="Linear">Linear</option>
-                                            <option value="Exponential">Exponential</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" id="angular-coefficient" value="0.9"></td>
-                                    <td><input type="number" id="risings-coefficient" value="0.7"></td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr id="2">
                                     <td><input type="number" id="curve-number" value="1"></td>
                                     <td><input type="number" id="sales-start" value="4"></td>
                                     <td><input type="number" id="sales-end" value="7"></td>
@@ -916,52 +696,6 @@
                                 </tr>
                                 <tr id="0">
                                     <td><input type="text" id="action-number" value="Action 1"></td>
-                                    <td><input type="text" id="source" value=""></td>
-                                    <td>
-                                        <select name="currency-type" id="currency-type">
-                                            <option id="0" value="Pool type">Pool type</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="text" id="value-percents" value="" placeholder="%"></td>
-                                    <td><input type="text" id="destination" value=""></td>
-                                    <td>
-                                        <label>
-                                            <input type="checkbox" id="pre-condition">
-                                            Yes/No
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr id="1">
-                                    <td><input type="text" id="action-number" value="Action 2"></td>
-                                    <td><input type="text" id="source" value=""></td>
-                                    <td>
-                                        <select name="currency-type" id="currency-type">
-                                            <option id="0" value="Pool type">Pool type</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="text" id="value-percents" value="" placeholder="%"></td>
-                                    <td><input type="text" id="destination" value=""></td>
-                                    <td>
-                                        <label>
-                                            <input type="checkbox" id="pre-condition">
-                                            Yes/No
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr id="2">
-                                    <td><input type="text" id="action-number" value="Action 3"></td>
                                     <td><input type="text" id="source" value=""></td>
                                     <td>
                                         <select name="currency-type" id="currency-type">
@@ -1061,16 +795,17 @@
             $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-pool').val('0')
         })
 
+        // $('#zbcc-popup .inputs div#time #time-select').on('change', e => {
+            // if (e.currentTarget.checked) {
+        //
+            // } else {
+            // }
+        // })
+
         $('#zbcc-popup .inputs div#time #time-select').on('change', e => {
             if (e.currentTarget.checked) {
                 $('#zbcc-popup .inputs div#time #time-monthly').prop('disabled', false)
-            } else {
-                $('#zbcc-popup .inputs div#time #time-monthly').prop('disabled', true)
-            }
-        })
 
-        $('#zbcc-popup .inputs div#time #time-monthly').on('change', e => {
-            if (e.currentTarget.checked) {
                 $('#zbcc-popup .inputs div#time #time-monthly-easier').prop('disabled', false)
                 $('#zbcc-popup .inputs div#time #time-monthly-easier-cb1').prop('disabled', false)
                 $('#zbcc-popup .inputs div#time #time-monthly-easier-inpx').prop('disabled', false)
@@ -1081,6 +816,8 @@
                 $('#zbcc-popup .inputs div#time #time-monthly-harder-cb2').prop('disabled', false)
                 $('#zbcc-popup .inputs div#time #time-monthly-harder-inpy').prop('disabled', false)
             } else {
+                $('#zbcc-popup .inputs div#time #time-monthly').prop('disabled', true)
+
                 $('#zbcc-popup .inputs div#time #time-monthly-easier').prop('disabled', true)
                 $('#zbcc-popup .inputs div#time #time-monthly-easier-cb1').prop('disabled', true)
                 $('#zbcc-popup .inputs div#time #time-monthly-easier-inpx').prop('disabled', true)

@@ -130,7 +130,7 @@ class Table {
         this.row.importOptionsFrom = params.row.importOptionsFrom
 
         this.unicValues = []
-        this.rows = []
+        this.rows = {}
 
         this.listeners = {}
 
@@ -150,19 +150,6 @@ class Table {
         Object.keys(this.row.inputsSelectors).forEach(inputName => {
             let input
 
-            /* if (this.row.inputsTypes[inputName] === 'text')
-                input = new TextInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
-            else if (this.row.inputsTypes[inputName] === 'number')
-                input = new NumberInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
-            else if (this.row.inputsTypes[inputName] === 'select')
-                input = new SelectInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
-            else
-                input = new TextInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
-            */
-            // input = new TextInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
-            // input = new NumberInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
-            // input = new SelectInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
-            // input = new TextInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
             if (this.row.inputsTypes[inputName] === 'text')
                 input = new TextInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
             else if (this.row.inputsTypes[inputName] === 'number')
@@ -182,7 +169,7 @@ class Table {
     }
 
     updateRows() {
-        this.rows.forEach(row => {
+        Object.values(this.rows).forEach(row => {
             this.updateRowBySelectors(row)
         })
     }
@@ -194,17 +181,16 @@ class Table {
     }
 
     sortRows() {
-        let mylist = $(this.element);
-        let listitems = Array.from( $(this.row.trsSelector) )
-        listitems.sort(function(a, b) {
-            var compA = Number($(a).attr('id').toUpperCase())
-            var compB = Number($(b).attr('id').toUpperCase())
+        let rowSelectors = Array.from( $(this.row.trsSelector) )
+        rowSelectors.sort((a, b) => {
+            let compA = Number($(a).attr('id').toUpperCase())
+            let compB = Number($(b).attr('id').toUpperCase())
             return (compA < compB) ? -1 : (compA > compB) ? 1 : 0
         })
 
-        $.each(listitems, function(idx, itm) {
-            mylist.append(itm)
-        });
+        $.each(rowSelectors, (idx, itm) => {
+            $(this.element).append(itm)
+        })
     }
 
     appendRow(id) {
@@ -212,7 +198,7 @@ class Table {
             let ids = []
             let max = 0
 
-            this.rows.forEach(row => {
+            Object.values(this.rows).forEach(row => {
                 ids.push(row.id)
                 max = row.id > max ? row.id : max
             })
@@ -225,7 +211,7 @@ class Table {
             }
 
             if (id === undefined)
-                id = this.rows.length
+                id = Object.keys(this.rows).length
         }
 
 
@@ -240,7 +226,7 @@ class Table {
 
                 let replacement = this.row.importOptionsFrom[key]
 
-                Array.from($(replacement.byOptionsUsingSelector)).forEach(optionDataInput => {
+                Array.from( $(replacement.byOptionsUsingSelector) ).forEach(optionDataInput => {
                     optionsHtml += replacement.optionHtmlTemplate
                     .replace('{id}', optionDataInput.parentNode.parentNode.id)
                     .replace('{value}', optionDataInput.value)
@@ -256,9 +242,11 @@ class Table {
         // .replaceAll('{options}')
 
         $(this.element).append(rowHtml)
-        // this.sortRows()
+        this.sortRows()
 
-        this.rows.push( this.getRowBySelectors(id) )
+        // this.rows.push( this.getRowBySelectors(id) )
+        this.rows[id] = this.getRowBySelectors(id)
+        // this.rows[id] = this.getRowBySelectors(id)
 
         if (this.row.dataForSelectInputs !== undefined) {
             this.appendOptionToLinkedSelectInputs(id)
@@ -269,7 +257,7 @@ class Table {
     removeRow(id) {
         let rowId
 
-        this.rows.forEach((row, index) => {
+        Object.values(this.rows).forEach((row, index) => {
             if (row.id === Number(id)) {
                 rowId = index
             }
@@ -286,18 +274,36 @@ class Table {
         console.log('rows now:', this.rows)
         console.log('log:', rowId, id)
         $(this.element).find('tr#' + (id)).remove()
-        this.rows.splice(rowId ?? id, 1)
+        delete this.rows[rowId ?? id]
     }
 
     appendOptionToLinkedSelectInputs(id) {
         Object.keys(this.row.dataForSelectInputs).forEach(input => {
             this.row.dataForSelectInputs[input].selects.forEach(select => {
                 Array.from($(select)).forEach(selectInput => {
-                    $(selectInput).append(this.row.dataForSelectInputs[input].optionHtmlTemplate
+                    console.log(this.rows)
+                    console.log(this.rows[id][input].value)
+
+                    let prevId = 0
+
+                    Object.values(this.rows).forEach(row => {
+                        if (row.id > prevId && row.id < id)
+                            prevId = row.id
+                    })
+
+                    console.log('id:', id)
+                    console.log('input:', input)
+                    console.log('select:', select)
+                    console.log('selectInput:', selectInput)
+
+                    $(selectInput).find(this.row.dataForSelectInputs[input].optionPrevSelector
+                        .replace('{id}', this.rows[prevId].id)
+                        .replace('{value}', this.rows[prevId][input].value)
+                        ).after(this.row.dataForSelectInputs[input].optionHtmlTemplate
                         .replaceAll('{id}', id)
                         .replaceAll('{value}', this.rows[id][input].value)
                         .replaceAll('{text}', this.rows[id][input].value)
-                        )
+                    )
                 })
             })
         })
@@ -345,8 +351,8 @@ class Table {
     }
 
     clearData() {
-        console.log('length:', this.rows.length)
-        for (let i = this.rows.length - 1; i >= 0; i--)
+        console.log('length:', Object.keys(this.rows).length)
+        for (let i = Object.keys(this.rows).length - 1; i >= 0; i--)
             this.removeRow(i)
 
         for (let i = 0; i < this.row.minNumberOf; i++)

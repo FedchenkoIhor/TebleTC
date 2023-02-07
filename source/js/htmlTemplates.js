@@ -10,6 +10,8 @@ const htmlTemplates = {
     '' +
     '',
 
+    //
+
     trAgent:
     '<tr id="{id}">' +
     '    <td><input type="text" id="agent-name" value="Agent {number}"></td>' +
@@ -19,7 +21,7 @@ const htmlTemplates = {
     '' +
     '',
 
-    optionAgentName: '<option value="{replace}">{replace}</option>',
+    //
 
     trPoolType:
     '<tr id="{id}">' +
@@ -36,8 +38,6 @@ const htmlTemplates = {
     '</tr>' +
     '' +
     '',
-
-    optionPoolType: '<option value="{replace}">{replace}</option>',
 
     trPool:
     '<tr id="{id}">' +
@@ -59,7 +59,7 @@ const htmlTemplates = {
     '' +
     '',
 
-    optionPoolName: '<option value="{replace}">{replace}</option>',
+    //
 
     trVesting:
     '<tr id="{id}"> ' +
@@ -105,6 +105,8 @@ const htmlTemplates = {
     '</tr>' +
     '' +
     '',
+
+    //
 
     trFarming:
     '' +
@@ -160,6 +162,7 @@ const htmlTemplates = {
     '</tr>' +
     '',
 
+    //
 
     trAction:
     '<tr id="{id}">' +
@@ -172,7 +175,12 @@ const htmlTemplates = {
     '    </td>' +
     '    <td><input type="text" id="value-percents" value="" placeholder="%"></td>' +
     '    <td><input type="text" id="destination" value=""></td>' +
-    '    <td><input type="text" id="pre-condition" value="Yes/No"></td>' +
+    '    <td>' +
+    '        <label>' +
+    '            <input type="checkbox" id="pre-condition">' +
+    '            Yes/No' +
+    '        </label>' +
+    '</td>' +
     '    <td>' +
     '        <div class="calc-buttons">' +
     '            <button class="calc" id="remove-row">–</button>' +
@@ -182,6 +190,8 @@ const htmlTemplates = {
     '</tr>' +
     '' +
     '',
+
+    //
 
     selectOption: '<option id="{id}" value="{value}">{text}</option>',
 }

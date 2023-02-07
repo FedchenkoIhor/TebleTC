@@ -229,7 +229,7 @@ form section.data-block > .base-inputs button.calc:hover {
 form section.data-block > .base-inputs button.submit {
     padding: 10px 50px;
     margin: auto;
-    margin-top: 30px;
+    /* margin-top: 30px; */
 
     display: block;
 
