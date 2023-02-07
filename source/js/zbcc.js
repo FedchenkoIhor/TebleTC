@@ -26,6 +26,7 @@ class zbccForm {
                     numerableInput: new NumberInput({ element: $('#zbcc-inputs .data-block#investment-rounds #rounds-number')[0], dataType: 'number', isUnic: false }),
 
                     row: {
+                        minNumberOf: 2,
                         htmlTemplate: this.htmlTemplates.trInvestmentRound,
                         trsSelector: '#zbcc-inputs .data-block#investment-rounds .inputs-table#rounds table tr[id]',
                         inputsSelectors: {
@@ -58,6 +59,7 @@ class zbccForm {
                     numerableInput: new NumberInput({ element: $('#zbcc-inputs .data-block#agents #agents-number')[0], dataType: 'number', isUnic: false }),
 
                     row: {
+                        minNumberOf: 2,
                         htmlTemplate: this.htmlTemplates.trAgent,
                         trsSelector: '#zbcc-inputs .data-block#agents .inputs-table#agents table tr[id]',
                         inputsSelectors: {
@@ -80,7 +82,9 @@ class zbccForm {
                                 optionPrevSelector: 'option[value="{value}"][id={id}]',
                                 selects: [
                                     '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr[id] #agent-name',
-                                    '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#unlocking table tr[id] #agent-name'
+                                    '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#unlocking table tr[id] #agent-name',
+                                    '#zbcc-inputs .data-block#project-services .inputs-table#staking table tr[id] #agent-name',
+                                    '#zbcc-inputs .data-block#project-services .inputs-table#farming table tr[id] #agent-name',
                                 ]
                             }
                         }
@@ -98,6 +102,7 @@ class zbccForm {
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
+                        minNumberOf: 2,
                         htmlTemplate: this.htmlTemplates.trPoolType,
                         trsSelector: '#zbcc-inputs .data-block#pools .inputs-table#pool-types table tr[id]',
                         inputsSelectors: {
@@ -117,9 +122,11 @@ class zbccForm {
                                 optionHtmlTemplate: this.htmlTemplates.selectOption,
                                 optionPrevSelector: 'option[value="{value}"][id="{id}"]',
                                 selects: [
-                                    '#zbcc-inputs .data-block#pools .inputs-table#pools table tr[id] #pool-type'
+                                    '#zbcc-inputs .data-block#pools .inputs-table#pools table tr[id] #pool-type',
+                                    '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr[id] #currency-type',
+                                    '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr[id] #currency-type',
                                 ]
-                            }
+                            },
                         }
                     }
                 }),
@@ -130,6 +137,7 @@ class zbccForm {
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
+                        minNumberOf: 2,
                         htmlTemplate: this.htmlTemplates.trPool,
                         trsSelector: '#zbcc-inputs .data-block#pools .inputs-table#pools table tr[id]',
                         inputsSelectors: {
@@ -153,6 +161,18 @@ class zbccForm {
                                 optionHtmlTemplate: this.htmlTemplates.selectOption,
                                 byOptionsUsingSelector: '#zbcc-inputs .data-block#pools .inputs-table#pool-types table tr[id] #pool-type'
                             }
+                        },
+                        dataForSelectInputs: {
+                            poolTitle: {
+                                inputId: 'pool-title',
+                                optionHtmlTemplate: this.htmlTemplates.selectOption,
+                                optionPrevSelector: 'option[value="{value}"][id="{id}"]',
+                                selects: [
+                                    '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr[id] #pool-title',
+                                    '#zbcc-inputs .data-block#project-services .inputs-table#staking table tr[id] #pool-for-rewards',
+                                    '#zbcc-inputs .data-block#project-services .inputs-table#farming table tr[id] #pool-for-rewards',
+                                ]
+                            }
                         }
                     }
                 })
@@ -174,23 +194,35 @@ class zbccForm {
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
+                        minNumberOf: 2,
                         htmlTemplate: this.htmlTemplates.trVesting,
                         trsSelector: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr[id]',
                         inputsSelectors: {
                             agentName: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #agent-name',
-                            pool: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #pool',
+                            poolTitle: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #pool-title',
                             startVesting: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #start-vesting',
                             endVesting: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #end-vesting',
                             vestingCoefficient: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#vesting table tr#{tr-id} #vesting-coefficient',
                         },
                         inputsTypes: {
                             agentName: 'text',
-                            pool: 'text',
+                            poolTitle: 'select',
                             startVesting: 'text',
                             endVesting: 'text',
                             vestingCoefficient: 'text',
+                        },
+                        importOptionsFrom: {
+                            agentName: {
+                                replaceInTrPool: '{agent-names-options}',
+                                optionHtmlTemplate: this.htmlTemplates.selectOption,
+                                byOptionsUsingSelector: '#zbcc-inputs .data-block#agents .inputs-table#agents table tr[id] #agent-name'
+                            },
+                            poolTitle: {
+                                replaceInTrPool: '{pool-title-options}',
+                                optionHtmlTemplate: this.htmlTemplates.selectOption,
+                                byOptionsUsingSelector: '#zbcc-inputs .data-block#pools .inputs-table#pools table tr[id] #pool-title'
+                            }
                         }
-
                     }
                 }),
                 unlocking: new CalcableTable({
@@ -199,6 +231,7 @@ class zbccForm {
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
+                        minNumberOf: 2,
                         htmlTemplate: this.htmlTemplates.trUnlocking,
                         trsSelector: '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table#unlocking table tr[id]',
                         inputsSelectors: {
@@ -212,15 +245,108 @@ class zbccForm {
                             startUnlocking: 'text',
                             endUnlocking: 'text',
                             initialUnlocking: 'text',
+                        },
+                        importOptionsFrom: {
+                            agentName: {
+                                replaceInTrPool: '{agent-names-options}',
+                                optionHtmlTemplate: this.htmlTemplates.selectOption,
+                                byOptionsUsingSelector: '#zbcc-inputs .data-block#agents .inputs-table#agents table tr[id] #agent-name'
+                            }
                         }
                     }
                 })
             }
         })
 
-        // this.dataBlocks['tokenCirculation'] = new UnhiddableTables({
+        this.dataBlocks['tokenCirculation'] = new UnhiddableTables({
+            cssClass: 'unhidden',
+            unhidders: {
+                staking: $('#zbcc-inputs .data-block#project-services button.unhidder#show-staking')[0],
+                farming: $('#zbcc-inputs .data-block#project-services button.unhidder#show-farming')[0],
+            },
+            tables: {
+                staking: new CalcableTable({
+                    element: $('#zbcc-inputs .data-block#project-services .inputs-table#staking table')[0],
 
-        // })
+                    calcAppendBtnSelector: 'button.calc#append-row',
+                    calcRemoveBtnSelector: 'button.calc#remove-row',
+
+                    row: {
+                        minNumberOf: 2,
+                        htmlTemplate: this.htmlTemplates.trStaking,
+                        trsSelector: '#zbcc-inputs .data-block#project-services .inputs-table#staking table tr[id]',
+                        inputsSelectors: {
+                            number: '#zbcc-inputs .data-block#project-services .inputs-table#staking table tr#{tr-id} #number',
+                            agentName: '#zbcc-inputs .data-block#project-services .inputs-table#staking table tr#{tr-id} #agent-name',
+                            agentShare: '#zbcc-inputs .data-block#project-services .inputs-table#staking table tr#{tr-id} #agent-share',
+                            unstakingFactor: '#zbcc-inputs .data-block#project-services .inputs-table#staking table tr#{tr-id} #unstaking-factor',
+                            rewardCoefficient: '#zbcc-inputs .data-block#project-services .inputs-table#staking table tr#{tr-id} #reward-coefficient',
+                            poolForRewards: '#zbcc-inputs .data-block#project-services .inputs-table#staking table tr#{tr-id} #pool-for-rewards',
+                        },
+                        inputsTypes: {
+                            number: 'number',
+                            agentName: 'select',
+                            agentShare: 'text',
+                            unstakingFactor: 'text',
+                            rewardCoefficient: 'text',
+                            poolForRewards: 'select',
+                        },
+                        importOptionsFrom: {
+                            agentName: {
+                                replaceInTrPool: '{agent-names-options}',
+                                optionHtmlTemplate: this.htmlTemplates.selectOption,
+                                byOptionsUsingSelector: '#zbcc-inputs .data-block#agents .inputs-table#agents table tr[id] #agent-name'
+                            },
+                            poolTitle: {
+                                replaceInTrPool: '{pool-title-options}',
+                                optionHtmlTemplate: this.htmlTemplates.selectOption,
+                                byOptionsUsingSelector: '#zbcc-inputs .data-block#pools .inputs-table#pools table tr[id] #pool-title'
+                            }
+                        }
+                    }
+                }),
+                farming: new CalcableTable({
+                    element: $('#zbcc-inputs .data-block#project-services .inputs-table#farming table')[0],
+
+                    calcAppendBtnSelector: 'button.calc#append-row',
+                    calcRemoveBtnSelector: 'button.calc#remove-row',
+
+                    row: {
+                        minNumberOf: 2,
+                        htmlTemplate: this.htmlTemplates.trFarming,
+                        trsSelector: '#zbcc-inputs .data-block#project-services .inputs-table#farming table tr[id]',
+                        inputsSelectors: {
+                            number: '#zbcc-inputs .data-block#project-services .inputs-table#farming table tr#{tr-id} #number',
+                            agentName: '#zbcc-inputs .data-block#project-services .inputs-table#farming table tr#{tr-id} #agent-name',
+                            agentShare: '#zbcc-inputs .data-block#project-services .inputs-table#farming table tr#{tr-id} #agent-share',
+                            unstakingFactor: '#zbcc-inputs .data-block#project-services .inputs-table#farming table tr#{tr-id} #unstaking-factor',
+                            rewardCoefficient: '#zbcc-inputs .data-block#project-services .inputs-table#farming table tr#{tr-id} #reward-coefficient',
+                            poolForRewards: '#zbcc-inputs .data-block#project-services .inputs-table#farming table tr#{tr-id} #pool-for-rewards',
+                        },
+                        inputsTypes: {
+                            number: 'number',
+                            agentName: 'select',
+                            agentShare: 'text',
+                            unstakingFactor: 'text',
+                            rewardCoefficient: 'text',
+                            poolForRewards: 'select',
+                        },
+                        importOptionsFrom: {
+                            agentName: {
+                                replaceInTrPool: '{agent-names-options}',
+                                optionHtmlTemplate: this.htmlTemplates.selectOption,
+                                byOptionsUsingSelector: '#zbcc-inputs .data-block#agents .inputs-table#agents table tr[id] #agent-name'
+                            },
+                            poolTitle: {
+                                replaceInTrPool: '{pool-title-options}',
+                                optionHtmlTemplate: this.htmlTemplates.selectOption,
+                                byOptionsUsingSelector: '#zbcc-inputs .data-block#pools .inputs-table#pools table tr[id] #pool-title'
+                            }
+                        }
+                    }
+                })
+            }
+        })
 
         this.dataBlocks['tokenCirculation'] = new UnhiddableTables({
             cssClass: 'unhidden',
@@ -235,6 +361,7 @@ class zbccForm {
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     row: {
+                        minNumberOf: 2,
                         htmlTemplate: this.htmlTemplates.trAction,
                         trsSelector: '#zbcc-inputs .data-block#token-circulation .inputs-table#actions table tr[id]',
                         inputsSelectors: {
@@ -255,7 +382,14 @@ class zbccForm {
                         },
                         unicInputs: [
                             'actionNumber'
-                        ]
+                        ],
+                        importOptionsFrom: {
+                            poolTypes: {
+                                replaceInTrPool: '{pool-types-options}',
+                                optionHtmlTemplate: this.htmlTemplates.selectOption,
+                                byOptionsUsingSelector: '#zbcc-inputs .data-block#pools .inputs-table#pool-types table tr[id] #pool-type'
+                            }
+                        },
                     }
                 })
             }

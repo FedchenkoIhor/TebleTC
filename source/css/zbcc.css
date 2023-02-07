@@ -1,6 +1,10 @@
+#crypto-constructor {
+    /* padding-top: 200px; */
+}
+
 form {
     width: 100%;
-    margin: 200px 0;
+    /* margin: 200px 0; */
 
     display: flex;
     flex-direction: column;
@@ -13,6 +17,9 @@ form {
 /*  */
 
 
+form#zbcc-inputs section.data-block:first {
+    margin-top: 200px;
+}
 form section.data-block {
     width: 80%;
     margin: auto;
@@ -236,6 +243,15 @@ form section.data-block > .base-inputs button.submit {
 
 
 
+form#zbcc-popup {
+    display: none;
+    height: 100%;
+    position: fixed;
+    backdrop-filter: blur(10px);
+    /* margin: 0px 0px 0px 0px !important; */
+    /* display: inline-block; */
+}
+
 form#zbcc-popup .inputs {
     width: 100%;
     margin: auto;
@@ -246,6 +262,9 @@ form#zbcc-popup .inputs {
 
     gap: 40px;
 }
+form#zbcc-popup .inputs.base-inputs {
+    padding: 20px;
+}
 
 form#zbcc-popup .inputs input, form#zbcc-popup .inputs select {
     margin: 0 5px;
@@ -253,4 +272,9 @@ form#zbcc-popup .inputs input, form#zbcc-popup .inputs select {
 
 form#zbcc-popup .inputs ul {
     list-style-type: none;
+}
+
+label, tr {
+    min-width: 120px;
+    width: fit-content;
 }

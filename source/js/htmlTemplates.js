@@ -65,11 +65,14 @@ const htmlTemplates = {
     '<tr id="{id}"> ' +
     '    <td>' +
     '        <select name="agent-name" id="agent-name">' +
-    '            <option value="Agent 1">Agent 1</option>' +
-    '            <option value="Agent 2">Agent 2</option>' +
+    '           {agent-names-options}' +
     '        </select>' +
     '    </td>' +
-    '    <td><input type="text" id="pool" value="" placeholder="x"></td>' +
+    '    <td>' +
+    '       <select name="pool-title" id="pool-title">' +
+    '          {pool-title-options}' +
+    '       </select>' +
+    '    </td>' +
     '    <td><input type="text" id="start-vesting" value="" placeholder="x"></td>' +
     '    <td><input type="text" id="end-vesting" value="" placeholder="x"></td>' +
     '    <td><input type="text" id="vesting-coefficient" value="" placeholder="%"></td>' +
@@ -87,8 +90,7 @@ const htmlTemplates = {
     '<tr id="{id}">' +
     '    <td>' +
     '        <select name="agent-name" id="agent-name">' +
-    '            <option value="Agent 1">Agent 1</option>' +
-    '            <option value="Agent 2">Agent 2</option>' +
+    '           {agent-names-options}' +
     '        </select>' +
     '    </td>' +
     '    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>' +
@@ -104,11 +106,70 @@ const htmlTemplates = {
     '' +
     '',
 
+    trFarming:
+    '' +
+    '<tr id="{id}">' +
+    '    <td><input type="number" value="{number}" id="number"></td>' +
+    '    <td>' +
+    '        <select name="agent-name" id="agent-name">' +
+    '            {agent-names-options}' +
+    '        </select>' +
+    '    </td>' +
+    '    <td><input type="number" id="agent-share" value="" placeholder="%"></td>' +
+    '    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>' +
+    '    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>' +
+    '    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->' +
+    '    <td>' +
+    '        <select name="pool-for-rewards" id="pool-for-rewards">' +
+    '            {pool-title-options}' +
+    '        </select>' +
+    '    </td>' +
+    '    <td>' +
+    '        <div class="calc-buttons">' +
+    '            <button class="calc" id="remove-row">–</button>' +
+    '            <button class="calc" id="append-row">+</button>' +
+    '        </div>' +
+    '    </td>' +
+    '</tr>' +
+    '',
+
+    trStaking:
+    '' +
+    '<tr id="{id}">' +
+    '    <td><input type="number" value="{number}" id="number"></td>' +
+    '    <td>' +
+    '        <select name="agent-name" id="agent-name">' +
+    '            {agent-names-options}' +
+    '        </select>' +
+    '    </td>' +
+    '    <td><input type="number" id="agent-share" value="" placeholder="%"></td>' +
+    '    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>' +
+    '    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>' +
+    '    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->' +
+    '    <td>' +
+    '        <select name="pool-for-rewards" id="pool-for-rewards">' +
+    '            {pool-title-options}' +
+    '        </select>' +
+    '    </td>' +
+    '    <td>' +
+    '        <div class="calc-buttons">' +
+    '            <button class="calc" id="remove-row">–</button>' +
+    '            <button class="calc" id="append-row">+</button>' +
+    '        </div>' +
+    '    </td>' +
+    '</tr>' +
+    '',
+
+
     trAction:
     '<tr id="{id}">' +
     '    <td><input type="text" id="action-number" value="Action {number}"></td>' +
     '    <td><input type="text" id="source" value=""></td>' +
-    '    <td><input type="text" id="currency-type" value=""></td>' +
+    '    <td>' +
+    '       <select name="currency-type" id="currency-type">' +
+    '           {pool-types-options}' +
+    '        </select>' +
+    '    </td>' +
     '    <td><input type="text" id="value-percents" value="" placeholder="%"></td>' +
     '    <td><input type="text" id="destination" value=""></td>' +
     '    <td><input type="text" id="pre-condition" value="Yes/No"></td>' +

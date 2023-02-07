@@ -14,6 +14,7 @@
     <main>
         <div id="crypto-constructor">
             <form id="zbcc-popup">
+                <!-- TODO: popup form as popup + edit ids and add classes/// + refactor -->
                 <section class="data-block">
                     <header>
                         <h3 class="block-title">Add pre-condition</h3>
@@ -26,47 +27,47 @@
 
                         <div id="time">
                             <h3>
-                                <label for="">
+                                <label>
                                     <input type="checkbox" id="time-select">
                                     Time
                                 </label>
                             </h3>
                             <ul>
-                                <li><label for="">
+                                <li><label>
                                     <input disabled type="checkbox" name="" id="time-monthly">monthly
                                 </label></li>
-                                <li><label for="">
+                                <li><label>
                                     <input disabled type="radio" name="month-params" id="time-monthly-easier">
                                         when month is <select disabled name="" id="time-monthly-easier-cb1">
-                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
+                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
                                             <option value=">">></option>
-                                            <option value="=">=</option>
+                                            <option value="==">==</option>
                                             <option value="!=">!=</option>
                                         </select>
                                     <input disabled type="number" id="time-monthly-harder-inpx">
                                 </label></li>
-                                <li><label for="">
+                                <li><label>
                                         <input disabled type="radio" name="month-params" id="time-monthly-harder">
                                         when month is <select disabled name="" id="time-monthly-harder-cb1">
-                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
+                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
                                             <option value=">">></option>
-                                            <option value="=">=</option>
+                                            <option value="==">==</option>
                                             <option value="!=">!=</option>
                                         </select>
                                         <input disabled type="number" id="time-monthly-harder-inpx">and
                                         <select disabled name="" id="time-monthly-harder-cb1">
-                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
+                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
                                             <option value=">">></option>
-                                            <option value="=">=</option>
+                                            <option value="==">==</option>
                                             <option value="!=">!=</option>
                                         </select>
                                         <input disabled type="number" id="time-monthly-harder-inpy">
@@ -81,44 +82,44 @@
                                 <option value="OR">OR</option>
                             </select>
                             <h3>
-                                <label for="">
+                                <label>
                                     <input type="checkbox" id="token-price-select">
                                     Token price threshold values
                                 </label>
                             </h3>
                             <ul>
-                                <li><label for="">
+                                <li><label>
                                     <input disabled type="radio" name="token-price-params" id="token-price-easier">
                                     when Token price is <select disabled name="" id="token-price-easier-cb1">
-                                        <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
+                                        <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                         <option value="<"><</option>
                                         <option value="<="><=</option>
                                         <option value=">=">>=</option>
                                         <option value=">">></option>
-                                        <option value="=">=</option>
+                                        <option value="==">==</option>
                                         <option value="!=">!=</option>
                                     </select>
                                     <input disabled type="number" id="token-price-easier-inpx">
                                 </label></li>
-                                <li><label for="">
+                                <li><label>
                                         <input disabled type="radio" name="token-price-params" id="token-price-harder">
                                         when Token price is <select disabled name="" id="token-price-harder-cb1">
-                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
+                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
                                             <option value=">">></option>
-                                            <option value="=">=</option>
+                                            <option value="==">==</option>
                                             <option value="!=">!=</option>
                                         </select>
                                         <input disabled type="number" id="token-price-harder-inpx">and
                                         <select disabled name="" id="token-price-harder-cb2">
-                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
+                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
                                             <option value=">">></option>
-                                            <option value="=">=</option>
+                                            <option value="==">==</option>
                                             <option value="!=">!=</option>
                                         </select>
                                         <input disabled type="number" id="token-price-harder-inpy">
@@ -133,13 +134,13 @@
                                 <option value="OR">OR</option>
                             </select>
                             <h3>
-                                <label for="">
+                                <label>
                                     <input type="checkbox" id="pool-threshold-select">
                                     Pool threshold values
                                 </label>
                             </h3>
                             <ul>
-                                <li><label for="">
+                                <li><label>
                                     <input disabled type="radio" name="pool-threshold-params" id="pool-threshold-easier">
                                     when <select disabled name="" id="pool-threshold-easier-pool">
                                         <option value="0" disabled selected>Pool #</option>
@@ -147,17 +148,17 @@
                                         <option value="Pool 2">Pool 2</option>
                                     </select>
                                     is <select disabled name="" id="pool-threshold-easier-cb1">
-                                        <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
+                                        <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                         <option value="<"><</option>
                                         <option value="<="><=</option>
                                         <option value=">=">>=</option>
                                         <option value=">">></option>
-                                        <option value="=">=</option>
+                                        <option value="==">==</option>
                                         <option value="!=">!=</option>
                                     </select>
                                     <input disabled type="number" id="pool-threshold-easier-inpx">
                                 </label></li>
-                                <li><label for="">
+                                <li><label>
                                         <input disabled type="radio" name="pool-threshold-params" id="pool-threshold-harder">
                                         when <select disabled name="" id="pool-threshold-harder-pool">
                                             <option value="0" disabled selected>Pool #</option>
@@ -165,22 +166,22 @@
                                             <option value="Pool 2">Pool 2</option>
                                         </select>
                                         is <select disabled name="" id="pool-threshold-harder-cb1">
-                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
+                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
                                             <option value=">">></option>
-                                            <option value="=">=</option>
+                                            <option value="==">==</option>
                                             <option value="!=">!=</option>
                                         </select>
                                         <input disabled type="number" id="pool-threshold-harder-inpx">and
                                         <select disabled name="" id="pool-threshold-harder-cb2">
-                                            <option value="0" disabled selected>< / <= / >= / > / = / !=</option>
+                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                             <option value="<"><</option>
                                             <option value="<="><=</option>
                                             <option value=">=">>=</option>
                                             <option value=">">></option>
-                                            <option value="=">=</option>
+                                            <option value="==">==</option>
                                             <option value="!=">!=</option>
                                         </select>
                                         <input disabled type="number" id="pool-threshold-harder-inpy">
@@ -473,7 +474,12 @@
                                             <option id="1" value="Agent 2">Agent 2</option>
                                         </select>
                                     </td>
-                                    <td><input type="text" id="pool" value="" placeholder="x"></td>
+                                    <td>
+                                        <select name="pool-title" id="pool-title">
+                                            <option id="0" value="Pool 1">Pool 1</option>
+                                            <option id="1" value="Pool 2">Pool 2</option>
+                                        </select>
+                                    </td>
                                     <td><input type="text" id="start-vesting" value="" placeholder="x"></td>
                                     <td><input type="text" id="end-vesting" value="" placeholder="x"></td>
                                     <td><input type="text" id="vesting-coefficient" value="" placeholder="%"></td>
@@ -491,7 +497,12 @@
                                             <option id="1" value="Agent 2">Agent 2</option>
                                         </select>
                                     </td>
-                                    <td><input type="text" id="pool" value="" placeholder="x"></td>
+                                    <td>
+                                        <select name="pool-title" id="pool-title">
+                                            <option id="0" value="Pool 1">Pool 1</option>
+                                            <option id="1" value="Pool 2">Pool 2</option>
+                                        </select>
+                                    </td>
                                     <td><input type="text" id="start-vesting" value="" placeholder="x"></td>
                                     <td><input type="text" id="end-vesting" value="" placeholder="x"></td>
                                     <td><input type="text" id="vesting-coefficient" value="" placeholder="%"></td>
@@ -618,9 +629,6 @@
                                         </select>
                                     </td>
 
-                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
                                     <td>
                                         <div class="calc-buttons">
                                             <button class="calc" id="remove-row">–</button>
@@ -647,9 +655,6 @@
                                         </select>
                                     </td>
 
-                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
                                     <td>
                                         <div class="calc-buttons">
                                             <button class="calc" id="remove-row">–</button>
@@ -676,9 +681,6 @@
                                         </select>
                                     </td>
 
-                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
                                     <td>
                                         <div class="calc-buttons">
                                             <button class="calc" id="remove-row">–</button>
@@ -724,9 +726,6 @@
                                         </select>
                                     </td>
 
-                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
                                     <td>
                                         <div class="calc-buttons">
                                             <button class="calc" id="remove-row">–</button>
@@ -753,9 +752,6 @@
                                         </select>
                                     </td>
 
-                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
                                     <td>
                                         <div class="calc-buttons">
                                             <button class="calc" id="remove-row">–</button>
@@ -782,9 +778,6 @@
                                         </select>
                                     </td>
 
-                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
                                     <td>
                                         <div class="calc-buttons">
                                             <button class="calc" id="remove-row">–</button>
@@ -924,10 +917,19 @@
                                 <tr id="0">
                                     <td><input type="text" id="action-number" value="Action 1"></td>
                                     <td><input type="text" id="source" value=""></td>
-                                    <td><input type="text" id="currency-type" value=""></td>
+                                    <td>
+                                        <select name="currency-type" id="currency-type">
+                                            <option id="0" value="Pool type">Pool type</option>
+                                        </select>
+                                    </td>
                                     <td><input type="text" id="value-percents" value="" placeholder="%"></td>
                                     <td><input type="text" id="destination" value=""></td>
-                                    <td><input type="text" id="pre-condition" value="Yes/No"></td>
+                                    <td>
+                                        <label>
+                                            <input type="checkbox" id="pre-condition">
+                                            Yes/No
+                                        </label>
+                                    </td>
                                     <td>
                                         <div class="calc-buttons">
                                             <button class="calc" id="remove-row">–</button>
@@ -938,10 +940,19 @@
                                 <tr id="1">
                                     <td><input type="text" id="action-number" value="Action 2"></td>
                                     <td><input type="text" id="source" value=""></td>
-                                    <td><input type="text" id="currency-type" value=""></td>
+                                    <td>
+                                        <select name="currency-type" id="currency-type">
+                                            <option id="0" value="Pool type">Pool type</option>
+                                        </select>
+                                    </td>
                                     <td><input type="text" id="value-percents" value="" placeholder="%"></td>
                                     <td><input type="text" id="destination" value=""></td>
-                                    <td><input type="text" id="pre-condition" value="Yes/No"></td>
+                                    <td>
+                                        <label>
+                                            <input type="checkbox" id="pre-condition">
+                                            Yes/No
+                                        </label>
+                                    </td>
                                     <td>
                                         <div class="calc-buttons">
                                             <button class="calc" id="remove-row">–</button>
@@ -952,10 +963,19 @@
                                 <tr id="2">
                                     <td><input type="text" id="action-number" value="Action 3"></td>
                                     <td><input type="text" id="source" value=""></td>
-                                    <td><input type="text" id="currency-type" value=""></td>
+                                    <td>
+                                        <select name="currency-type" id="currency-type">
+                                            <option id="0" value="Pool type">Pool type</option>
+                                        </select>
+                                    </td>
                                     <td><input type="text" id="value-percents" value="" placeholder="%"></td>
                                     <td><input type="text" id="destination" value=""></td>
-                                    <td><input type="text" id="pre-condition" value="Yes/No"></td>
+                                    <td>
+                                        <label>
+                                            <input type="checkbox" id="pre-condition">
+                                            Yes/No
+                                        </label>
+                                    </td>
                                     <td>
                                         <div class="calc-buttons">
                                             <button class="calc" id="remove-row">–</button>
@@ -984,6 +1004,10 @@
             e.preventDefault()
             e.stopImmediatePropagation()
         })
+
+
+
+        // TODO: refactor this sh#t))
 
         $('#zbcc-popup').on('submit', e => {
             e.preventDefault()
@@ -1135,6 +1159,14 @@
 
         const form = new zbccForm(htmlTemplates)
         console.log(form)
+
+
+
+        form.dataBlocks['tokenCirculation'].tables.actions.addEventListener('change', e => {
+            if (e.target.id === 'pre-condition' && e.target.checked) {
+                $('#zbcc-popup').show()
+            }
+        })
     </script>
 </body>
 

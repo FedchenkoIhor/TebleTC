@@ -27,9 +27,6 @@ class Input {
         $(this.element).on('change', e => {
             this.syncValue()
 
-            console.log('iam changed:',)
-            console.log(this)
-
             this.listeners['change'].forEach(func => {
                 func(e, this)
             })
@@ -43,16 +40,9 @@ class Input {
 
     syncValue() {
         if ( this.verifyValue( this.element.value) ) {
-            console.log('pre-value:',this.value)
-            console.log('pre-prevValue:',this.prevValue)
-
             this.prevValue = this.dataType( (JSON.parse( JSON.stringify({value: this.value}) ) ).value)
-            console.log('post-prevValue:',this.prevValue)
-
             this.value = this.dataType(this.element.value)
 
-            console.log('post2-prevValue:', this.prevValue)
-            console.log('post2-value:', this.value)
         } else {
             this.element.value = this.prevValue
         }
@@ -127,6 +117,7 @@ class Table {
 
         // this.row = params.row
         this.row = {}
+        this.row.minNumberOf = params.row.minNumberOf
         this.row.htmlTemplate = params.row.htmlTemplate
 
         this.row.trsSelector = params.row.trsSelector
@@ -140,6 +131,8 @@ class Table {
 
         this.unicValues = []
         this.rows = []
+
+        this.listeners = {}
 
         this.initRows()
         this.listenForChangesInDataRows()
@@ -200,6 +193,20 @@ class Table {
         })
     }
 
+    sortRows() {
+        let mylist = $(this.element);
+        let listitems = Array.from( $(this.row.trsSelector) )
+        listitems.sort(function(a, b) {
+            var compA = Number($(a).attr('id').toUpperCase())
+            var compB = Number($(b).attr('id').toUpperCase())
+            return (compA < compB) ? -1 : (compA > compB) ? 1 : 0
+        })
+
+        $.each(listitems, function(idx, itm) {
+            mylist.append(itm)
+        });
+    }
+
     appendRow(id) {
         if (id === undefined) {
             let ids = []
@@ -232,7 +239,6 @@ class Table {
                 let optionsHtml = ''
 
                 let replacement = this.row.importOptionsFrom[key]
-                console.log(replacement)
 
                 Array.from($(replacement.byOptionsUsingSelector)).forEach(optionDataInput => {
                     optionsHtml += replacement.optionHtmlTemplate
@@ -241,8 +247,6 @@ class Table {
                     .replace('{text}', optionDataInput.value)
                 })
 
-                console.log(replacement.replaceInTrPool)
-                console.log(optionsHtml)
                 rowHtml = rowHtml.replaceAll(replacement.replaceInTrPool, optionsHtml)
             })
         }
@@ -252,12 +256,14 @@ class Table {
         // .replaceAll('{options}')
 
         $(this.element).append(rowHtml)
+        // this.sortRows()
 
         this.rows.push( this.getRowBySelectors(id) )
 
         if (this.row.dataForSelectInputs !== undefined) {
             this.appendOptionToLinkedSelectInputs(id)
         }
+
     }
 
     removeRow(id) {
@@ -274,6 +280,11 @@ class Table {
             this.removeOptionToLinkedSelectInputs(rowId ?? id)
         }
 
+        console.log('')
+        console.log('rows before:', this.rows)
+        console.log('deleting:', this.rows[rowId ?? id])
+        console.log('rows now:', this.rows)
+        console.log('log:', rowId, id)
         $(this.element).find('tr#' + (id)).remove()
         this.rows.splice(rowId ?? id, 1)
     }
@@ -310,34 +321,43 @@ class Table {
         $(this.element).on('change', e => {
             this.updateRows()
 
-            console.log('changes!')
             if (this.row.dataForSelectInputs !== undefined) {
 
                 Object.keys(this.row.dataForSelectInputs).forEach(input => {
 
                     if (this.row.dataForSelectInputs[input].inputId === e.originalEvent.target.id) {
-                        console.log('rows:', this.rows)
-                        console.log('row:', this.rows[e.originalEvent.target.parentNode.parentNode.id])
-
-                        console.log('selector:', this.row.dataForSelectInputs[input].optionPrevSelector
-                        .replace('{value}', this.rows[e.originalEvent.target.parentNode.parentNode.id][input].prevValue)
-                        .replace('{id}', e.originalEvent.target.parentNode.parentNode.id))
-
-                        console.log('elements:', $(this.row.dataForSelectInputs[input].optionPrevSelector
-                        .replace('{value}', this.rows[e.originalEvent.target.parentNode.parentNode.id][input].prevValue)
-                        .replace('{id}', e.originalEvent.target.parentNode.parentNode.id)))
-
                         Array.from($(this.row.dataForSelectInputs[input].optionPrevSelector
                             .replace('{value}', this.rows[e.originalEvent.target.parentNode.parentNode.id][input].prevValue)
                             .replace('{id}', e.originalEvent.target.parentNode.parentNode.id))).forEach(option => {
-                                console.log('option:', $(option))
                                 $(option).html(this.rows[e.originalEvent.target.parentNode.parentNode.id][input].value)
                                 $(option).attr('value', this.rows[e.originalEvent.target.parentNode.parentNode.id][input].value)
                             })
                     }
                 })
             }
+
+            Object.keys(this.listeners).forEach(event => {
+                this.listeners[event].forEach(listener => {
+                    listener(e)
+                })
+            })
         })
+    }
+
+    clearData() {
+        console.log('length:', this.rows.length)
+        for (let i = this.rows.length - 1; i >= 0; i--)
+            this.removeRow(i)
+
+        for (let i = 0; i < this.row.minNumberOf; i++)
+            this.appendRow(i)
+    }
+
+    addEventListener(event, callback) {
+        if (this.listeners[event] === undefined)
+            this.listeners[event] = []
+
+        this.listeners[event].push(callback)
     }
 }
 
@@ -408,14 +428,21 @@ class UnhiddableTables {
 
     listenOnUnhidderClick() {
         let unhiddersList = Object.keys(this.unhidders)
-
         unhiddersList.forEach(key => {
             $(this.unhidders[key]).on('click', e => {
                 if ( $(e.currentTarget).hasClass(this.cssClass) ) {
+                    // TODO: clear vesting / unlocking table
+                    this.tables[key].clearData()
                     $(this.unhidders[key]).html('+').removeClass(this.cssClass)
+                    console.log(this.tables[key])
+                    console.log(key)
                     $(this.tables[key].element.parentNode).removeClass(this.cssClass)
                 } else {
                     $(this.unhidders[key]).html('-').addClass(this.cssClass)
+                    console.log(key)
+                    console.log(this.tables)
+                    console.log(this.tables[key])
+                    console.log(this.tables[key].element)
                     $(this.tables[key].element.parentNode).addClass(this.cssClass)
 
                     unhiddersList.forEach(key2 => {
