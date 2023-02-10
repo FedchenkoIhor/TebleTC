@@ -1,25 +1,13 @@
-#crypto-constructor {
-    /* padding-top: 200px; */
-}
 
-form {
-    width: 100%;
-    /* margin: 200px 0; */
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+/*  */
 
-    gap: 100px;
-}
+/* asdasdasd */
 
 
 /*  */
 
 
-form#zbcc-inputs section.data-block:first {
-    margin-top: 200px;
-}
 form section.data-block {
     width: 80%;
     margin: auto;
@@ -32,10 +20,6 @@ form section.data-block {
     color: black;
 }
 
-
-/*  */
-
-
 form section.data-block > header {
     padding: 50px;
 
@@ -46,7 +30,6 @@ form section.data-block > header {
     background-color: black;
     color: white;
 }
-
 
 form section.data-block > header h3.block-title {
     /* font-weight: bold; */
@@ -128,6 +111,14 @@ form section.data-block > .inputs .inputs-table.unhiddable {
 }
 
 form section.data-block > .inputs .inputs-table.unhiddable.unhidden {
+    display: inherit !important;
+}
+
+form section.data-block > .inputs .inputs-table.choosable {
+    display: none;
+}
+
+form section.data-block > .inputs .inputs-table.choosable.choosen {
     display: inherit !important;
 }
 
@@ -214,6 +205,7 @@ form section.data-block > .base-inputs select {
 form section.data-block > .base-inputs input:disabled {
     opacity: 0.5;
 }
+
 form section.data-block > .base-inputs select:disabled {
     opacity: 0.5;
 }
@@ -229,30 +221,51 @@ form section.data-block > .base-inputs button.calc:hover {
 form section.data-block > .base-inputs button.submit {
     padding: 10px 50px;
     margin: auto;
-    /* margin-top: 30px; */
-
+    margin-top: 30px;
     display: block;
-
     border: 0;
     border-radius: 5px;
     appearance: none;
     background-color: black;
-
     color: white;
 }
 
 
+/*  */
 
-form#zbcc-popup {
-    display: none;
-    height: 100%;
-    position: fixed;
-    backdrop-filter: blur(10px);
-    /* margin: 0px 0px 0px 0px !important; */
-    /* display: inline-block; */
+
+form#zbcc-inputs {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    gap: 100px;
 }
 
-form#zbcc-popup .inputs {
+form#zbcc-inputs section.data-block:first-of-type {
+    margin-top: 200px;
+}
+
+form#zbcc-inputs section.data-block:last-of-type {
+    margin-bottom: 200px;
+}
+
+
+/*  */
+
+
+form#zbcc-precond-popup {
+    padding-top: 100px;
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: fixed;
+    backdrop-filter: blur(40px);
+}
+
+form#zbcc-precond-popup .inputs {
     width: 100%;
     margin: auto;
 
@@ -262,15 +275,15 @@ form#zbcc-popup .inputs {
 
     gap: 40px;
 }
-form#zbcc-popup .inputs.base-inputs {
+form#zbcc-precond-popup .inputs.base-inputs {
     padding: 20px;
 }
 
-form#zbcc-popup .inputs input, form#zbcc-popup .inputs select {
+form#zbcc-precond-popup .inputs input, form#zbcc-precond-popup .inputs select {
     margin: 0 5px;
 }
 
-form#zbcc-popup .inputs ul {
+form#zbcc-precond-popup .inputs ul {
     list-style-type: none;
 }
 

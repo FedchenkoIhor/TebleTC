@@ -1,83 +1,86 @@
-class Input {
+class htmlBaseElement {
     constructor(params) {
         this.element = params.element
+        /* this.possibleEvents = params.possibleEvents ?? [] */
+        this.listeners = {}
 
-        this.type = params.type
-        this.dataType = { 'text': String, 'number': Number, 'select': String }[params.dataType]
-
-        this.allowedValues = params.allowedValues
-
-        this.isUnic = params.isUnic
-
-        if (this.dataType === String)
-            this.value = String(this.element.value)
-        else if (this.dataType === Number)
-            this.value = Number(this.element.value)
-        else
-            this.value = String(this.element.value)
-
-
-        this.listeners = { change: [] }
-
-        this.setAltValues()
-        this.listenOnChange()
+        /* this.initListeners() */
     }
 
-    listenOnChange() {
-        $(this.element).on('change', e => {
-            this.syncValue()
+    /* initListeners() {
+        this.possibleEvents.forEach(event => {
+            this.listeners[event] = []
+        })
+    } */
 
-            this.listeners['change'].forEach(func => {
-                func(e, this)
+    addEventListener(event, callback) {
+        if (!Object.keys(this.listeners).includes(event) && this.listeners[event] === undefined) {
+            this.listeners[event] = []
+
+            $(this.element).on(event, e => {
+                this.listeners[event].forEach(func => {
+                    func(e, this)
+                })
             })
+        }
+
+        this.listeners[event].push(callback)
+    }
+}
+
+
+
+//
+
+
+
+class Input extends htmlBaseElement {
+    constructor(params) {
+        super(params)
+
+        this.initParams(params)
+
+        this.addEventListener('change', e => {
+            this.syncValue()
         })
     }
 
-    setAltValues() {
-        this.prevValue = this.dataType(this.value)
+    initParams(params) {
+        this.inputType = params.type
+
+        this.dataType = params.dataType ?? { 'text': String, 'number': Number, 'select': String }[this.inputType] ?? String
+        this.allowedValues = params.allowedValues
+
+        this.isUnic = params.isUnic ?? false
+        this.linkToUnicValues = params.linkToUnicValues
+
+        this.value = undefined
+        this.previousValue = this.dataType(this.value)
         this.defaultValue = this.dataType(this.value)
     }
 
     syncValue() {
-        if ( this.verifyValue( this.element.value) ) {
-            this.prevValue = this.dataType( (JSON.parse( JSON.stringify({value: this.value}) ) ).value)
+        // if ( this.verifyValue(this.element.value) ) {
+            this.previousValue = this.dataType(this.value)
             this.value = this.dataType(this.element.value)
-
-        } else {
-            this.element.value = this.prevValue
-        }
+        // } else {
+        //     this.element.value = this.previousValue
+        // }
     }
 
     verifyValue(value) {
-        if (typeof this.dataType() === typeof value || typeof this.dataType() === typeof this.dataType(value)) {
-            if (this.allowedValues !== undefined) {
-                if (this.allowedValues.includes(value)) {
-                    return true
-                    // if (this.isUnic) {
-                    //     if (this.linkToUnics.includes(value)) {
-                    //         return false
-                    //     } else {
-                    //         return true
-                    //     }
-                    // } else {
-                    //     return true
-                    // }
-                } else {
-                    return false
-                }
-            } else {
-                return true
-            }
-        } else {
+        if (typeof this.dataType() !== typeof value && typeof this.dataType() !== typeof this.dataType(value))
             return false
-        }
-    }
 
-    addEventListener(event, callback) {
-        if (this.listeners[event] === undefined)
-            this.listeners[event] = []
+        if (this.allowedValues !== undefined)
+            if (this.allowedValues.includes(value))
+                return false
 
-        this.listeners[event].push(callback)
+        if (this.isUnic)
+            if (this.linkToUnicValues !== undefined && this.linkToUnicValues.includes(value))
+                return false
+
+        return true
     }
 }
 
@@ -111,53 +114,66 @@ class SelectInput extends Input {
 
 
 
-class Table {
+class Table extends htmlBaseElement {
     constructor(params) {
-        this.element = params.element
+        super(params)
 
-        // this.row = params.row
+        this.initParams(params)
+
+        this.initRows()
+
+        this.addEventListener('change', e => {
+            this.editOptionInLinkedSelectInputs(e)
+        })
+    }
+
+    initParams(params) {
         this.row = {}
-        this.row.minNumberOf = params.row.minNumberOf
+
+        this.row.numberOfInitial = params.row.numberOfInitial
+        this.row.numberOfMin = params.row.numberOfMin
+
         this.row.htmlTemplate = params.row.htmlTemplate
 
-        this.row.trsSelector = params.row.trsSelector
+        this.row.tableId = params.row.tableId
+        this.row.trSelector = params.row.trSelector
         this.row.inputsSelectors = params.row.inputsSelectors
 
         this.row.inputsTypes = params.row.inputsTypes
         this.row.unicInputs = params.row.unicInputs
 
-        this.row.dataForSelectInputs = params.row.dataForSelectInputs
-        this.row.importOptionsFrom = params.row.importOptionsFrom
+        this.row.linksToDependableSelects = params.row.linksToDependableSelects
+        this.row.linksToOptions = params.row.linksToOptions
 
         this.unicValues = []
         this.rows = {}
-
-        this.listeners = {}
-
-        this.initRows()
-        this.listenForChangesInDataRows()
     }
 
     initRows() {
-        Array.from( $(this.row.trsSelector) ).forEach(tr => {
-            this.rows[tr.id] = this.getRowBySelectors(tr.id)
-        })
+        for (let rowId = 0; rowId < this.row.numberOfInitial; rowId++) {
+            this.appendRow(rowId)
+        }
     }
 
-    getRowBySelectors(id) {
-        let row = { id: Number(id) }
+    getRowBySelectors(rowId) {
+        let row = { id: Number(rowId) }
 
         Object.keys(this.row.inputsSelectors).forEach(inputName => {
             let input
+            let inputElement = $(
+                this.row.inputsSelectors[inputName]
+                .replace('{table-id}', this.row.tableId)
+                .replace('{tr-id}', rowId)
+            )[0]
 
             if (this.row.inputsTypes[inputName] === 'text')
-                input = new TextInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
+                input = new TextInput({ element: inputElement, dataType: String })
             else if (this.row.inputsTypes[inputName] === 'number')
-                input = new NumberInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
+                input = new NumberInput({ element: inputElement, dataType: Number })
             else if (this.row.inputsTypes[inputName] === 'select')
-                input = new SelectInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
+                input = new SelectInput({ element: inputElement, dataType: String })
             else
-                input = new TextInput({ element: $(this.row.inputsSelectors[inputName].replace('{tr-id}', id))[0], dataType: this.row.inputsTypes[inputName] })
+                input = new TextInput({ element: inputElement, dataType: this.row.inputsTypes[inputName] })
 
             if (this.row.unicInputs !== undefined )
                 input.isUnic = this.row.unicInputs.includes(inputName)
@@ -168,24 +184,65 @@ class Table {
         return row
     }
 
-    updateRows() {
-        Object.values(this.rows).forEach(row => {
-            this.updateRowBySelectors(row)
-        })
-    }
+    appendRow(rowId) {
+        if (rowId === undefined) {
+            let idsOfRows = []
+            let maxRowId = 0
 
-    updateRowBySelectors(row) {
-        Object.values(row.id).forEach(input => {
-            input.syncValue()
-        })
+            Object.values(this.rows).forEach(row => {
+                idsOfRows.push(row.id)
+                maxRowId = row.id > maxRowId ? row.id : maxRowId
+            })
+
+            for(let id = 0; id < maxRowId; id++) {
+                if (!idsOfRows.includes(id)) {
+                    rowId = id
+                    break
+                }
+            }
+
+            if (rowId === undefined)
+                rowId = Object.keys(this.rows).length
+        }
+
+        let rowHtml = this.row.htmlTemplate
+            .replaceAll('{id}', rowId)
+            .replaceAll('{number}', rowId + 1)
+
+        if (this.row.linksToOptions !== undefined) {
+            Object.keys(this.row.linksToOptions).forEach(linkedInput => {
+                let optionsHtml = ''
+                let options = this.row.linksToOptions[linkedInput]
+
+                Array.from( $(options.selector) ).forEach(optionDataInput => {
+                    optionsHtml += options.optionHtmlTemplate
+                        .replace('{id}', optionDataInput.parentNode.parentNode.id)
+                        .replace('{value}', optionDataInput.value)
+                        .replace('{text}', optionDataInput.value)
+                })
+
+                rowHtml = rowHtml.replaceAll(options.mask, optionsHtml)
+            })
+        }
+
+        $(this.element).append(rowHtml)
+        this.sortRows()
+        this.rows[rowId] = this.getRowBySelectors(rowId)
+
+        if (this.row.linksToDependableSelects !== undefined)
+            this.appendOptionToLinkedSelectInputs(rowId)
     }
 
     sortRows() {
-        let rowSelectors = Array.from( $(this.row.trsSelector) )
+        let rowSelectors = Array.from(
+            $(this.row.trSelector
+                .replace('{table-id}', this.row.tableId !== undefined ? this.row.tableId : '')
+        ))
+
         rowSelectors.sort((a, b) => {
             let compA = Number($(a).attr('id').toUpperCase())
             let compB = Number($(b).attr('id').toUpperCase())
-            return (compA < compB) ? -1 : (compA > compB) ? 1 : 0
+            return (compA < compB) ? -1 : ((compA > compB) ? 1 : 0)
         })
 
         $.each(rowSelectors, (idx, itm) => {
@@ -193,128 +250,57 @@ class Table {
         })
     }
 
-    appendRow(id) {
-        if (id === undefined) {
-            let ids = []
-            let max = 0
+    removeRow(rowId, force) {
+        if (Object.keys(this.rows).length === this.row.numberOfMin && (force === undefined || force !== true))
+            return
 
-            Object.values(this.rows).forEach(row => {
-                ids.push(row.id)
-                max = row.id > max ? row.id : max
-            })
-
-            for(let i = 0; i < max; i++) {
-                if (!ids.includes(i)) {
-                    id = i
-                    break
-                }
-            }
-
-            if (id === undefined)
-                id = Object.keys(this.rows).length
-        }
-
-
-
-        let rowHtml = this.row.htmlTemplate
-        .replaceAll('{id}', id)
-        .replaceAll('{number}', id + 1)
-
-        if (this.row.importOptionsFrom !== undefined) {
-            Object.keys(this.row.importOptionsFrom).forEach(key => {
-                let optionsHtml = ''
-
-                let replacement = this.row.importOptionsFrom[key]
-
-                Array.from( $(replacement.byOptionsUsingSelector) ).forEach(optionDataInput => {
-                    optionsHtml += replacement.optionHtmlTemplate
-                    .replace('{id}', optionDataInput.parentNode.parentNode.id)
-                    .replace('{value}', optionDataInput.value)
-                    .replace('{text}', optionDataInput.value)
-                })
-
-                rowHtml = rowHtml.replaceAll(replacement.replaceInTrPool, optionsHtml)
-            })
-        }
-
-
-
-        // .replaceAll('{options}')
-
-        $(this.element).append(rowHtml)
-        this.sortRows()
-
-        // this.rows.push( this.getRowBySelectors(id) )
-        this.rows[id] = this.getRowBySelectors(id)
-        // this.rows[id] = this.getRowBySelectors(id)
-
-        if (this.row.dataForSelectInputs !== undefined) {
-            this.appendOptionToLinkedSelectInputs(id)
-        }
-
-    }
-
-    removeRow(id) {
-        let rowId
+        let rowIndex
 
         Object.values(this.rows).forEach((row, index) => {
-            if (row.id === Number(id)) {
-                rowId = index
-            }
+            if (row.id === rowId)
+                rowIndex = index
         })
 
-
-        if (this.row.dataForSelectInputs !== undefined) {
-            this.removeOptionToLinkedSelectInputs(rowId ?? id)
+        if (this.row.linksToDependableSelects !== undefined) {
+            this.removeOptionFromLinkedSelectInputs(rowIndex ?? rowId)
         }
 
-        console.log('')
-        console.log('rows before:', this.rows)
-        console.log('deleting:', this.rows[rowId ?? id])
-        console.log('rows now:', this.rows)
-        console.log('log:', rowId, id)
-        $(this.element).find('tr#' + (id)).remove()
-        delete this.rows[rowId ?? id]
+        $(Object.values($(this.row.trSelector))[rowIndex ?? rowId]).remove()
+        delete this.rows[rowIndex ?? rowId]
     }
 
-    appendOptionToLinkedSelectInputs(id) {
-        Object.keys(this.row.dataForSelectInputs).forEach(input => {
-            this.row.dataForSelectInputs[input].selects.forEach(select => {
-                Array.from($(select)).forEach(selectInput => {
-                    console.log(this.rows)
-                    console.log(this.rows[id][input].value)
-
-                    let prevId = 0
+    appendOptionToLinkedSelectInputs(rowId) {
+        Object.keys(this.row.linksToDependableSelects).forEach(input => {
+            this.row.linksToDependableSelects[input].selects.forEach(select => {
+                Array.from( $(select) ).forEach(selectInput => {
+                    let previousOptionId = 0
 
                     Object.values(this.rows).forEach(row => {
-                        if (row.id > prevId && row.id < id)
-                            prevId = row.id
+                        if (row.id > previousOptionId && row.id < rowId)
+                            previousOptionId = row.id
                     })
 
-                    console.log('id:', id)
-                    console.log('input:', input)
-                    console.log('select:', select)
-                    console.log('selectInput:', selectInput)
-
-                    $(selectInput).find(this.row.dataForSelectInputs[input].optionPrevSelector
-                        .replace('{id}', this.rows[prevId].id)
-                        .replace('{value}', this.rows[prevId][input].value)
-                        ).after(this.row.dataForSelectInputs[input].optionHtmlTemplate
-                        .replaceAll('{id}', id)
-                        .replaceAll('{value}', this.rows[id][input].value)
-                        .replaceAll('{text}', this.rows[id][input].value)
+                    $(selectInput).find(
+                        this.row.linksToDependableSelects[input].optionSelector
+                            .replace('{id}', this.rows[previousOptionId].id)
+                            .replace('{value}', this.rows[previousOptionId][input].value)
+                    ).after(
+                        this.row.linksToDependableSelects[input].optionHtmlTemplate
+                            .replaceAll('{id}', rowId)
+                            .replaceAll('{value}', this.rows[rowId][input].value)
+                            .replaceAll('{text}', this.rows[rowId][input].value)
                     )
                 })
             })
         })
     }
 
-    removeOptionToLinkedSelectInputs(id) {
-        Object.keys(this.row.dataForSelectInputs).forEach(input => {
-            this.row.dataForSelectInputs[input].selects.forEach(select => {
+    removeOptionFromLinkedSelectInputs(id) {
+        Object.keys(this.row.linksToDependableSelects).forEach(input => {
+            this.row.linksToDependableSelects[input].selects.forEach(select => {
                 Array.from($(select)).forEach(selectInput => {
                     $(selectInput).find(
-                        this.row.dataForSelectInputs[input].optionPrevSelector
+                        this.row.linksToDependableSelects[input].optionSelector
                         .replace('{value}', this.rows[id][input].value)
                         .replace('{id}', id)
                     ).remove()
@@ -323,47 +309,29 @@ class Table {
         })
     }
 
-    listenForChangesInDataRows() {
-        $(this.element).on('change', e => {
-            this.updateRows()
+    editOptionInLinkedSelectInputs(e) {
+        if (this.row.linksToDependableSelects === undefined)
+            return
 
-            if (this.row.dataForSelectInputs !== undefined) {
-
-                Object.keys(this.row.dataForSelectInputs).forEach(input => {
-
-                    if (this.row.dataForSelectInputs[input].inputId === e.originalEvent.target.id) {
-                        Array.from($(this.row.dataForSelectInputs[input].optionPrevSelector
-                            .replace('{value}', this.rows[e.originalEvent.target.parentNode.parentNode.id][input].prevValue)
-                            .replace('{id}', e.originalEvent.target.parentNode.parentNode.id))).forEach(option => {
-                                $(option).html(this.rows[e.originalEvent.target.parentNode.parentNode.id][input].value)
-                                $(option).attr('value', this.rows[e.originalEvent.target.parentNode.parentNode.id][input].value)
-                            })
-                    }
+        Object.keys(this.row.linksToDependableSelects).forEach(input => {
+            if (this.row.linksToDependableSelects[input].inputId === e.originalEvent.target.id) {
+                Array.from( $(this.row.linksToDependableSelects[input].optionSelector
+                    .replace('{value}', this.rows[e.originalEvent.target.parentNode.parentNode.id][input].previousValue)
+                    .replace('{id}', e.originalEvent.target.parentNode.parentNode.id))
+                ).forEach(option => {
+                    $(option).html(this.rows[e.originalEvent.target.parentNode.parentNode.id][input].value)
+                    $(option).attr('value', this.rows[e.originalEvent.target.parentNode.parentNode.id][input].value)
                 })
             }
-
-            Object.keys(this.listeners).forEach(event => {
-                this.listeners[event].forEach(listener => {
-                    listener(e)
-                })
-            })
         })
     }
 
     clearData() {
-        console.log('length:', Object.keys(this.rows).length)
         for (let i = Object.keys(this.rows).length - 1; i >= 0; i--)
-            this.removeRow(i)
+            this.removeRow(i, true)
 
-        for (let i = 0; i < this.row.minNumberOf; i++)
+        for (let i = 0; i < this.row.numberOfMin; i++)
             this.appendRow(i)
-    }
-
-    addEventListener(event, callback) {
-        if (this.listeners[event] === undefined)
-            this.listeners[event] = []
-
-        this.listeners[event].push(callback)
     }
 }
 
@@ -372,22 +340,25 @@ class Table {
 class NumerableTable extends Table {
     constructor(params) {
         super(params)
-
         this.numerableInput = params.numerableInput
 
         this.listenForChangesInNumOfRows()
     }
 
     listenForChangesInNumOfRows() {
+        if (this.numerableInput.value === undefined) {
+            this.numerableInput.syncValue()
+        }
+
         this.numerableInput.addEventListener('change', (e, input) => {
-            while (Number(input.prevValue) < Number(input.value)) {
-                this.appendRow(Number(input.prevValue))
-                input.prevValue++
+            while (input.previousValue < input.value) {
+                this.appendRow(input.previousValue)
+                input.previousValue++
             }
 
-            while (Number(input.prevValue) > Number(input.value)) {
-                this.removeRow(Number(input.prevValue) - 1)
-                input.prevValue--
+            while (input.previousValue > input.value) {
+                this.removeRow(input.previousValue - 1)
+                input.previousValue--
             }
         })
     }
@@ -437,18 +408,11 @@ class UnhiddableTables {
         unhiddersList.forEach(key => {
             $(this.unhidders[key]).on('click', e => {
                 if ( $(e.currentTarget).hasClass(this.cssClass) ) {
-                    // TODO: clear vesting / unlocking table
                     this.tables[key].clearData()
                     $(this.unhidders[key]).html('+').removeClass(this.cssClass)
-                    console.log(this.tables[key])
-                    console.log(key)
                     $(this.tables[key].element.parentNode).removeClass(this.cssClass)
                 } else {
                     $(this.unhidders[key]).html('-').addClass(this.cssClass)
-                    console.log(key)
-                    console.log(this.tables)
-                    console.log(this.tables[key])
-                    console.log(this.tables[key].element)
                     $(this.tables[key].element.parentNode).addClass(this.cssClass)
 
                     unhiddersList.forEach(key2 => {
@@ -460,5 +424,180 @@ class UnhiddableTables {
                 }
             })
         })
+    }
+}
+
+
+class ChoosableCalcableTables {
+    constructor(params) {
+        this.cssClass = params.cssClass
+
+        this.activeServiceId
+        this.activeServiceName
+        this.timeoutIdForNameChange
+
+        this.services = {}
+        this.controls = {}
+        this.presetTable = {}
+
+        this.controls.serviceNameInput = params.controls.serviceNameInput
+        this.controls.serviceNamesList = params.controls.serviceNamesList
+        this.controls.addServiceBtn = params.controls.addServiceBtn
+        this.controls.serviceNameOptionSelector = params.controls.serviceNameOptionSelector
+        this.controls.serviceNameOptionTemplate = params.controls.serviceNameOptionTemplate
+        this.controls.serviceNameInputPlaceholder = params.controls.serviceNameInputPlaceholder
+
+        this.presetTable.calcAppendBtnSelector = params.presetTable.calcAppendBtnSelector
+        this.presetTable.calcRemoveBtnSelector = params.presetTable.calcRemoveBtnSelector
+
+        this.presetTable.tableParentElement = params.presetTable.tableParentElement
+        this.presetTable.tableBlockSelector = params.presetTable.tableBlockSelector
+        this.presetTable.tableSelector = params.presetTable.tableSelector
+        this.presetTable.htmlTableTemplate = params.presetTable.htmlTableTemplate
+
+        this.presetTable.header = params.presetTable.header
+        this.presetTable.row = params.presetTable.row
+
+        this.listenOnEvents()
+    }
+
+    listenOnEvents() {
+        $(this.controls.serviceNameInput).on('focus', e => {
+            $(this.controls.serviceNameInput).val('')
+
+            if (this.activeServiceId !== undefined && this.activeServiceName !== undefined)
+                $(this.controls.serviceNameInput).attr('placeholder', this.activeServiceName)
+            else
+                $(this.controls.serviceNameInput).attr('placeholder', '')
+        })
+
+        $(this.controls.serviceNameInput).on('change', e => {
+            clearTimeout(this.timeoutIdForNameChange)
+
+            let servicesNames = {}
+
+            Object.keys(this.services).forEach(serviceId => {
+                servicesNames[this.services[serviceId].name] = serviceId
+            })
+
+            if ( Object.keys(servicesNames).includes( $(this.controls.serviceNameInput).val() )) {
+                this.changeService(this.activeServiceId, servicesNames[$(this.controls.serviceNameInput).val()], $(this.controls.serviceNameInput).val())
+
+            } else {
+                this.timeoutIdForNameChange = setTimeout(() => {
+                    // $(this.controls.serviceNameInput).data('prev-placeholder', $(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder'))
+                    this.activeServiceName = $(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder')
+
+                    $(this.controls.serviceNamesList).find(this.controls.serviceNameOptionSelector.replace('{id}', this.activeServiceId)).val( $(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder') )
+                    $(this.controls.serviceNamesList).find(this.controls.serviceNameOptionSelector.replace('{id}', this.activeServiceId)).html( $(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder') )
+
+                    $(this.presetTable.header.titleElement.replace('{table-id}', this.activeServiceId)).html(this.presetTable.header.titlePreset.replace('{service-name}', $(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder')))
+
+                    if (this.services[this.activeServiceId] !== undefined)
+                        this.services[this.activeServiceId].name = $(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder')
+                }, 2000)
+            }
+        })
+
+        $(this.controls.serviceNameInput).on('focusout', () => {
+            setTimeout(() => {
+                if ($(this.controls.serviceNameInput).val() !== '') {
+                    $(this.controls.serviceNameInput).data('prev-placeholder', $(this.controls.serviceNameInput).attr('placeholder'))
+                    $(this.controls.serviceNameInput).attr('placeholder', $(this.controls.serviceNameInput).val() )
+                    $(this.controls.serviceNameInput).val('')
+                }
+
+                if ($(this.controls.serviceNameInput).val() === '' && $(this.controls.serviceNameInput).attr('placeholder') === '') {
+                    $(this.controls.serviceNameInput).data('prev-placeholder', 'enter Service name')
+                    $(this.controls.serviceNameInput).attr('placeholder', $(this.controls.serviceNameInput).data('prev-placeholder') )
+                    $(this.controls.serviceNameInput).val('')
+                }
+            }, 0)
+        })
+
+        $(this.controls.addServiceBtn).on('click', e => {
+            clearTimeout(this.timeoutIdForNameChange)
+
+            if ($(this.controls.serviceNameInput).val() !== '' || ($(this.controls.serviceNameInput).attr('placeholder') !== 'enter Service name' && $(this.controls.serviceNameInput).attr('placeholder') !== '')) {
+                this.addService($(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder'))
+                if ($(this.controls.serviceNameInput).val() !== '') {
+                    $(this.controls.serviceNameInput).data('prev-placeholder', $(this.controls.serviceNameInput).attr('placeholder'))
+                    $(this.controls.serviceNameInput).attr('placeholder', $(this.controls.serviceNameInput).val() )
+                    $(this.controls.serviceNameInput).val('')
+                }
+            }
+        })
+    }
+
+    addService() {
+        let prevId = this.activeServiceId
+        let id
+        let ids = []
+        let max = 0
+
+        Object.values(this.services).forEach(service => {
+            ids.push(service.id)
+            max = service.id > max ? service.id : max
+        })
+
+        for(let i = 0; i < max; i++) {
+            if (!ids.includes(i)) {
+                id = i
+                break
+            }
+        }
+
+        if (id === undefined)
+            id = Object.keys(this.services).length
+
+        let name = $(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder')
+
+        $(this.controls.serviceNamesList).append(
+            this.controls.serviceNameOptionTemplate
+                .replace('{id}', id)
+                .replace('{value}', name)
+                .replace('{text}', name)
+        )
+
+        this.createTable(id, name)
+        this.services[id] = this.getTableBySelectors(id, name)
+
+        this.changeService(prevId, id, name)
+        // this.tables[id].table.element.addClass(this.cssClass)
+    }
+
+    createTable(id, name) {
+        $(this.presetTable.tableParentElement).append(
+            this.presetTable.htmlTableTemplate
+                .replace('{table-id}', id)
+                .replace('{service-name}', name)
+        )
+    }
+
+    getTableBySelectors(id, name) {
+        let service = {
+            id: id,
+            name: name,
+            table: new CalcableTable({
+                element: $(this.presetTable.tableSelector.replace('{table-id}', id))[0],
+
+                calcAppendBtnSelector: this.presetTable.calcAppendBtnSelector,
+                calcRemoveBtnSelector: this.presetTable.calcRemoveBtnSelector,
+
+                row: Object.assign(this.presetTable.row, { tableId: id })
+            })
+        }
+
+        return service
+    }
+
+    changeService(prevId, nowId, nowName) {
+        if (prevId !== undefined)
+            $(this.presetTable.tableBlockSelector.replace('{table-id}', prevId)).removeClass(this.cssClass)
+
+        $(this.presetTable.tableBlockSelector.replace('{table-id}', nowId)).addClass(this.cssClass)
+
+        this.activeServiceId = nowId
+        this.activeServiceName = nowName
     }
 }

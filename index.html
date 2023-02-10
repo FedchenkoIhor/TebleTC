@@ -12,10 +12,10 @@
 
 <body>
     <main>
-        <div id="crypto-constructor">
-            <form id="zbcc-popup">
+        <div id="zb-crypto-constructor">
+            <form id="zbcc-precond-popup">
                 <!-- TODO: popup form as popup + edit ids and add classes/// + refactor -->
-                <section class="data-block">
+                <section class="data-block" id="precond-popup">
                     <header>
                         <h3 class="block-title">Add pre-condition</h3>
                         <div class="block-description">
@@ -24,54 +24,53 @@
                     </header>
 
                     <div class="inputs base-inputs">
-
                         <div id="time">
                             <h3>
-                                <label>
-                                    <input type="checkbox" id="time-select">
-                                    Time
-                                </label>
+                                <label><input type="checkbox" id="time-select">Time</label>
                             </h3>
                             <ul>
-                                <li><label>
-                                    <input disabled type="radio" name="time-params" id="time-monthly">monthly
-                                </label></li>
-                                <li><label>
+                                <li>
+                                    <label><input disabled type="radio" name="time-params" id="time-monthly">monthly</label>
+                                </li>
+                                <li>
                                     <input disabled type="radio" name="time-params" id="time-monthly-easier">
-                                        when month is <select disabled name="" id="time-monthly-easier-cb1">
-                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
-                                            <option value="<"><</option>
-                                            <option value="<="><=</option>
-                                            <option value=">=">>=</option>
-                                            <option value=">">></option>
-                                            <option value="==">==</option>
-                                            <option value="!=">!=</option>
-                                        </select>
+                                    when month is
+                                    <select disabled name="" id="time-monthly-easier-cb1">
+                                        <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
+                                        <option value="<"><</option>
+                                        <option value="<="><=</option>
+                                        <option value=">=">>=</option>
+                                        <option value=">">></option>
+                                        <option value="==">==</option>
+                                        <option value="!=">!=</option>
+                                    </select>
                                     <input disabled type="number" id="time-monthly-harder-inpx">
-                                </label></li>
-                                <li><label>
-                                        <input disabled type="radio" name="time-params" id="time-monthly-harder">
-                                        when month is <select disabled name="" id="time-monthly-harder-cb1">
-                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
-                                            <option value="<"><</option>
-                                            <option value="<="><=</option>
-                                            <option value=">=">>=</option>
-                                            <option value=">">></option>
-                                            <option value="==">==</option>
-                                            <option value="!=">!=</option>
-                                        </select>
-                                        <input disabled type="number" id="time-monthly-harder-inpx">and
-                                        <select disabled name="" id="time-monthly-harder-cb1">
-                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
-                                            <option value="<"><</option>
-                                            <option value="<="><=</option>
-                                            <option value=">=">>=</option>
-                                            <option value=">">></option>
-                                            <option value="==">==</option>
-                                            <option value="!=">!=</option>
-                                        </select>
-                                        <input disabled type="number" id="time-monthly-harder-inpy">
-                                </label></li>
+                                </li>
+                                <li>
+                                    <input disabled type="radio" name="time-params" id="time-monthly-harder">
+                                    when month is
+                                    <select disabled name="" id="time-monthly-harder-cb1">
+                                        <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
+                                        <option value="<"><</option>
+                                        <option value="<="><=</option>
+                                        <option value=">=">>=</option>
+                                        <option value=">">></option>
+                                        <option value="==">==</option>
+                                        <option value="!=">!=</option>
+                                    </select>
+                                    <input disabled type="number" id="time-monthly-harder-inpx">
+                                    and
+                                    <select disabled name="" id="time-monthly-harder-cb1">
+                                        <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
+                                        <option value="<"><</option>
+                                        <option value="<="><=</option>
+                                        <option value=">=">>=</option>
+                                        <option value=">">></option>
+                                        <option value="==">==</option>
+                                        <option value="!=">!=</option>
+                                    </select>
+                                    <input disabled type="number" id="time-monthly-harder-inpy">
+                                </li>
                             </ul>
                         </div>
 
@@ -82,15 +81,13 @@
                                 <option value="OR">OR</option>
                             </select>
                             <h3>
-                                <label>
-                                    <input type="checkbox" id="token-price-select">
-                                    Token price threshold values
-                                </label>
+                                <label><input type="checkbox" id="token-price-select">Token price threshold values</label>
                             </h3>
                             <ul>
-                                <li><label>
+                                <li>
                                     <input disabled type="radio" name="token-price-params" id="token-price-easier">
-                                    when Token price is <select disabled name="" id="token-price-easier-cb1">
+                                    when Token price is
+                                    <select disabled name="" id="token-price-easier-cb1">
                                         <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                         <option value="<"><</option>
                                         <option value="<="><=</option>
@@ -100,30 +97,32 @@
                                         <option value="!=">!=</option>
                                     </select>
                                     <input disabled type="number" id="token-price-easier-inpx">
-                                </label></li>
-                                <li><label>
-                                        <input disabled type="radio" name="token-price-params" id="token-price-harder">
-                                        when Token price is <select disabled name="" id="token-price-harder-cb1">
-                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
-                                            <option value="<"><</option>
-                                            <option value="<="><=</option>
-                                            <option value=">=">>=</option>
-                                            <option value=">">></option>
-                                            <option value="==">==</option>
-                                            <option value="!=">!=</option>
-                                        </select>
-                                        <input disabled type="number" id="token-price-harder-inpx">and
-                                        <select disabled name="" id="token-price-harder-cb2">
-                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
-                                            <option value="<"><</option>
-                                            <option value="<="><=</option>
-                                            <option value=">=">>=</option>
-                                            <option value=">">></option>
-                                            <option value="==">==</option>
-                                            <option value="!=">!=</option>
-                                        </select>
-                                        <input disabled type="number" id="token-price-harder-inpy">
-                                </label></li>
+                                </li>
+                                <li>
+                                    <input disabled type="radio" name="token-price-params" id="token-price-harder">
+                                    when Token price is
+                                    <select disabled name="" id="token-price-harder-cb1">
+                                        <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
+                                        <option value="<"><</option>
+                                        <option value="<="><=</option>
+                                        <option value=">=">>=</option>
+                                        <option value=">">></option>
+                                        <option value="==">==</option>
+                                        <option value="!=">!=</option>
+                                    </select>
+                                    <input disabled type="number" id="token-price-harder-inpx">
+                                    and
+                                    <select disabled name="" id="token-price-harder-cb2">
+                                        <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
+                                        <option value="<"><</option>
+                                        <option value="<="><=</option>
+                                        <option value=">=">>=</option>
+                                        <option value=">">></option>
+                                        <option value="==">==</option>
+                                        <option value="!=">!=</option>
+                                    </select>
+                                    <input disabled type="number" id="token-price-harder-inpy">
+                                </li>
                             </ul>
                         </div>
 
@@ -134,19 +133,18 @@
                                 <option value="OR">OR</option>
                             </select>
                             <h3>
-                                <label>
-                                    <input type="checkbox" id="pool-threshold-select">
-                                    Pool threshold values
-                                </label>
+                                <label><input type="checkbox" id="pool-threshold-select">Pool threshold values</label>
                             </h3>
                             <ul>
-                                <li><label>
+                                <li>
                                     <input disabled type="radio" name="pool-threshold-params" id="pool-threshold-easier">
-                                    when <select disabled name="" id="pool-threshold-easier-pool">
+                                    when
+                                    <select disabled name="" id="pool-threshold-easier-pool">
                                         <option value="0" disabled selected>Pool #</option>
                                         <option value="Pool 1">Pool 1</option>
                                     </select>
-                                    is <select disabled name="" id="pool-threshold-easier-cb1">
+                                    is
+                                    <select disabled name="" id="pool-threshold-easier-cb1">
                                         <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
                                         <option value="<"><</option>
                                         <option value="<="><=</option>
@@ -156,34 +154,37 @@
                                         <option value="!=">!=</option>
                                     </select>
                                     <input disabled type="number" id="pool-threshold-easier-inpx">
-                                </label></li>
-                                <li><label>
-                                        <input disabled type="radio" name="pool-threshold-params" id="pool-threshold-harder">
-                                        when <select disabled name="" id="pool-threshold-harder-pool">
-                                            <option value="0" disabled selected>Pool #</option>
-                                            <option value="Pool 1">Pool 1</option>
-                                        </select>
-                                        is <select disabled name="" id="pool-threshold-harder-cb1">
-                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
-                                            <option value="<"><</option>
-                                            <option value="<="><=</option>
-                                            <option value=">=">>=</option>
-                                            <option value=">">></option>
-                                            <option value="==">==</option>
-                                            <option value="!=">!=</option>
-                                        </select>
-                                        <input disabled type="number" id="pool-threshold-harder-inpx">and
-                                        <select disabled name="" id="pool-threshold-harder-cb2">
-                                            <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
-                                            <option value="<"><</option>
-                                            <option value="<="><=</option>
-                                            <option value=">=">>=</option>
-                                            <option value=">">></option>
-                                            <option value="==">==</option>
-                                            <option value="!=">!=</option>
-                                        </select>
-                                        <input disabled type="number" id="pool-threshold-harder-inpy">
-                                </label></li>
+                                </li>
+                                <li>
+                                    <input disabled type="radio" name="pool-threshold-params" id="pool-threshold-harder">
+                                    when
+                                    <select disabled name="" id="pool-threshold-harder-pool">
+                                        <option value="0" disabled selected>Pool #</option>
+                                        <option value="Pool 1">Pool 1</option>
+                                    </select>
+                                    is
+                                    <select disabled name="" id="pool-threshold-harder-cb1">
+                                        <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
+                                        <option value="<"><</option>
+                                        <option value="<="><=</option>
+                                        <option value=">=">>=</option>
+                                        <option value=">">></option>
+                                        <option value="==">==</option>
+                                        <option value="!=">!=</option>
+                                    </select>
+                                    <input disabled type="number" id="pool-threshold-harder-inpx">
+                                    and
+                                    <select disabled name="" id="pool-threshold-harder-cb2">
+                                        <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
+                                        <option value="<"><</option>
+                                        <option value="<="><=</option>
+                                        <option value=">=">>=</option>
+                                        <option value=">">></option>
+                                        <option value="==">==</option>
+                                        <option value="!=">!=</option>
+                                    </select>
+                                    <input disabled type="number" id="pool-threshold-harder-inpy">
+                                </li>
                             </ul>
                         </div>
                         <div style="display: flex; flex-direction: row; justify-content: space-around">
@@ -195,7 +196,7 @@
             </form>
 
 
-
+            <!--  -->
 
 
             <form id="zbcc-inputs">
@@ -227,14 +228,12 @@
                                 <tr>
                                     <td><input type="number" id="total-tokens-amount" value="" placeholder="x"></td>
                                     <td><input type="number" id="initial-token-price" value="" placeholder="x"></td>
-                                    <!-- <td><input type="text" id="exchange-type" value="Decentralized"></td> -->
                                     <td>
                                         <select name="exchange-type" id="exchange-type">
                                             <option value="decentralized">Decentralized</option>
                                             <option value="centralized">Centralized</option>
                                         </select>
                                     </td>
-                                    <!-- <td><input type="text" id="trading-function" value="Increasing"></td> -->
                                     <td>
                                         <select name="trading-function" id="trading-function">
                                             <option value="increasing">Increasing</option>
@@ -263,12 +262,12 @@
                     <div class="inputs extra-inputs">
                         <label>
                             <p>Rounds Number</p>
-                            <input type="number" id="rounds-number" value="2">
+                            <input type="number" id="rounds-number" value="1">
                         </label>
                     </div>
 
                     <div class="inputs base-inputs">
-                        <div class="inputs-table" id="rounds">
+                        <div class="inputs-table numerable" id="rounds">
                             <header>
                                 <h3 class="table-title"></h3>
                                 <div class="table-description"></div>
@@ -280,13 +279,6 @@
                                     <th>Token Price</th>
                                     <th>Tokens amount</th>
                                     <th>Investor share</th>
-                                </tr>
-                                <tr id="0">
-                                    <td><input type="text" id="round-title" value="Round 1"></td>
-                                    <td><input type="number" id="fiat" value="1000"></td>
-                                    <td><input type="number" id="token-price" value="10000"></td>
-                                    <td><input type="number" id="tokens-amount" value="1000"></td>
-                                    <td><input type="number" id="investor-share" value="" placeholder="%"></td>
                                 </tr>
                             </table>
                         </div>
@@ -308,12 +300,12 @@
                     <div class="inputs extra-inputs">
                         <label>
                             <p>Agents Number</p>
-                            <input type="number" id="agents-number" min="1" value="2">
+                            <input type="number" id="agents-number" min="1" value="1">
                         </label>
                     </div>
 
                     <div class="inputs base-inputs">
-                        <div class="inputs-table" id="agents">
+                        <div class="inputs-table numerable" id="agents">
                             <header>
                                 <h3 class="table-title"></h3>
                                 <div class="table-description"></div>
@@ -323,11 +315,6 @@
                                     <th>Agent Name</th>
                                     <th>Agent Share</th>
                                     <th>Tokens Amount</th>
-                                </tr>
-                                <tr id="0">
-                                    <td><input type="text" id="agent-name" value="Agent 1"></td>
-                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
-                                    <td><input type="number" id="tokens-amount" value="10000"></td>
                                 </tr>
                             </table>
                         </div>
@@ -346,31 +333,19 @@
                     </header>
 
                     <div class="inputs extra-inputs">
-                        <div class="inputs-table" id="pool-types">
+                        <div class="inputs-table calcable" id="pool-types">
                             <table>
                                 <tr>
                                     <th>№</th>
                                     <th>Pool Type</th>
                                     <th></th>
                                 </tr>
-                                <tr id="0">
-                                    <td><input type="text" id="pool-number" value="1"></td>
-                                    <td>
-                                        <input type="text" id="pool-type" value="Pool type">
-                                    </td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
                             </table>
                         </div>
                     </div>
 
                     <div class="inputs base-inputs">
-                        <div class="inputs-table" id="pools">
+                        <div class="inputs-table calcable" id="pools">
                             <header>
                                 <h3 class="table-title"></h3>
                                 <div class="table-description"></div>
@@ -382,22 +357,6 @@
                                     <th>Pool Share</th>
                                     <th>Amount</th>
                                     <th></th>
-                                </tr>
-                                <tr id="0">
-                                    <td><input type="text" id="pool-title" value="Pool 1"></td>
-                                    <td>
-                                        <select name="pool-type" id="pool-type">
-                                            <option id="0" value="Pool type">Pool type</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="text" id="pool-share" value="" placeholder="%"></td>
-                                    <td><input type="text" id="amount" value="10000"></td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -427,7 +386,7 @@
                     </div>
 
                     <div class="inputs base-inputs">
-                        <div class="inputs-table unhiddable" id="vesting">
+                        <div class="inputs-table unhiddable calcable" id="vesting">
                             <header>
                                 <h3 class="table-title">Vesting</h3>
                                 <div class="table-description"></div>
@@ -440,31 +399,10 @@
                                     <th>End Vesting</th>
                                     <th>Vesting Coefficient</th>
                                 </tr>
-                                <tr id="0">
-                                    <td>
-                                        <select name="agent-name" id="agent-name">
-                                            <option id="0" value="Agent 1">Agent 1</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select name="pool-title" id="pool-title">
-                                            <option id="0" value="Pool 1">Pool 1</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="text" id="start-vesting" value="" placeholder="x"></td>
-                                    <td><input type="text" id="end-vesting" value="" placeholder="x"></td>
-                                    <td><input type="text" id="vesting-coefficient" value="" placeholder="%"></td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
                             </table>
                         </div>
 
-                        <div class="inputs-table unhiddable" id="unlocking">
+                        <div class="inputs-table unhiddable calcable" id="unlocking">
                             <header>
                                 <h3 class="table-title">Unlocking Schedule</h3>
                                 <div class="table-description"></div>
@@ -476,22 +414,6 @@
                                     <th>End Unlocking</th>
                                     <th>Initial Unlocking</th>
                                     <th></th>
-                                </tr>
-                                <tr id="0">
-                                    <td>
-                                        <select name="agent-name" id="agent-name">
-                                            <option id="0" value="Agent 1">Agent 1</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>
-                                    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -518,14 +440,17 @@
                             <p>FARMING</p>
                             <button class="unhidder" id="show-farming">+</button>
                         </label>
-                        <label>
+                        <div>
                             <p>CHOOSE / ADD NEW SERVICE</p>
-                            <input type="text" id="service-name" value="Service name">
-                        </label>
+                            <input type="text" list="service-names" id="service-name" data-prev-placeholder="enter Service name" placeholder="enter Service name">
+                            <datalist id="service-names">
+                            </datalist>
+                            <button id="add-service">+</button>
+                        </div>
                     </div>
 
                     <div class="inputs base-inputs">
-                        <div class="inputs-table unhiddable" id="staking">
+                        <div class="inputs-table unhiddable calcable" id="staking">
                             <header>
                                 <h3 class="table-title">Staking</h3>
                                 <div class="table-description"></div>
@@ -540,35 +465,11 @@
                                     <th>Pool (For Rewards)</th>
                                     <th></th>
                                 </tr>
-                                <tr id="0">
-                                    <td><input type="number" value="1" id="number"></td>
-                                    <td>
-                                        <select name="agent-name" id="agent-name">
-                                            <option id="0" value="Agent 1">Agent 1</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
-                                    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>
-                                    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>
-                                    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->
-                                    <td>
-                                        <select name="pool-for-rewards" id="pool-for-rewards">
-                                            <option id="0" value="Pool 1">Pool 1</option>
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
                             </table>
                         </div>
 
 
-                        <div class="inputs-table unhiddable" id="farming">
+                        <div class="inputs-table unhiddable calcable" id="farming">
                             <header>
                                 <h3 class="table-title">Farming</h3>
                                 <div class="table-description"></div>
@@ -583,76 +484,9 @@
                                     <th>Pool (For Rewards)</th>
                                     <th></th>
                                 </tr>
-                                <tr id="0">
-                                    <td><input type="number" value="1" id="number"></td>
-                                    <td>
-                                        <select name="agent-name" id="agent-name">
-                                            <option id="0" value="Agent 1">Agent 1</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" id="agent-share" value="" placeholder="%"></td>
-                                    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>
-                                    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>
-                                    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->
-                                    <td>
-                                        <select name="pool-for-rewards" id="pool-for-rewards">
-                                            <option id="0" value="Pool 1">Pool 1</option>
-                                        </select>
-                                    </td>
-
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
                             </table>
                         </div>
 
-
-                        <div class="inputs-table" id="project-services">
-                            <header>
-                                <h3 class="table-title">"Service name" Income</h3>
-                                <div class="table-description">(Incomes - marketing functions for planned project services)</div>
-                            </header>
-                            <table>
-                                <tr>
-                                    <th>Curve №</th>
-                                    <th>Sales Start</th>
-                                    <th>Sales End</th>
-                                    <th>Sales Min (USD)</th>
-                                    <th>Sales Max (USD)</th>
-                                    <th>Choose Algorithm</th>
-                                    <th>Angular Coefficient</th>
-                                    <th>Rising's Coefficient</th>
-                                    <th></th>
-                                </tr>
-                                <tr id="0">
-                                    <td><input type="number" id="curve-number" value="1"></td>
-                                    <td><input type="number" id="sales-start" value="4"></td>
-                                    <td><input type="number" id="sales-end" value="7"></td>
-                                    <td><input type="number" id="sales-min" value="10000"></td>
-                                    <td><input type="number" id="sales-max" value="10000"></td>
-                                    <td>
-                                        <select name="choose-algorithm" id="choose-algorithm">
-                                            <option value="Linear">Linear</option>
-                                            <option value="Exponential">Exponential</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" id="angular-coefficient" value="0.9"></td>
-                                    <td><input type="number" id="risings-coefficient" value="0.7"></td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <button class="submit" id="build-project-services">Build Scheme</button>
-                        </div>
                     </div>
                 </section>
 
@@ -678,7 +512,7 @@
                     </div>
 
                     <div class="inputs base-inputs">
-                        <div class="inputs-table unhiddable" id="actions">
+                        <div class="inputs-table unhiddable calcable" id="actions">
                             <header>
                                 <h3 class="table-title"></h3>
                                 <div class="table-description"></div>
@@ -693,29 +527,6 @@
                                     <th>Destination</th>
                                     <th>Pre-Condition</th>
                                     <th></th>
-                                </tr>
-                                <tr id="0">
-                                    <td><input type="text" id="action-number" value="Action 1"></td>
-                                    <td><input type="text" id="source" value=""></td>
-                                    <td>
-                                        <select name="currency-type" id="currency-type">
-                                            <option id="0" value="Pool type">Pool type</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="text" id="value-percents" value="" placeholder="%"></td>
-                                    <td><input type="text" id="destination" value=""></td>
-                                    <td>
-                                        <label>
-                                            <input type="checkbox" id="pre-condition">
-                                            Yes/No
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <div class="calc-buttons">
-                                            <button class="calc" id="remove-row">–</button>
-                                            <button class="calc" id="append-row">+</button>
-                                        </div>
-                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -739,171 +550,341 @@
             e.stopImmediatePropagation()
         })
 
+        const form = new zbccForm({ element: null, htmlTemplates: htmlTemplates })
+        console.log(form)
 
 
         // TODO: refactor this sh#t))
 
-        $('#zbcc-popup').on('submit', e => {
+        $('form#zbcc-precond-popup').on('submit', e => {
             e.preventDefault()
-            $('#zbcc-popup').hide()
+            $('form#zbcc-precond-popup').hide()
 
-            $('#zbcc-popup .inputs div#time #time-select').prop('checked', false)
+            $('form#zbcc-precond-popup .inputs div#time #time-select').prop('checked', false)
 
-            $('#zbcc-popup .inputs div#time #time-monthly').prop('checked', false)
-            $('#zbcc-popup .inputs div#time #time-monthly-easier').prop('checked', false)
-            $('#zbcc-popup .inputs div#time #time-monthly-easier-cb1').val('0')
-            $('#zbcc-popup .inputs div#time #time-monthly-easier-inpx').val('')
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly').prop('checked', false)
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-easier').prop('checked', false)
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-easier-cb1').val('0')
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-easier-inpx').val('')
 
-            $('#zbcc-popup .inputs div#time #time-monthly-harder').prop('checked', false)
-            $('#zbcc-popup .inputs div#time #time-monthly-harder-cb1').val('0')
-            $('#zbcc-popup .inputs div#time #time-monthly-harder-inpx').val('')
-            $('#zbcc-popup .inputs div#time #time-monthly-harder-cb2').val('0')
-            $('#zbcc-popup .inputs div#time #time-monthly-harder-inpy').val('')
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder').prop('checked', false)
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-cb1').val('0')
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-inpx').val('')
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-cb2').val('0')
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-inpy').val('')
 
-            //
 
-            $('#zbcc-popup .inputs div#token-price #token-price-select').prop('checked', false)
-            $('#zbcc-popup .inputs div#token-price #token-price-andor').val('0')
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly').prop('disabled', true)
 
-            $('#zbcc-popup .inputs div#token-price #token-price').prop('checked', false)
-            $('#zbcc-popup .inputs div#token-price #token-price-easier').prop('checked', false)
-            $('#zbcc-popup .inputs div#token-price #token-price-easier-cb1').val('0')
-            $('#zbcc-popup .inputs div#token-price #token-price-easier-inpx').val('')
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-easier').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-easier-cb1').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-easier-inpx').prop('disabled', true)
 
-            $('#zbcc-popup .inputs div#token-price #token-price-harder').prop('checked', false)
-            $('#zbcc-popup .inputs div#token-price #token-price-harder-cb1').val('0')
-            $('#zbcc-popup .inputs div#token-price #token-price-harder-inpx').val('')
-            $('#zbcc-popup .inputs div#token-price #token-price-harder-cb2').val('0')
-            $('#zbcc-popup .inputs div#token-price #token-price-harder-inpy').val('')
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-cb1').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-inpx').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-cb2').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-inpy').prop('disabled', true)
 
             //
 
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-select').prop('checked', false)
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-andor').val('0')
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-select').prop('checked', false)
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-andor').val('0')
 
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold').prop('checked', false)
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier').prop('checked', false)
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-cb1').val('0')
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-inpx').val('')
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-pool').val('0')
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price').prop('checked', false)
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-easier').prop('checked', false)
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-easier-cb1').val('0')
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-easier-inpx').val('')
 
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder').prop('checked', false)
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-cb1').val('0')
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-inpx').val('')
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-cb2').val('0')
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-inpy').val('')
-            $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-pool').val('0')
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder').prop('checked', false)
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-cb1').val('0')
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-inpx').val('')
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-cb2').val('0')
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-inpy').val('')
+
+
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-andor').prop('disabled', true)
+
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-easier').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-easier-cb1').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-easier-inpx').prop('disabled', true)
+
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-cb1').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-inpx').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-cb2').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-inpy').prop('disabled', true)
+
+            //
+
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-select').prop('checked', false)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-andor').val('0')
+
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold').prop('checked', false)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier').prop('checked', false)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier-cb1').val('0')
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier-inpx').val('')
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier-pool').val('0')
+
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder').prop('checked', false)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-cb1').val('0')
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-inpx').val('')
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-cb2').val('0')
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-inpy').val('')
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-pool').val('0')
+
+
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-andor').prop('disabled', true)
+
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier-cb1').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier-inpx').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier-pool').prop('disabled', true)
+
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-cb1').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-inpx').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-cb2').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-inpy').prop('disabled', true)
+            $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-pool').prop('disabled', true)
         })
 
-        // $('#zbcc-popup .inputs div#time #time-select').on('change', e => {
-            // if (e.currentTarget.checked) {
-        //
-            // } else {
-            // }
-        // })
-
-        $('#zbcc-popup .inputs div#time #time-select').on('change', e => {
+        $('form#zbcc-precond-popup .inputs div#time #time-select').on('change', e => {
             if (e.currentTarget.checked) {
-                $('#zbcc-popup .inputs div#time #time-monthly').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly').prop('disabled', false)
 
-                $('#zbcc-popup .inputs div#time #time-monthly-easier').prop('disabled', false)
-                $('#zbcc-popup .inputs div#time #time-monthly-easier-cb1').prop('disabled', false)
-                $('#zbcc-popup .inputs div#time #time-monthly-easier-inpx').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-easier').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-easier-cb1').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-easier-inpx').prop('disabled', false)
 
-                $('#zbcc-popup .inputs div#time #time-monthly-harder').prop('disabled', false)
-                $('#zbcc-popup .inputs div#time #time-monthly-harder-cb1').prop('disabled', false)
-                $('#zbcc-popup .inputs div#time #time-monthly-harder-inpx').prop('disabled', false)
-                $('#zbcc-popup .inputs div#time #time-monthly-harder-cb2').prop('disabled', false)
-                $('#zbcc-popup .inputs div#time #time-monthly-harder-inpy').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-cb1').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-inpx').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-cb2').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-inpy').prop('disabled', false)
             } else {
-                $('#zbcc-popup .inputs div#time #time-monthly').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly').prop('disabled', true)
 
-                $('#zbcc-popup .inputs div#time #time-monthly-easier').prop('disabled', true)
-                $('#zbcc-popup .inputs div#time #time-monthly-easier-cb1').prop('disabled', true)
-                $('#zbcc-popup .inputs div#time #time-monthly-easier-inpx').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-easier').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-easier-cb1').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-easier-inpx').prop('disabled', true)
 
-                $('#zbcc-popup .inputs div#time #time-monthly-harder').prop('disabled', true)
-                $('#zbcc-popup .inputs div#time #time-monthly-harder-cb1').prop('disabled', true)
-                $('#zbcc-popup .inputs div#time #time-monthly-harder-inpx').prop('disabled', true)
-                $('#zbcc-popup .inputs div#time #time-monthly-harder-cb2').prop('disabled', true)
-                $('#zbcc-popup .inputs div#time #time-monthly-harder-inpy').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-cb1').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-inpx').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-cb2').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#time #time-monthly-harder-inpy').prop('disabled', true)
             }
         })
 
-        $('#zbcc-popup .inputs div#token-price #token-price-select').on('change', e => {
+        $('form#zbcc-precond-popup .inputs div#token-price #token-price-select').on('change', e => {
             if (e.currentTarget.checked) {
-                $('#zbcc-popup .inputs div#token-price #token-price-andor').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-andor').prop('disabled', false)
 
-                $('#zbcc-popup .inputs div#token-price #token-price').prop('disabled', false)
-                $('#zbcc-popup .inputs div#token-price #token-price-easier').prop('disabled', false)
-                $('#zbcc-popup .inputs div#token-price #token-price-easier-cb1').prop('disabled', false)
-                $('#zbcc-popup .inputs div#token-price #token-price-easier-inpx').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-easier').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-easier-cb1').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-easier-inpx').prop('disabled', false)
 
-                $('#zbcc-popup .inputs div#token-price #token-price-harder').prop('disabled', false)
-                $('#zbcc-popup .inputs div#token-price #token-price-harder-cb1').prop('disabled', false)
-                $('#zbcc-popup .inputs div#token-price #token-price-harder-inpx').prop('disabled', false)
-                $('#zbcc-popup .inputs div#token-price #token-price-harder-cb2').prop('disabled', false)
-                $('#zbcc-popup .inputs div#token-price #token-price-harder-inpy').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-cb1').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-inpx').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-cb2').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-inpy').prop('disabled', false)
             } else {
-                $('#zbcc-popup .inputs div#token-price #token-price-andor').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-andor').prop('disabled', true)
 
-                $('#zbcc-popup .inputs div#token-price #token-price').prop('disabled', true)
-                $('#zbcc-popup .inputs div#token-price #token-price-easier').prop('disabled', true)
-                $('#zbcc-popup .inputs div#token-price #token-price-easier-cb1').prop('disabled', true)
-                $('#zbcc-popup .inputs div#token-price #token-price-easier-inpx').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-easier').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-easier-cb1').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-easier-inpx').prop('disabled', true)
 
-                $('#zbcc-popup .inputs div#token-price #token-price-harder').prop('disabled', true)
-                $('#zbcc-popup .inputs div#token-price #token-price-harder-cb1').prop('disabled', true)
-                $('#zbcc-popup .inputs div#token-price #token-price-harder-inpx').prop('disabled', true)
-                $('#zbcc-popup .inputs div#token-price #token-price-harder-cb2').prop('disabled', true)
-                $('#zbcc-popup .inputs div#token-price #token-price-harder-inpy').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-cb1').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-inpx').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-cb2').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#token-price #token-price-harder-inpy').prop('disabled', true)
             }
         })
 
-        $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-select').on('change', e => {
+        $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-select').on('change', e => {
             if (e.currentTarget.checked) {
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-andor').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-andor').prop('disabled', false)
 
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold').prop('disabled', false)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier').prop('disabled', false)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-cb1').prop('disabled', false)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-inpx').prop('disabled', false)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-pool').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier-cb1').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier-inpx').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier-pool').prop('disabled', false)
 
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder').prop('disabled', false)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-cb1').prop('disabled', false)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-inpx').prop('disabled', false)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-cb2').prop('disabled', false)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-inpy').prop('disabled', false)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-pool').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-cb1').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-inpx').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-cb2').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-inpy').prop('disabled', false)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-pool').prop('disabled', false)
             } else {
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-andor').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-andor').prop('disabled', true)
 
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold').prop('disabled', true)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier').prop('disabled', true)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-cb1').prop('disabled', true)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-inpx').prop('disabled', true)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-easier-pool').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier-cb1').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier-inpx').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-easier-pool').prop('disabled', true)
 
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder').prop('disabled', true)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-cb1').prop('disabled', true)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-inpx').prop('disabled', true)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-cb2').prop('disabled', true)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-inpy').prop('disabled', true)
-                $('#zbcc-popup .inputs div#pool-threshold #pool-threshold-harder-pool').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-cb1').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-inpx').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-cb2').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-inpy').prop('disabled', true)
+                $('form#zbcc-precond-popup .inputs div#pool-threshold #pool-threshold-harder-pool').prop('disabled', true)
             }
         })
 
-        const form = new zbccForm(htmlTemplates)
-        console.log(form)
-
-
-
-        form.dataBlocks['tokenCirculation'].tables.actions.addEventListener('change', e => {
+        form.dataBlocks['tokenCirculation'].actions.tables.actions.addEventListener('change', e => {
             if (e.target.id === 'pre-condition' && e.target.checked) {
-                $('#zbcc-popup').show()
+                $('#zbcc-precond-popup').show()
             }
         })
+
+
+        function calculateInvestmentRoundForRow(rowId, dataBlock) {
+            let db = dataBlock.rows[rowId]
+            let tta = form.dataBlocks['initialData'].inputs.totalTokensAmount.value
+
+            console.log('')
+            console.log('')
+            console.log('')
+            console.log('—————————————')
+
+            Object.keys(db).forEach(key => {
+                if (key === 'id' || key === 'roundTitle')
+                    return
+
+                console.log('')
+                console.log('key:', key)
+                console.log('value:', db[key].value)
+                console.log('element:', db[key].element)
+                console.log('element value:', db[key].element.value)
+            })
+            // console.log(db.map(e => {return e.value}))
+
+            if (db.tokenPrice.value !== undefined && db.investorShare.value !== undefined) {
+                db.tokensAmount.element.value = tta * db.investorShare.value / 100
+                db.tokensAmount.syncValue()
+                db.fiat.element.value = tta * db.investorShare.value / 100 * db.tokenPrice.value
+                db.fiat.syncValue()
+            } else if (db.tokenPrice.value !== undefined && db.tokensAmount.value !== undefined) {
+                db.investorShare.element.value = db.tokensAmount.value * 100 / tta
+                db.investorShare.syncValue()
+                db.fiat.element.value = db.tokensAmount.value / db.tokenPrice.value
+                db.fiat.syncValue()
+            } else if (db.tokenPrice.value !== undefined && db.fiat.value !== undefined) {
+                db.tokensAmount.element.value = db.fiat.value * db.tokenPrice.value
+                db.tokensAmount.syncValue()
+                db.investorShare.element.value = db.fiat.value * db.tokenPrice.value * 100 / tta
+                db.investorShare.syncValue()
+            } else if (db.fiat.value !== undefined && db.tokensAmount.value !== undefined) {
+                db.investorShare.element.value = db.tokensAmount.value * 100 / tta
+                db.investorShare.syncValue()
+                db.tokenPrice.element.value = db.fiat.value / db.tokensAmount.value
+                db.tokenPrice.syncValue()
+            } else if (db.fiat.value !== undefined && db.investorShare.value !== undefined) {
+                db.tokensAmount.element.value = tta * db.investorShare.value / 100
+                db.tokensAmount.syncValue()
+                db.tokenPrice.element.value = db.fiat.value / ((tta * db.investorShare.value) / 100)
+                db.tokenPrice.syncValue()
+            } else {
+                console.log('')
+                console.log('not enough data for auto calculate')
+                console.log('')
+            }
+        }
+
+        form.dataBlocks['initialData'].inputs.totalTokensAmount.addEventListener('change', (e, input) => {
+            let ids = Object.keys(form.dataBlocks['investmentRounds'].tables.rounds.rows)
+            console.log('tta changed:', ids)
+            for (let rowId = 0; rowId < Object.keys(form.dataBlocks['investmentRounds'].tables.rounds.rows).length; rowId++) {
+                console.log('changing row:', rowId)
+                calculateInvestmentRoundForRow(rowId, form.dataBlocks['investmentRounds'].tables.rounds)
+            }
+        })
+
+        form.dataBlocks['investmentRounds'].tables.rounds.addEventListener('change', (e, dataBlock) => {
+            console.log('')
+            console.log('')
+            console.log('rounds table changed')
+            let rowId = e.target.parentNode.parentNode.id
+
+            calculateInvestmentRoundForRow(rowId, dataBlock)
+        })
+
+
+
+        // let inputId = e.target.id
+/* let tpv = dataBlock.rows[rowId].tokenPrice.value
+            let tav = dataBlock.rows[rowId].tokensAmount.value
+            let isv = dataBlock.rows[rowId].investorShare.value
+            let fv = dataBlock.rows[rowId].fiat.value
+
+            let tpev = dataBlock.rows[rowId].tokenPrice.element.value
+            let taev = dataBlock.rows[rowId].tokensAmount.element.value
+            let isev = dataBlock.rows[rowId].investorShare.element.value
+            let fev = dataBlock.rows[rowId].fiat.element.value */
+        // console.log(dataBlock.rows[rowId])
+            /* switch (inputId) {
+                case 'token-price':
+                    if (dataBlock.rows[rowId].investorShare.value !== undefined) {
+                        alert('TP & IS')
+                    } else if (dataBlock.rows[rowId].tokensAmount.value !== undefined) {
+                        alert('TP & TA')
+                    } else if (dataBlock.rows[rowId].fiat.value !== undefined) {
+                        alert('TP & F')
+                    } else {
+                        alert('not yet')
+                    }
+                    break
+
+                case 'fiat':
+                    // $(dataBlock.rows[rowId].tokensAmount.element).prop('disabled', true)
+                    if (dataBlock.rows[rowId].tokensAmount.value !== undefined) {
+                        alert('F & TA')
+                    } else if (dataBlock.rows[rowId].investorShare.value !== undefined) {
+                        alert('F & IS')
+                    } else {
+                        alert('not yet')
+                    }
+                    break
+
+                case 'investor-share':
+                    if (dataBlock.rows[rowId].tokenPrice.value !== undefined) {
+                        alert('IS & TP')
+                    } else if (dataBlock.rows[rowId].fiat.value !== undefined) {
+                        alert('IS & F')
+                    } else {
+                        alert('not yet')
+                    }
+                    break
+
+                case 'tokens-amount':
+                    if (dataBlock.rows[rowId].tokenPrice.value !== undefined) {
+                        alert('TA & TP')
+                    } else if (dataBlock.rows[rowId].fiat.value !== undefined) {
+                        alert('TA & F')
+                    } else {
+                        alert('not yet')
+                    }
+                    break
+
+                default:
+                    alert('not yet')
+                    break
+            } */
+            // console.log(e.target.id)
+            // console.log(e.target.parentNode.parentNode.id)
+            // console.log(dataBlock.row.inputsSelectors.)
     </script>
 </body>
 

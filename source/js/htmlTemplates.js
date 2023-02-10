@@ -2,10 +2,10 @@ const htmlTemplates = {
     trInvestmentRound:
     '<tr id="{id}">' +
     '    <td><input type="text" id="round-title" value="Round {number}"></td>' +
-    '    <td><input type="number" id="fiat" value="1000"></td>' +
-    '    <td><input type="number" id="token-price" value="10000"></td>' +
-    '    <td><input type="number" id="tokens-amount" value="1000"></td>' +
-    '    <td><input type="number" id="investor-share" value="" placeholder="%"></td>' +
+    '    <td><input type="number" step="any" id="fiat" value="" placeholder="x"></td>' +
+    '    <td><input type="number" step="any" id="token-price" value="" placeholder="x"></td>' +
+    '    <td><input type="number" step="any" id="tokens-amount" value="" placeholder="x"></td>' +
+    '    <td><input type="number" step="any" id="investor-share" value="" placeholder="%"></td>' +
     '</tr>' +
     '' +
     '',
@@ -161,6 +161,80 @@ const htmlTemplates = {
     '    </td>' +
     '</tr>' +
     '',
+
+    //
+
+    serviceTableTemplate:
+    '<div class="inputs-table choosable calcable" id="{table-id}">' +
+    '    <header>' +
+    '        <h3 class="table-title">"{service-name}" Income</h3>' +
+    '        <div class="table-description">(Incomes - marketing functions for planned project services)</div>' +
+    '    </header>' +
+    '    <table>' +
+    '        <tr>' +
+    '            <th>Curve №</th>' +
+    '            <th>Sales Start</th>' +
+    '            <th>Sales End</th>' +
+    '            <th>Sales Min (USD)</th>' +
+    '            <th>Sales Max (USD)</th>' +
+    '            <th>Choose Algorithm</th>' +
+    '            <th>Angular Coefficient</th>' +
+    '            <th>Rising\'s Coefficient</th>' +
+    '            <th></th>' +
+    '        </tr>' +
+    '        <tr id="0">' +
+    '            <td><input type="number" id="curve-number" value="1"></td>' +
+    '            <td><input type="number" id="sales-start" value="4"></td>' +
+    '            <td><input type="number" id="sales-end" value="7"></td>' +
+    '            <td><input type="number" id="sales-min" value="10000"></td>' +
+    '            <td><input type="number" id="sales-max" value="10000"></td>' +
+    '            <td>' +
+    '                <select name="choose-algorithm" id="choose-algorithm">' +
+    '                    <option value="Linear">Linear</option>' +
+    '                    <option value="Exponential">Exponential</option>' +
+    '                </select>' +
+    '            </td>' +
+    '            <td><input type="number" id="angular-coefficient" value="0.9"></td>' +
+    '            <td><input type="number" id="risings-coefficient" value="0.7"></td>' +
+    '            <td>' +
+    '                <div class="calc-buttons">' +
+    '                    <button class="calc" id="remove-row">–</button>' +
+    '                    <button class="calc" id="append-row">+</button>' +
+    '                </div>' +
+    '            </td>' +
+    '        </tr>' +
+    '    </table>' +
+    // '    <button class="submit" id="build-project-services">Build Scheme</button>' +
+    '</div>' +
+    '' +
+    '',
+
+    trServiceCurve:
+    '<tr id="{id}">' +
+    '    <td><input type="number" id="curve-number" value="1"></td>' +
+    '    <td><input type="number" id="sales-start" value="4"></td>' +
+    '    <td><input type="number" id="sales-end" value="7"></td>' +
+    '    <td><input type="number" id="sales-min" value="10000"></td>' +
+    '    <td><input type="number" id="sales-max" value="10000"></td>' +
+    '    <td>' +
+    '        <select name="choose-algorithm" id="choose-algorithm">' +
+    '            <option value="Linear">Linear</option>' +
+    '            <option value="Exponential">Exponential</option>' +
+    '        </select>' +
+    '    </td>' +
+    '    <td><input type="number" id="angular-coefficient" value="0.9"></td>' +
+    '    <td><input type="number" id="risings-coefficient" value="0.7"></td>' +
+    '    <td>' +
+    '        <div class="calc-buttons">' +
+    '            <button class="calc" id="remove-row">–</button>' +
+    '            <button class="calc" id="append-row">+</button>' +
+    '        </div>' +
+    '    </td>' +
+    '</tr>' +
+    '' +
+    '',
+
+    serviceNameOption: '<option id="{id}" value="{value}">{text}</option>',
 
     //
 
