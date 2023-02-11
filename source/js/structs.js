@@ -89,6 +89,8 @@ class Input extends htmlBaseElement {
 class TextInput extends Input {
     constructor(params) {
         super(Object.assign(params, { type: 'text' } ))
+
+        this.syncValue()
     }
 }
 
@@ -105,6 +107,8 @@ class NumberInput extends Input {
 class SelectInput extends Input {
     constructor(params) {
         super(Object.assign(params, { type: 'select' } ))
+
+        this.syncValue()
     }
 }
 
@@ -373,6 +377,9 @@ class CalcableTable extends Table {
         this.calcAppendBtnSelector = params.calcAppendBtnSelector
         this.calcRemoveBtnSelector = params.calcRemoveBtnSelector
 
+        this.removeClasses = params.removeClasses
+        this.addCurvesBtnSelector = params.addCurvesBtnSelector
+
         this.listenForChangesInNumOfRows()
     }
 
@@ -384,6 +391,14 @@ class CalcableTable extends Table {
         $(this.element).on('click', this.calcRemoveBtnSelector, e => {
             this.removeRow(Number(e.currentTarget.parentNode.parentNode.parentNode.id))
         })
+
+        if (this.addCurvesBtnSelector !== undefined && this.removeClasses !== undefined) {
+            $(this.element.parentNode).on('click', this.addCurvesBtnSelector, e => {
+                this.removeClasses.forEach(cssClass => {
+                    $(this.element.parentNode).removeClass(cssClass)
+                })
+            })
+        }
     }
 }
 
@@ -400,6 +415,12 @@ class UnhiddableTables {
 
         this.cssClass = params.cssClass
 
+        this.curveableTablesSelector = params.curveableTablesSelector
+        this.curveableTablesCssClass = params.curveableTablesCssClass
+
+        this.choosableCalcableTablesSelector = params.choosableCalcableTablesSelector
+        this.choosableCalcableTablesCssClass = params.choosableCalcableTablesCssClass
+
         this.listenOnUnhidderClick()
     }
 
@@ -407,6 +428,10 @@ class UnhiddableTables {
         let unhiddersList = Object.keys(this.unhidders)
         unhiddersList.forEach(key => {
             $(this.unhidders[key]).on('click', e => {
+                $(this.choosableCalcableTablesSelector).removeClass(this.choosableCalcableTablesCssClass)
+                console.log($(this.curveableTablesSelector))
+                $(this.curveableTablesSelector).removeClass(this.curveableTablesCssClass)
+
                 if ( $(e.currentTarget).hasClass(this.cssClass) ) {
                     this.tables[key].clearData()
                     $(this.unhidders[key]).html('+').removeClass(this.cssClass)
@@ -440,12 +465,21 @@ class ChoosableCalcableTables {
         this.controls = {}
         this.presetTable = {}
 
+        this.unhiddableTablesSelector = params.unhiddableTablesSelector
+        this.unhiddableTablesCssClass = params.unhiddableTablesCssClass
+        this.unhidders = params.unhidders
+
         this.controls.serviceNameInput = params.controls.serviceNameInput
         this.controls.serviceNamesList = params.controls.serviceNamesList
         this.controls.addServiceBtn = params.controls.addServiceBtn
         this.controls.serviceNameOptionSelector = params.controls.serviceNameOptionSelector
         this.controls.serviceNameOptionTemplate = params.controls.serviceNameOptionTemplate
         this.controls.serviceNameInputPlaceholder = params.controls.serviceNameInputPlaceholder
+
+        this.presetTable.removeClasses = params.presetTable.removeClasses
+        this.presetTable.addCurvesBtnSelector = params.presetTable.addCurvesBtnSelector
+        this.presetTable.curveableTablesSelector = params.presetTable.curveableTablesSelector
+        this.presetTable.curveableTablesCssClass = params.presetTable.curveableTablesCssClass
 
         this.presetTable.calcAppendBtnSelector = params.presetTable.calcAppendBtnSelector
         this.presetTable.calcRemoveBtnSelector = params.presetTable.calcRemoveBtnSelector
@@ -455,20 +489,44 @@ class ChoosableCalcableTables {
         this.presetTable.tableSelector = params.presetTable.tableSelector
         this.presetTable.htmlTableTemplate = params.presetTable.htmlTableTemplate
 
-        this.presetTable.header = params.presetTable.header
-        this.presetTable.row = params.presetTable.row
+        this.presetTable.header = {}
+        this.presetTable.header.titleElement = params.presetTable.header.titleElement
+        this.presetTable.header.titlePreset = params.presetTable.header.titlePreset
+        this.presetTable.header.description = params.presetTable.header.description
+
+        this.presetTable.row = {}
+        this.presetTable.row.numberOfInitial = params.presetTable.row.numberOfInitial
+        this.presetTable.row.numberOfMin = params.presetTable.row.numberOfMin
+        this.presetTable.row.tableId = params.presetTable.row.tableId
+        this.presetTable.row.htmlTemplate = params.presetTable.row.htmlTemplate
+        this.presetTable.row.trSelector = params.presetTable.row.trSelector
+        this.presetTable.row.inputsSelectors = params.presetTable.row.inputsSelectors
+        this.presetTable.row.inputsTypes = params.presetTable.row.inputsTypes
+        this.presetTable.row.linksToOptions = params.presetTable.row.linksToOptions
 
         this.listenOnEvents()
+    }
+
+    hideUnhiddable() {
+        $(this.unhiddableTablesSelector).removeClass(this.unhiddableTablesCssClass)
+        console.log(this.presetTable.curveableTablesSelector, this.presetTable.curveableTablesCssClass)
+        console.log($(this.presetTable.curveableTablesSelector))
+        $(this.presetTable.curveableTablesSelector).removeClass(this.presetTable.curveableTablesCssClass)
+
+        Object.keys(this.unhidders).forEach(key => {
+            $(this.unhidders[key]).html('+').removeClass(this.unhiddableTablesCssClass)
+        })
     }
 
     listenOnEvents() {
         $(this.controls.serviceNameInput).on('focus', e => {
             $(this.controls.serviceNameInput).val('')
 
-            if (this.activeServiceId !== undefined && this.activeServiceName !== undefined)
+            if (this.activeServiceId !== undefined && this.activeServiceName !== undefined) {
                 $(this.controls.serviceNameInput).attr('placeholder', this.activeServiceName)
-            else
+            } else {
                 $(this.controls.serviceNameInput).attr('placeholder', '')
+            }
         })
 
         $(this.controls.serviceNameInput).on('change', e => {
@@ -483,6 +541,7 @@ class ChoosableCalcableTables {
             if ( Object.keys(servicesNames).includes( $(this.controls.serviceNameInput).val() )) {
                 this.changeService(this.activeServiceId, servicesNames[$(this.controls.serviceNameInput).val()], $(this.controls.serviceNameInput).val())
 
+                this.hideUnhiddable()
             } else {
                 this.timeoutIdForNameChange = setTimeout(() => {
                     // $(this.controls.serviceNameInput).data('prev-placeholder', $(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder'))
@@ -520,6 +579,8 @@ class ChoosableCalcableTables {
 
             if ($(this.controls.serviceNameInput).val() !== '' || ($(this.controls.serviceNameInput).attr('placeholder') !== 'enter Service name' && $(this.controls.serviceNameInput).attr('placeholder') !== '')) {
                 this.addService($(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder'))
+                this.hideUnhiddable()
+
                 if ($(this.controls.serviceNameInput).val() !== '') {
                     $(this.controls.serviceNameInput).data('prev-placeholder', $(this.controls.serviceNameInput).attr('placeholder'))
                     $(this.controls.serviceNameInput).attr('placeholder', $(this.controls.serviceNameInput).val() )
@@ -563,14 +624,13 @@ class ChoosableCalcableTables {
         this.services[id] = this.getTableBySelectors(id, name)
 
         this.changeService(prevId, id, name)
-        // this.tables[id].table.element.addClass(this.cssClass)
     }
 
     createTable(id, name) {
         $(this.presetTable.tableParentElement).append(
             this.presetTable.htmlTableTemplate
                 .replace('{table-id}', id)
-                .replace('{service-name}', name)
+                .replace('{table-title}', name)
         )
     }
 
@@ -583,6 +643,12 @@ class ChoosableCalcableTables {
 
                 calcAppendBtnSelector: this.presetTable.calcAppendBtnSelector,
                 calcRemoveBtnSelector: this.presetTable.calcRemoveBtnSelector,
+
+                curveableTablesSelector: this.presetTable.curveableTablesSelector,
+                curveableTablesCssClass: this.presetTable.curveableTablesCssClass,
+
+                removeClasses: this.presetTable.removeClasses,
+                addCurvesBtnSelector: this.presetTable.addCurvesBtnSelector,
 
                 row: Object.assign(this.presetTable.row, { tableId: id })
             })
@@ -599,5 +665,81 @@ class ChoosableCalcableTables {
 
         this.activeServiceId = nowId
         this.activeServiceName = nowName
+    }
+}
+
+class CurvesTable {
+    constructor(params) {
+        this.tables = {}
+
+        this.cssClass = params.cssClass
+        this.anotherServiceNameSelector = params.anotherServiceNameSelector
+        this.btnTablesSelector = params.btnTablesSelector
+        this.addCurvesBtnSelector = params.addCurvesBtnSelector
+        this.unhiddableTablesSelector = params.unhiddableTablesSelector
+        this.unhiddableTablesCssClass = params.unhiddableTablesCssClass
+        this.choosableTablesSelector = params.choosableTablesSelector
+        this.choosableTablesCssClass = params.choosableTablesCssClass
+
+        this.presetTable = params.presetTable
+
+        this.listenOnShowCurvesTable()
+    }
+
+    listenOnShowCurvesTable() {
+        $(this.btnTablesSelector).on('click', this.addCurvesBtnSelector, e => {
+            console.log('clicked')
+
+            let idsOfTables = Object.keys(this.tables)
+            let curId = e.target.parentNode.id
+
+            if (idsOfTables.includes(curId)) {
+                $(this.tables[curId].element).addClass(this.cssClass)
+            } else {
+                console.log(curId > -1)
+                console.log($(this.anotherServiceNameSelector).val())
+                console.log($(this.anotherServiceNameSelector).attr('placeholder'))
+                this.createTable(
+                    curId,
+                    curId > -1
+                        ? (
+                            $(this.anotherServiceNameSelector).val() !== undefined && $(this.anotherServiceNameSelector).val() !== ''
+                            ? $(this.anotherServiceNameSelector).val()
+                            : $(this.anotherServiceNameSelector).attr('placeholder')
+                            )
+                        : curId
+                )
+            }
+        })
+    }
+
+    createTable(id, name) {
+        $(this.presetTable.tableParentElement).append(
+            this.presetTable.htmlTableTemplate
+                .replace('{table-id}', id)
+                .replace('{table-title}', name)
+        )
+
+        this.tables[id] = this.getTableBySelectors(id, name)
+    }
+
+    getTableBySelectors(id, name) {
+        let table = {
+            id: id,
+            name: name,
+            table: new CalcableTable({
+                element: $(this.presetTable.tableSelector.replace('{table-id}', id))[0],
+
+                calcAppendBtnSelector: this.presetTable.calcAppendBtnSelector,
+                calcRemoveBtnSelector: this.presetTable.calcRemoveBtnSelector,
+
+                removeClasses: this.presetTable.removeClasses,
+                addCurvesBtnSelector: this.presetTable.addCurvesBtnSelector,
+
+                row: Object.assign(this.presetTable.row, { tableId: id })
+            })
+        }
+
+        return table
     }
 }

@@ -162,12 +162,62 @@ const htmlTemplates = {
     '</tr>' +
     '',
 
+    trService:
+    '' +
+    '<tr id="{id}">' +
+    '    <td><input type="number" value="{number}" id="number"></td>' +
+    '    <td>' +
+    '        <select name="agent-name" id="agent-name">' +
+    '            {agent-names-options}' +
+    '        </select>' +
+    '    </td>' +
+    '    <td><input type="number" id="agent-share" value="" placeholder="%"></td>' +
+    '    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>' +
+    '    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>' +
+    '    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->' +
+    '    <td>' +
+    '        <select name="pool-for-rewards" id="pool-for-rewards">' +
+    '            {pool-title-options}' +
+    '        </select>' +
+    '    </td>' +
+    '    <td>' +
+    '        <div class="calc-buttons">' +
+    '            <button class="calc" id="remove-row">–</button>' +
+    '            <button class="calc" id="append-row">+</button>' +
+    '        </div>' +
+    '    </td>' +
+    '</tr>' +
+    '',
+
     //
 
     serviceTableTemplate:
-    '<div class="inputs-table choosable calcable" id="{table-id}">' +
+    '<div class="inputs-table choosable calcable choosen" id="{table-id}">' +
     '    <header>' +
-    '        <h3 class="table-title">"{service-name}" Income</h3>' +
+    '        <h3 class="table-title">{table-title}</h3>' +
+    '        <div class="table-description"></div>' +
+    '    </header>' +
+    '    <table>' +
+    '        <tr>' +
+    '            <th>№</th>' +
+    '            <th>Agent Name</th>' +
+    '            <th>Agent Share</th>' +
+    '            <th>Unstaking Factor</th>' +
+    '            <th>Reward Coefficient</th>' +
+    '            <th>Pool (For Rewards)</th>' +
+    '            <th></th>' +
+    '        </tr>' +
+    '    </table>' +
+    '    <button class="submit" id="add-curves">Add curves</button>' +
+    '</div>' +
+    '' +
+    '' +
+    '',
+
+    curvesTableTemplate:
+    '<div class="inputs-table curveable calcable curved" id="{table-id}">' +
+    '    <header>' +
+    '        <h3 class="table-title">"{table-title}" Income</h3>' +
     '        <div class="table-description">(Incomes - marketing functions for planned project services)</div>' +
     '    </header>' +
     '    <table>' +
@@ -182,8 +232,14 @@ const htmlTemplates = {
     '            <th>Rising\'s Coefficient</th>' +
     '            <th></th>' +
     '        </tr>' +
-    '        <tr id="0">' +
-    '            <td><input type="number" id="curve-number" value="1"></td>' +
+    '    </table>' +
+    // '    <button class="submit" id="build-project-services">Build Scheme</button>' +
+    '</div>' +
+    '' +
+    '',
+
+    /* <tr id="0">' +
+    '            <td><input type="number" id="curve-number" value="{number}"></td>' +
     '            <td><input type="number" id="sales-start" value="4"></td>' +
     '            <td><input type="number" id="sales-end" value="7"></td>' +
     '            <td><input type="number" id="sales-min" value="10000"></td>' +
@@ -202,16 +258,11 @@ const htmlTemplates = {
     '                    <button class="calc" id="append-row">+</button>' +
     '                </div>' +
     '            </td>' +
-    '        </tr>' +
-    '    </table>' +
-    // '    <button class="submit" id="build-project-services">Build Scheme</button>' +
-    '</div>' +
-    '' +
-    '',
+    '        </tr>' + */
 
-    trServiceCurve:
+    trCurve:
     '<tr id="{id}">' +
-    '    <td><input type="number" id="curve-number" value="1"></td>' +
+    '    <td><input type="number" readonly id="curve-number" value="{number}"></td>' +
     '    <td><input type="number" id="sales-start" value="4"></td>' +
     '    <td><input type="number" id="sales-end" value="7"></td>' +
     '    <td><input type="number" id="sales-min" value="10000"></td>' +

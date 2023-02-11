@@ -92,6 +92,7 @@ class zbccForm {
                                     '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table.unhiddable.calcable#unlocking table tr[id] #agent-name',
                                     '#zbcc-inputs .data-block#project-services .inputs-table.unhiddable.calcable#staking table tr[id] #agent-name',
                                     '#zbcc-inputs .data-block#project-services .inputs-table.unhiddable.calcable#farming table tr[id] #agent-name',
+                                    '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable[id] table tr[id] #agent-name',
                                 ]
                             }
                         }
@@ -179,6 +180,7 @@ class zbccForm {
                                     '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table.unhiddable.calcable#vesting table tr[id] #pool-title',
                                     '#zbcc-inputs .data-block#project-services .inputs-table.unhiddable.calcable#staking table tr[id] #pool-for-rewards',
                                     '#zbcc-inputs .data-block#project-services .inputs-table.unhiddable.calcable#farming table tr[id] #pool-for-rewards',
+                                    '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable[id] table tr[id] #pool-for-rewards',
                                 ]
                             }
                         }
@@ -271,16 +273,27 @@ class zbccForm {
         this.dataBlocks['projectServices'] = {
             stakingAndFarming: new UnhiddableTables({
                 cssClass: 'unhidden',
+                choosableCalcableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable',
+                choosableCalcableTablesCssClass: 'choosen',
                 unhidders: {
                     staking: $('#zbcc-inputs .data-block#project-services button.unhidder#show-staking')[0],
                     farming: $('#zbcc-inputs .data-block#project-services button.unhidder#show-farming')[0],
                 },
+
+                curveableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.curveable',
+                curveableTablesCssClass: 'curved',
                 tables: {
                     staking: new CalcableTable({
                         element: $('#zbcc-inputs .data-block#project-services .inputs-table.unhiddable.calcable#staking table')[0],
 
                         calcAppendBtnSelector: 'button.calc#append-row',
                         calcRemoveBtnSelector: 'button.calc#remove-row',
+
+                        curveableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.curveable',
+                        curveableTablesCssClass: 'curved',
+
+                        removeClasses: ['choosen', 'unhidden', 'curved'],
+                        addCurvesBtnSelector: 'button#add-curves',
 
                         row: {
                             numberOfInitial: 1,
@@ -323,6 +336,12 @@ class zbccForm {
                         calcAppendBtnSelector: 'button.calc#append-row',
                         calcRemoveBtnSelector: 'button.calc#remove-row',
 
+                        curveableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.curveable',
+                        curveableTablesCssClass: 'curved',
+
+                        removeClasses: ['choosen', 'unhidden', 'curved'],
+                        addCurvesBtnSelector: 'button#add-curves',
+
                         row: {
                             numberOfInitial: 1,
                             numberOfMin: 1,
@@ -363,6 +382,15 @@ class zbccForm {
             services: new ChoosableCalcableTables({
                 // cssClass: 'choosable',
                 cssClass: 'choosen',
+                unhiddableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.unhiddable',
+                unhiddableTablesCssClass: 'unhidden',
+                curveableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.curveable',
+                curveableTablesCssClass: 'curved',
+
+                unhidders: {
+                    staking: $('#zbcc-inputs .data-block#project-services button.unhidder#show-staking')[0],
+                    farming: $('#zbcc-inputs .data-block#project-services button.unhidder#show-farming')[0],
+                },
                 controls: {
                     serviceNameInput: '#zbcc-inputs .data-block#project-services .extra-inputs #service-name',
                     serviceNamesList: '#zbcc-inputs .data-block#project-services .extra-inputs #service-names',
@@ -380,27 +408,98 @@ class zbccForm {
                     tableSelector: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table',
                     htmlTableTemplate: this.htmlTemplates.serviceTableTemplate,
 
+                    curveableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.curveable',
+                    curveableTablesCssClass: 'curved',
+                    removeClasses: ['choosen', 'unhidden', 'curved'],
+                    addCurvesBtnSelector: 'button#add-curves',
+
                     header: {
                         titleElement: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} header h3.table-title',
-                        titlePreset: '"{service-name}" Income',
+                        titlePreset: '{service-name}',
                         description: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} header div.table-description',
                     },
 
                     row: {
                         numberOfInitial: 1,
                         numberOfMin: 1,
-                        htmlTemplate: this.htmlTemplates.trServiceCurve,
+                        tableId: '',
+                        htmlTemplate: this.htmlTemplates.trService,
                         trSelector: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr[id]',
+                        inputsSelectors: {
+                            number: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #number',
+                            agentName: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #agent-name',
+                            agentShare: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #agent-share',
+                            unstakingFactor: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #unstaking-factor',
+                            rewardCoefficient: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #reward-coefficient',
+                            poolForRewards: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #pool-for-rewards',
+                        },
+                        inputsTypes: {
+                            number: 'number',
+                            agentName: 'select',
+                            agentShare: 'text',
+                            unstakingFactor: 'text',
+                            rewardCoefficient: 'text',
+                            poolForRewards: 'select',
+                        },
+                        linksToOptions: {
+                            agentName: {
+                                mask: '{agent-names-options}',
+                                optionHtmlTemplate: this.htmlTemplates.selectOption,
+                                selector: '#zbcc-inputs .data-block#agents .inputs-table.numerable#agents table tr[id] #agent-name'
+                            },
+                            poolTitle: {
+                                mask: '{pool-title-options}',
+                                optionHtmlTemplate: this.htmlTemplates.selectOption,
+                                selector: '#zbcc-inputs .data-block#pools .inputs-table.calcable#pools table tr[id] #pool-title'
+                            }
+                        }
+                    }
+                }
+            }),
+            curves: new CurvesTable({
+                // cssClass: 'choosable',
+                cssClass: 'curved',
+
+                anotherServiceNameSelector: '#zbcc-inputs .data-block#project-services .extra-inputs #service-name',
+                btnTablesSelector: '#zbcc-inputs .data-block#project-services',
+                curveableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.curveable',
+                unhiddableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.unhiddable',
+                unhiddableTablesCssClass: 'unhidden',
+                choosableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.choosable',
+                choosableTablesCssClass: 'choosen',
+                removeClasses: ['choosen', 'unhidden', 'curved'],
+                addCurvesBtnSelector: 'button#add-curves',
+
+                presetTable: {
+                    calcAppendBtnSelector: 'button.calc#append-row',
+                    calcRemoveBtnSelector: 'button.calc#remove-row',
+
+                    tableParentElement: '#zbcc-inputs .data-block#project-services .base-inputs',
+                    tableBlockSelector: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id}',
+                    tableSelector: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} table',
+                    htmlTableTemplate: this.htmlTemplates.curvesTableTemplate,
+
+                    header: {
+                        titleElement: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} header h3.table-title',
+                        titlePreset: '"{service-name}" Income',
+                        description: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} header div.table-description',
+                    },
+
+                    row: {
+                        numberOfInitial: 1,
+                        numberOfMin: 1,
+                        htmlTemplate: this.htmlTemplates.trCurve,
+                        trSelector: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} table tr[id]',
                         tableId: '',
                         inputsSelectors: {
-                            curveNumber: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #curve-number',
-                            salesStart: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #sales-start',
-                            salesEnd: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #sales-end',
-                            salesMin: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #sales-min',
-                            salesMax: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #sales-max',
-                            chooseAlgorithm: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #choose-algorithm',
-                            angularCoefficient: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #angular-coefficient',
-                            risingsCoefficient: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} table tr#{tr-id} #risings-coefficient',
+                            curveNumber: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} table tr#{tr-id} #curve-number',
+                            salesStart: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} table tr#{tr-id} #sales-start',
+                            salesEnd: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} table tr#{tr-id} #sales-end',
+                            salesMin: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} table tr#{tr-id} #sales-min',
+                            salesMax: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} table tr#{tr-id} #sales-max',
+                            chooseAlgorithm: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} table tr#{tr-id} #choose-algorithm',
+                            angularCoefficient: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} table tr#{tr-id} #angular-coefficient',
+                            risingsCoefficient: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} table tr#{tr-id} #risings-coefficient',
                         },
                         inputsTypes: {
                             curveNumber: 'number',
@@ -414,7 +513,6 @@ class zbccForm {
                         },
                     }
                 }
-
             })
         }
 
