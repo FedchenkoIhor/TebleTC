@@ -38,6 +38,8 @@ class Input extends htmlBaseElement {
     constructor(params) {
         super(params)
 
+        this.history = []
+
         this.initParams(params)
 
         this.addEventListener('change', e => {
@@ -51,21 +53,25 @@ class Input extends htmlBaseElement {
         this.dataType = params.dataType ?? { 'text': String, 'number': Number, 'select': String }[this.inputType] ?? String
         this.allowedValues = params.allowedValues
 
+        this.min = params.min
+
         this.isUnic = params.isUnic ?? false
         this.linkToUnicValues = params.linkToUnicValues
 
-        this.value = undefined
+        // this.value = undefined
+        this.value = this.element.value
         this.previousValue = this.dataType(this.value)
         this.defaultValue = this.dataType(this.value)
     }
 
     syncValue() {
-        // if ( this.verifyValue(this.element.value) ) {
+        this.history.push({ previousValue: this.previousValue, value: this.value })
+        if ( this.verifyValue(this.element.value) ) {
             this.previousValue = this.dataType(this.value)
             this.value = this.dataType(this.element.value)
-        // } else {
-        //     this.element.value = this.previousValue
-        // }
+        } else {
+            this.element.value = this.previousValue
+        }
     }
 
     verifyValue(value) {
@@ -79,6 +85,12 @@ class Input extends htmlBaseElement {
         if (this.isUnic)
             if (this.linkToUnicValues !== undefined && this.linkToUnicValues.includes(value))
                 return false
+
+        if (value !== this.dataType(value) && this.dataType !== Number)
+            return false
+        // if (this.min !== undefined)
+            // if (value !== undefined && this.linkToUnicValues.includes(value))
+                // return false
 
         return true
     }
@@ -99,6 +111,23 @@ class TextInput extends Input {
 class NumberInput extends Input {
     constructor(params) {
         super(Object.assign(params, { type: 'number' } ))
+    }
+
+    syncValue() {
+        this.history.push({ previousValue: this.previousValue, value: this.value })
+
+        if (this.element.value === '')
+            this.element.value = this.previousValue ?? this.history[this.history.length - 1].previousValue ?? this.min
+        if (this.element.value < this.min)
+            this.element.value = Number(this.element.value) + 1
+
+        else if ( this.verifyValue(this.element.value) ) {
+            this.previousValue = this.dataType(this.value)
+            this.value = this.dataType(this.element.value)
+
+        } else {
+            this.element.value = this.previousValue
+        }
     }
 }
 
@@ -284,16 +313,19 @@ class Table extends htmlBaseElement {
                             previousOptionId = row.id
                     })
 
-                    $(selectInput).find(
-                        this.row.linksToDependableSelects[input].optionSelector
-                            .replace('{id}', this.rows[previousOptionId].id)
-                            .replace('{value}', this.rows[previousOptionId][input].value)
-                    ).after(
-                        this.row.linksToDependableSelects[input].optionHtmlTemplate
-                            .replaceAll('{id}', rowId)
-                            .replaceAll('{value}', this.rows[rowId][input].value)
-                            .replaceAll('{text}', this.rows[rowId][input].value)
-                    )
+                    if (Object.values(this.rows).length > 1) {
+                        $(selectInput).find(
+                            this.row.linksToDependableSelects[input].optionSelector
+                                .replace('{id}', this.rows[previousOptionId].id)
+                                .replace('{value}', this.rows[previousOptionId][input].value)
+                        ).after(
+                            this.row.linksToDependableSelects[input].optionHtmlTemplate
+                                .replaceAll('{id}', rowId)
+                                .replaceAll('{value}', this.rows[rowId][input].value)
+                                .replaceAll('{text}', this.rows[rowId][input].value)
+                        )
+                    }
+
                 })
             })
         })
@@ -355,6 +387,10 @@ class NumerableTable extends Table {
         }
 
         this.numerableInput.addEventListener('change', (e, input) => {
+            if (input.value < this.row.numberOfMin || input.value === '') {
+                return input.element.value = input.history[input.history.length - 1].previousValue
+            }
+
             while (input.previousValue < input.value) {
                 this.appendRow(input.previousValue)
                 input.previousValue++
@@ -429,7 +465,6 @@ class UnhiddableTables {
         unhiddersList.forEach(key => {
             $(this.unhidders[key]).on('click', e => {
                 $(this.choosableCalcableTablesSelector).removeClass(this.choosableCalcableTablesCssClass)
-                console.log($(this.curveableTablesSelector))
                 $(this.curveableTablesSelector).removeClass(this.curveableTablesCssClass)
 
                 if ( $(e.currentTarget).hasClass(this.cssClass) ) {
@@ -491,6 +526,7 @@ class ChoosableCalcableTables {
 
         this.presetTable.header = {}
         this.presetTable.header.titleElement = params.presetTable.header.titleElement
+        this.presetTable.header.curvesTitleElement = params.presetTable.header.curvesTitleElement
         this.presetTable.header.titlePreset = params.presetTable.header.titlePreset
         this.presetTable.header.description = params.presetTable.header.description
 
@@ -509,8 +545,6 @@ class ChoosableCalcableTables {
 
     hideUnhiddable() {
         $(this.unhiddableTablesSelector).removeClass(this.unhiddableTablesCssClass)
-        console.log(this.presetTable.curveableTablesSelector, this.presetTable.curveableTablesCssClass)
-        console.log($(this.presetTable.curveableTablesSelector))
         $(this.presetTable.curveableTablesSelector).removeClass(this.presetTable.curveableTablesCssClass)
 
         Object.keys(this.unhidders).forEach(key => {
@@ -551,6 +585,7 @@ class ChoosableCalcableTables {
                     $(this.controls.serviceNamesList).find(this.controls.serviceNameOptionSelector.replace('{id}', this.activeServiceId)).html( $(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder') )
 
                     $(this.presetTable.header.titleElement.replace('{table-id}', this.activeServiceId)).html(this.presetTable.header.titlePreset.replace('{service-name}', $(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder')))
+                    $(this.presetTable.header.curvesTitleElement.replace('{table-id}', this.activeServiceId)).html(this.presetTable.header.titlePreset.replace('{service-name}', $(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder')))
 
                     if (this.services[this.activeServiceId] !== undefined)
                         this.services[this.activeServiceId].name = $(this.controls.serviceNameInput).val() !== '' ? $(this.controls.serviceNameInput).val() : $(this.controls.serviceNameInput).attr('placeholder')
@@ -680,6 +715,7 @@ class CurvesTable {
         this.unhiddableTablesCssClass = params.unhiddableTablesCssClass
         this.choosableTablesSelector = params.choosableTablesSelector
         this.choosableTablesCssClass = params.choosableTablesCssClass
+        this.tableBlockSelector = params.presetTable.tableBlockSelector
 
         this.presetTable = params.presetTable
 
@@ -688,17 +724,12 @@ class CurvesTable {
 
     listenOnShowCurvesTable() {
         $(this.btnTablesSelector).on('click', this.addCurvesBtnSelector, e => {
-            console.log('clicked')
-
             let idsOfTables = Object.keys(this.tables)
             let curId = e.target.parentNode.id
 
             if (idsOfTables.includes(curId)) {
-                $(this.tables[curId].element).addClass(this.cssClass)
+                $(this.tableBlockSelector.replace('{table-id}', curId)).addClass(this.cssClass)
             } else {
-                console.log(curId > -1)
-                console.log($(this.anotherServiceNameSelector).val())
-                console.log($(this.anotherServiceNameSelector).attr('placeholder'))
                 this.createTable(
                     curId,
                     curId > -1
@@ -717,7 +748,7 @@ class CurvesTable {
         $(this.presetTable.tableParentElement).append(
             this.presetTable.htmlTableTemplate
                 .replace('{table-id}', id)
-                .replace('{table-title}', name)
+                .replace('{service-name}', name)
         )
 
         this.tables[id] = this.getTableBySelectors(id, name)
@@ -732,6 +763,8 @@ class CurvesTable {
 
                 calcAppendBtnSelector: this.presetTable.calcAppendBtnSelector,
                 calcRemoveBtnSelector: this.presetTable.calcRemoveBtnSelector,
+
+                tableBlockSelector: this.presetTable.tableBlockSelector,
 
                 removeClasses: this.presetTable.removeClasses,
                 addCurvesBtnSelector: this.presetTable.addCurvesBtnSelector,

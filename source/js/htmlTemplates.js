@@ -120,7 +120,6 @@ const htmlTemplates = {
     '    <td><input type="number" id="agent-share" value="" placeholder="%"></td>' +
     '    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>' +
     '    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>' +
-    '    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->' +
     '    <td>' +
     '        <select name="pool-for-rewards" id="pool-for-rewards">' +
     '            {pool-title-options}' +
@@ -147,7 +146,6 @@ const htmlTemplates = {
     '    <td><input type="number" id="agent-share" value="" placeholder="%"></td>' +
     '    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>' +
     '    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>' +
-    '    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->' +
     '    <td>' +
     '        <select name="pool-for-rewards" id="pool-for-rewards">' +
     '            {pool-title-options}' +
@@ -174,7 +172,6 @@ const htmlTemplates = {
     '    <td><input type="number" id="agent-share" value="" placeholder="%"></td>' +
     '    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>' +
     '    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>' +
-    '    <!-- <td><input type="number" id="pool-for-rewards" value="" placeholder="%"></td> -->' +
     '    <td>' +
     '        <select name="pool-for-rewards" id="pool-for-rewards">' +
     '            {pool-title-options}' +
@@ -217,7 +214,7 @@ const htmlTemplates = {
     curvesTableTemplate:
     '<div class="inputs-table curveable calcable curved" id="{table-id}">' +
     '    <header>' +
-    '        <h3 class="table-title">"{table-title}" Income</h3>' +
+    '        <h3 class="table-title">"{service-name}" Income</h3>' +
     '        <div class="table-description">(Incomes - marketing functions for planned project services)</div>' +
     '    </header>' +
     '    <table>' +

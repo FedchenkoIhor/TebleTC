@@ -28,7 +28,7 @@ class zbccForm {
             tables: {
                 rounds: new NumerableTable({
                     element: $('#zbcc-inputs .data-block#investment-rounds .inputs-table.numerable#rounds table')[0],
-                    numerableInput: new NumberInput({ element: $('#zbcc-inputs .data-block#investment-rounds #rounds-number')[0] }),
+                    numerableInput: new NumberInput({ min: 1, element: $('#zbcc-inputs .data-block#investment-rounds #rounds-number')[0] }),
 
                     row: {
                         numberOfInitial: 1,
@@ -62,7 +62,7 @@ class zbccForm {
                 agents: new NumerableTable({
                     element: $('#zbcc-inputs .data-block#agents .inputs-table.numerable#agents table')[0],
 
-                    numerableInput: new NumberInput({ element: $('#zbcc-inputs .data-block#agents #agents-number')[0] }),
+                    numerableInput: new NumberInput({ min: 1, element: $('#zbcc-inputs .data-block#agents #agents-number')[0] }),
 
                     row: {
                         numberOfInitial: 1,
@@ -86,7 +86,7 @@ class zbccForm {
                             agentName: {
                                 inputId: 'agent-name',
                                 optionHtmlTemplate: this.htmlTemplates.selectOption,
-                                optionSelector: 'option[value="{value}"][id={id}]',
+                                optionSelector: 'option[value="{value}"][id="{id}"]',
                                 selects: [
                                     '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table.unhiddable.calcable#vesting table tr[id] #agent-name',
                                     '#zbcc-inputs .data-block#vesting-and-unlocking .inputs-table.unhiddable.calcable#unlocking table tr[id] #agent-name',
@@ -181,6 +181,8 @@ class zbccForm {
                                     '#zbcc-inputs .data-block#project-services .inputs-table.unhiddable.calcable#staking table tr[id] #pool-for-rewards',
                                     '#zbcc-inputs .data-block#project-services .inputs-table.unhiddable.calcable#farming table tr[id] #pool-for-rewards',
                                     '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable[id] table tr[id] #pool-for-rewards',
+                                    '#zbcc-precond-popup .data-block#precond-popup .inputs #pool-threshold select#pool-threshold-easier-pool',
+                                    '#zbcc-precond-popup .data-block#precond-popup .inputs #pool-threshold select#pool-threshold-harder-pool',
                                 ]
                             }
                         }
@@ -415,6 +417,7 @@ class zbccForm {
 
                     header: {
                         titleElement: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} header h3.table-title',
+                        curvesTitleElement: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} header h3.table-title',
                         titlePreset: '{service-name}',
                         description: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id} header div.table-description',
                     },
