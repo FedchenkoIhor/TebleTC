@@ -208,10 +208,9 @@ const htmlTemplates = {
     '    <button class="submit" id="add-curves">Add curves</button>' +
     '</div>' +
     '' +
-    '' +
     '',
 
-    curvesTableTemplate:
+    curvesTablesTemplate:
     '<div class="inputs-table curveable calcable curved" id="{table-id}">' +
     '    <header>' +
     '        <h3 class="table-title">"{service-name}" Income</h3>' +
@@ -230,7 +229,7 @@ const htmlTemplates = {
     '            <th></th>' +
     '        </tr>' +
     '    </table>' +
-    // '    <button class="submit" id="build-project-services">Build Scheme</button>' +
+    '    <button class="submit" id="show-service">Back to service</button>' +
     '</div>' +
     '' +
     '',

@@ -286,6 +286,11 @@ class zbccForm {
                 curveableTablesCssClass: 'curved',
                 tables: {
                     staking: new CalcableTable({
+
+                        cssClass: 'unhidden',
+
+                        showItAgain: 'button#show-service',
+
                         element: $('#zbcc-inputs .data-block#project-services .inputs-table.unhiddable.calcable#staking table')[0],
 
                         calcAppendBtnSelector: 'button.calc#append-row',
@@ -334,6 +339,8 @@ class zbccForm {
                     }),
                     farming: new CalcableTable({
                         element: $('#zbcc-inputs .data-block#project-services .inputs-table.unhiddable.calcable#farming table')[0],
+
+                        showItAgain: 'button#show-service',
 
                         calcAppendBtnSelector: 'button.calc#append-row',
                         calcRemoveBtnSelector: 'button.calc#remove-row',
@@ -402,6 +409,8 @@ class zbccForm {
                     serviceNameInputPlaceholder: 'enter Service name'
                 },
                 presetTable: {
+                    showItAgain: 'button#show-service',
+
                     calcAppendBtnSelector: 'button.calc#append-row',
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
@@ -459,28 +468,34 @@ class zbccForm {
                     }
                 }
             }),
-            curves: new CurvesTable({
+            curves: new CurvesTables({
                 // cssClass: 'choosable',
                 cssClass: 'curved',
 
+                showItAgain: 'button#show-service',
                 anotherServiceNameSelector: '#zbcc-inputs .data-block#project-services .extra-inputs #service-name',
                 btnTablesSelector: '#zbcc-inputs .data-block#project-services',
                 curveableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.curveable',
+                curveableTablesCssClass: 'curved',
                 unhiddableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.unhiddable',
                 unhiddableTablesCssClass: 'unhidden',
                 choosableTablesSelector: '#zbcc-inputs .data-block#project-services .inputs-table.choosable',
                 choosableTablesCssClass: 'choosen',
                 removeClasses: ['choosen', 'unhidden', 'curved'],
                 addCurvesBtnSelector: 'button#add-curves',
+                saSelector: '#zbcc-inputs .data-block#project-services .inputs-table.unhiddable.calcable#{table-id}',
+                sbSelector: '#zbcc-inputs .data-block#project-services .inputs-table.choosable.calcable#{table-id}',
 
                 presetTable: {
+                    showItAgain: 'button#show-service',
+
                     calcAppendBtnSelector: 'button.calc#append-row',
                     calcRemoveBtnSelector: 'button.calc#remove-row',
 
                     tableParentElement: '#zbcc-inputs .data-block#project-services .base-inputs',
                     tableBlockSelector: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id}',
                     tableSelector: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} table',
-                    htmlTableTemplate: this.htmlTemplates.curvesTableTemplate,
+                    htmlTableTemplate: this.htmlTemplates.curvesTablesTemplate,
 
                     header: {
                         titleElement: '#zbcc-inputs .data-block#project-services .inputs-table.curveable.calcable#{table-id} header h3.table-title',

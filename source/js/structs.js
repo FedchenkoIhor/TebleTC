@@ -413,6 +413,7 @@ class CalcableTable extends Table {
         this.calcAppendBtnSelector = params.calcAppendBtnSelector
         this.calcRemoveBtnSelector = params.calcRemoveBtnSelector
 
+        this.showItAgain = params.showItAgain
         this.removeClasses = params.removeClasses
         this.addCurvesBtnSelector = params.addCurvesBtnSelector
 
@@ -433,6 +434,19 @@ class CalcableTable extends Table {
                 this.removeClasses.forEach(cssClass => {
                     $(this.element.parentNode).removeClass(cssClass)
                 })
+            })
+
+            console.log(this)
+            console.log($(this.element))
+            console.log($(this.element.parentNode))
+            console.log($(this.element.parentNode.parentNode))
+
+            $(this.element.parentNode.parentNode).on('click', this.showItAgain, e => {
+                if (this.element.parentNode.id === e.target.parentNode.id) {
+                    // $(this.element.parentNode).addClass('unhidden')
+                }
+                console.log(e.target.parentNode.id)
+                console.log('show it again')
             })
         }
     }
@@ -676,6 +690,7 @@ class ChoosableCalcableTables {
             table: new CalcableTable({
                 element: $(this.presetTable.tableSelector.replace('{table-id}', id))[0],
 
+                showItAgain: this.presetTable.showItAgain,
                 calcAppendBtnSelector: this.presetTable.calcAppendBtnSelector,
                 calcRemoveBtnSelector: this.presetTable.calcRemoveBtnSelector,
 
@@ -703,26 +718,37 @@ class ChoosableCalcableTables {
     }
 }
 
-class CurvesTable {
+class CurvesTables {
     constructor(params) {
         this.tables = {}
 
         this.cssClass = params.cssClass
         this.anotherServiceNameSelector = params.anotherServiceNameSelector
         this.btnTablesSelector = params.btnTablesSelector
-        this.addCurvesBtnSelector = params.addCurvesBtnSelector
+
+        this.showItAgain = params.showItAgain
+        this.anotherServiceNameSelector = params.anotherServiceNameSelector
+        this.btnTablesSelector = params.btnTablesSelector
+        this.curveableTablesSelector = params.curveableTablesSelector
+        this.curveableTablesCssClass = params.curveableTablesCssClass
         this.unhiddableTablesSelector = params.unhiddableTablesSelector
         this.unhiddableTablesCssClass = params.unhiddableTablesCssClass
         this.choosableTablesSelector = params.choosableTablesSelector
         this.choosableTablesCssClass = params.choosableTablesCssClass
+        this.removeClasses = params.removeClasses
+        this.addCurvesBtnSelector = params.addCurvesBtnSelector
+
+        this.saSelector = params.saSelector
+        this.sbSelector = params.sbSelector
+
         this.tableBlockSelector = params.presetTable.tableBlockSelector
 
         this.presetTable = params.presetTable
 
-        this.listenOnShowCurvesTable()
+        this.listenOnShowCurvesTables()
     }
 
-    listenOnShowCurvesTable() {
+    listenOnShowCurvesTables() {
         $(this.btnTablesSelector).on('click', this.addCurvesBtnSelector, e => {
             let idsOfTables = Object.keys(this.tables)
             let curId = e.target.parentNode.id
@@ -741,6 +767,13 @@ class CurvesTable {
                         : curId
                 )
             }
+        })
+
+        $(this.presetTable.tableParentElement).on('click', this.showItAgain, e => {
+            $(this.curveableTablesSelector).removeClass(this.curveableTablesCssClass)
+            $(this.saSelector.replace('{table-id}', e.target.parentNode.id)).addClass(this.unhiddableTablesCssClass)
+            $(this.sbSelector.replace('{table-id}', e.target.parentNode.id)).addClass(this.choosableTablesCssClass)
+            // $()
         })
     }
 
@@ -761,6 +794,7 @@ class CurvesTable {
             table: new CalcableTable({
                 element: $(this.presetTable.tableSelector.replace('{table-id}', id))[0],
 
+                showItAgain: this.presetTable.showItAgain,
                 calcAppendBtnSelector: this.presetTable.calcAppendBtnSelector,
                 calcRemoveBtnSelector: this.presetTable.calcRemoveBtnSelector,
 
