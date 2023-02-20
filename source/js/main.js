@@ -233,8 +233,8 @@ zbcc.dataBlocksForm.addDataBlock({
                                 '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="staking"] table tr[data-id] [data-id="pool-for-rewards"]',
                                 '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="farming"] table tr[data-id] [data-id="pool-for-rewards"]',
                                 '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id] table tr[data-id] [data-id="pool-for-rewards"]',
-                                // '#zbcc-precond-popup .data-.form-blockblock[data-id="precond"]-popup .inputs [data-id="pool-threshold select[data-id="pool-threshold-easier-pool"]"]',
-                                // '#zbcc-precond-popup .data-.form-blockblock[data-id="precond"]-popup .inputs [data-id="pool-threshold select[data-id="pool-threshold-harder-pool"]"]',
+                                '#zbcc > .form-block[data-id="precond"] .input-data [data-id="pool-threshold"] select[data-id="pool-threshold-easier-pool"]',
+                                '#zbcc > .form-block[data-id="precond"] .input-data [data-id="pool-threshold"] select[data-id="pool-threshold-harder-pool"]',
                             ]
                         }
                     }

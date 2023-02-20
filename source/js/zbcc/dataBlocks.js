@@ -218,7 +218,7 @@ class zbccDataBlock_ProjectServices extends zbccDataBlock {
             })
 
             ok(this.curveTables).forEach(serviceTableKey => {
-                $(this.curveTables[serviceTableKey].element).parent().removeClass(this.choosableActiveCssClass)
+                $(this.curveTables[serviceTableKey].element).parent().removeClass(this.curveableActiveCssClass)
             })
 
             $(this.serviceTables[
