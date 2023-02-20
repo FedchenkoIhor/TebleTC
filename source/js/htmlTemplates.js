@@ -1,195 +1,126 @@
 const htmlTemplates = {
-    trInvestmentRound:
-    '<tr id="{id}">' +
-    '    <td><input type="text" id="round-title" value="Round {number}"></td>' +
-    '    <td><input type="number" step="any" id="fiat" value="" placeholder="x"></td>' +
-    '    <td><input type="number" step="any" id="token-price" value="" placeholder="x"></td>' +
-    '    <td><input type="number" step="any" id="tokens-amount" value="" placeholder="x"></td>' +
-    '    <td><input type="number" step="any" id="investor-share" value="" placeholder="%"></td>' +
-    '</tr>' +
-    '' +
-    '',
 
-    //
+    trInvestmentRound:
+    '<tr data-id="{row-id}">' +
+    '    <td><input type="text" data-id="round-title" value="Round {row-number}"></td>' +
+    '    <td><input type="number" value="" step="any" data-id="fiat" placeholder="x"></td>' +
+    '    <td><input type="number" value="" step="any" data-id="token-price" placeholder="x"></td>' +
+    '    <td><input type="number" value="" step="any" data-id="tokens-amount" placeholder="x"></td>' +
+    '    <td><input type="number" value="" step="any" data-id="investor-share" placeholder="%"></td>' +
+    '</tr>',
 
     trAgent:
-    '<tr id="{id}">' +
-    '    <td><input type="text" id="agent-name" value="Agent {number}"></td>' +
-    '    <td><input type="number" id="agent-share" value="" placeholder="%"></td> ' +
-    '    <td><input type="number" id="tokens-amount" value="10000"></td>' +
-    '</tr>' +
-    '' +
-    '',
+    '<tr data-id="{row-id}">' +
+    '    <td><input type="text" data-id="agent-name" value="Agent {row-number}"></td>' +
+    '    <td><input type="number" step="any" data-id="agent-share" placeholder="%" value=""></td> ' +
+    '    <td><input type="number" step="any" data-id="tokens-amount" value="" placeholder="x"></td>' +
+    '</tr>',
 
     //
 
     trPoolType:
-    '<tr id="{id}">' +
-    '    <td><input type="text" id="pool-number" value="{number}"></td>' +
+    '<tr data-id="{row-id}">' +
+    '    <td><input type="text" data-id="pool-number" value="{row-number}"></td>' +
     '    <td>' +
-    '        <input type="text" id="pool-type" value="Pool type">' +
+    '        <input type="text" data-id="pool-type" value="Pool type">' +
     '    </td>' +
     '    <td>' +
     '        <div class="calc-buttons">' +
-    '            <button class="calc" id="remove-row">–</button>' +
-    '            <button class="calc" id="append-row">+</button>' +
+    '            <button type="button" class="calc" data-action="delete">–</button>' +
+    '            <button type="button" class="calc" data-action="add">+</button>' +
     '        </div>' +
     '    </td>' +
-    '</tr>' +
-    '' +
-    '',
+    '</tr>',
 
     trPool:
-    '<tr id="{id}">' +
-    '    <td><input type="text" id="pool-title" value="Pool {number}"></td>' +
+    '<tr data-id="{row-id}">' +
+    '    <td><input type="text" data-id="pool-title" value="Pool {row-number}"></td>' +
     '    <td>' +
-    '        <select name="pool-type" id="pool-type">' +
-    '            {pool-types-options}' +
+    '        <select data-id="pool-type">' +
+    '            {pool-type-options}' +
     '        </select>' +
     '    </td>' +
-    '    <td><input type="text" id="pool-share" value="" placeholder="%"></td>' +
-    '    <td><input type="text" id="amount" value="10000"></td>' +
+    '    <td><input type="text" data-id="pool-share" value="" placeholder="%"></td>' +
+    '    <td><input type="text" data-id="amount" value="10000"></td>' +
     '    <td>' +
     '        <div class="calc-buttons">' +
-    '            <button class="calc" id="remove-row">–</button>' +
-    '            <button class="calc" id="append-row">+</button>' +
+    '            <button type="button" class="calc" data-action="delete">–</button>' +
+    '            <button type="button" class="calc" data-action="add">+</button>' +
     '        </div>' +
     '    </td>' +
-    '</tr>' +
-    '' +
-    '',
+    '</tr>',
 
     //
 
     trVesting:
-    '<tr id="{id}"> ' +
+    '<tr data-id="{row-id}"> ' +
     '    <td>' +
-    '        <select name="agent-name" id="agent-name">' +
-    '           {agent-names-options}' +
+    '        <select data-id="agent-name">' +
+    '           {agent-name-options}' +
     '        </select>' +
     '    </td>' +
     '    <td>' +
-    '       <select name="pool-title" id="pool-title">' +
+    '       <select data-id="pool-title">' +
     '          {pool-title-options}' +
     '       </select>' +
     '    </td>' +
-    '    <td><input type="text" id="start-vesting" value="" placeholder="x"></td>' +
-    '    <td><input type="text" id="end-vesting" value="" placeholder="x"></td>' +
-    '    <td><input type="text" id="vesting-coefficient" value="" placeholder="%"></td>' +
+    '    <td><input type="text" data-id="start-vesting" value="" placeholder="x"></td>' +
+    '    <td><input type="text" data-id="end-vesting" value="" placeholder="x"></td>' +
+    '    <td><input type="text" data-id="vesting-coefficient" value="" placeholder="%"></td>' +
     '    <td>' +
     '        <div class="calc-buttons">' +
-    '            <button class="calc" id="remove-row">–</button>' +
-    '            <button class="calc" id="append-row">+</button>' +
+    '            <button type="button" class="calc" data-action="delete">–</button>' +
+    '            <button type="button" class="calc" data-action="add">+</button>' +
     '        </div>' +
     '    </td>' +
-    '</tr>' +
-    '' +
-    '',
+    '</tr>',
 
     trUnlocking:
-    '<tr id="{id}">' +
+    '<tr data-id="{row-id}">' +
     '    <td>' +
-    '        <select name="agent-name" id="agent-name">' +
-    '           {agent-names-options}' +
+    '        <select data-id="agent-name">' +
+    '           {agent-name-options}' +
     '        </select>' +
     '    </td>' +
-    '    <td><input type="text" id="start-unlocking" value="" placeholder="x"></td>' +
-    '    <td><input type="text" id="end-unlocking" value="" placeholder="x"></td>' +
-    '    <td><input type="text" id="initial-unlocking" value="" placeholder="x"></td>' +
+    '    <td><input type="text" data-id="start-unlocking" value="" placeholder="x"></td>' +
+    '    <td><input type="text" data-id="end-unlocking" value="" placeholder="x"></td>' +
+    '    <td><input type="text" data-id="initial-unlocking" value="" placeholder="x"></td>' +
     '    <td>' +
     '        <div class="calc-buttons">' +
-    '            <button class="calc" id="remove-row">–</button>' +
-    '            <button class="calc" id="append-row">+</button>' +
+    '            <button type="button" class="calc" data-action="delete">–</button>' +
+    '            <button type="button" class="calc" data-action="add">+</button>' +
     '        </div>' +
     '    </td>' +
-    '</tr>' +
-    '' +
-    '',
+    '</tr>',
 
     //
-
-    trFarming:
-    '' +
-    '<tr id="{id}">' +
-    '    <td><input type="number" value="{number}" id="number"></td>' +
-    '    <td>' +
-    '        <select name="agent-name" id="agent-name">' +
-    '            {agent-names-options}' +
-    '        </select>' +
-    '    </td>' +
-    '    <td><input type="number" id="agent-share" value="" placeholder="%"></td>' +
-    '    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>' +
-    '    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>' +
-    '    <td>' +
-    '        <select name="pool-for-rewards" id="pool-for-rewards">' +
-    '            {pool-title-options}' +
-    '        </select>' +
-    '    </td>' +
-    '    <td>' +
-    '        <div class="calc-buttons">' +
-    '            <button class="calc" id="remove-row">–</button>' +
-    '            <button class="calc" id="append-row">+</button>' +
-    '        </div>' +
-    '    </td>' +
-    '</tr>' +
-    '',
-
-    trStaking:
-    '' +
-    '<tr id="{id}">' +
-    '    <td><input type="number" value="{number}" id="number"></td>' +
-    '    <td>' +
-    '        <select name="agent-name" id="agent-name">' +
-    '            {agent-names-options}' +
-    '        </select>' +
-    '    </td>' +
-    '    <td><input type="number" id="agent-share" value="" placeholder="%"></td>' +
-    '    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>' +
-    '    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>' +
-    '    <td>' +
-    '        <select name="pool-for-rewards" id="pool-for-rewards">' +
-    '            {pool-title-options}' +
-    '        </select>' +
-    '    </td>' +
-    '    <td>' +
-    '        <div class="calc-buttons">' +
-    '            <button class="calc" id="remove-row">–</button>' +
-    '            <button class="calc" id="append-row">+</button>' +
-    '        </div>' +
-    '    </td>' +
-    '</tr>' +
-    '',
 
     trService:
-    '' +
-    '<tr id="{id}">' +
-    '    <td><input type="number" value="{number}" id="number"></td>' +
+    '<tr data-id="{row-id}">' +
+    '    <td><input type="number" step="any" value="{row-number}" data-id="number"></td>' +
     '    <td>' +
-    '        <select name="agent-name" id="agent-name">' +
-    '            {agent-names-options}' +
+    '        <select data-id="agent-name">' +
+    '            {agent-name-options}' +
     '        </select>' +
     '    </td>' +
-    '    <td><input type="number" id="agent-share" value="" placeholder="%"></td>' +
-    '    <td><input type="number" id="unstaking-factor" value="" placeholder="%"></td>' +
-    '    <td><input type="number" id="reward-coefficient" value="" placeholder="%"></td>' +
+    '    <td><input type="number" step="any" data-id="agent-share" value="" placeholder="%"></td>' +
+    '    <td><input type="number" step="any" data-id="unstaking-factor" value="" placeholder="%"></td>' +
+    '    <td><input type="number" step="any" data-id="reward-coefficient" value="" placeholder="%"></td>' +
     '    <td>' +
-    '        <select name="pool-for-rewards" id="pool-for-rewards">' +
+    '        <select data-id="pool-for-rewards">' +
     '            {pool-title-options}' +
     '        </select>' +
     '    </td>' +
     '    <td>' +
     '        <div class="calc-buttons">' +
-    '            <button class="calc" id="remove-row">–</button>' +
-    '            <button class="calc" id="append-row">+</button>' +
+    '            <button type="button" class="calc" data-action="delete">–</button>' +
+    '            <button type="button" class="calc" data-action="add">+</button>' +
     '        </div>' +
     '    </td>' +
-    '</tr>' +
-    '',
-
-    //
+    '</tr>',
 
     serviceTableTemplate:
-    '<div class="inputs-table choosable calcable choosen" id="{table-id}">' +
+    '<div class="inputs-table calcable choosable choosen" data-id="{table-id}">' +
     '    <header>' +
     '        <h3 class="table-title">{table-title}</h3>' +
     '        <div class="table-description"></div>' +
@@ -205,13 +136,13 @@ const htmlTemplates = {
     '            <th></th>' +
     '        </tr>' +
     '    </table>' +
-    '    <button class="submit" id="add-curves">Add curves</button>' +
-    '</div>' +
-    '' +
-    '',
+    '    <div class="action-buttons">' +
+    '        <button type="button" class="action" data-action="add-curves">Add curves</button>' +
+    '    </div>' +
+    '</div>',
 
-    curvesTablesTemplate:
-    '<div class="inputs-table curveable calcable curved" id="{table-id}">' +
+    curvesTableTemplate:
+    '<div class="inputs-table curveable calcable curved" data-id="{table-id}">' +
     '    <header>' +
     '        <h3 class="table-title">"{service-name}" Income</h3>' +
     '        <div class="table-description">(Incomes - marketing functions for planned project services)</div>' +
@@ -229,90 +160,62 @@ const htmlTemplates = {
     '            <th></th>' +
     '        </tr>' +
     '    </table>' +
-    '    <button class="submit" id="show-service">Back to service</button>' +
-    '</div>' +
-    '' +
-    '',
-
-    /* <tr id="0">' +
-    '            <td><input type="number" id="curve-number" value="{number}"></td>' +
-    '            <td><input type="number" id="sales-start" value="4"></td>' +
-    '            <td><input type="number" id="sales-end" value="7"></td>' +
-    '            <td><input type="number" id="sales-min" value="10000"></td>' +
-    '            <td><input type="number" id="sales-max" value="10000"></td>' +
-    '            <td>' +
-    '                <select name="choose-algorithm" id="choose-algorithm">' +
-    '                    <option value="Linear">Linear</option>' +
-    '                    <option value="Exponential">Exponential</option>' +
-    '                </select>' +
-    '            </td>' +
-    '            <td><input type="number" id="angular-coefficient" value="0.9"></td>' +
-    '            <td><input type="number" id="risings-coefficient" value="0.7"></td>' +
-    '            <td>' +
-    '                <div class="calc-buttons">' +
-    '                    <button class="calc" id="remove-row">–</button>' +
-    '                    <button class="calc" id="append-row">+</button>' +
-    '                </div>' +
-    '            </td>' +
-    '        </tr>' + */
+    '    <div class="action-buttons">' +
+        '    <button type="button" class="action" data-action="show-service">Back to service</button>' +
+    '    </div>' +
+    '</div>',
 
     trCurve:
-    '<tr id="{id}">' +
-    '    <td><input type="number" readonly id="curve-number" value="{number}"></td>' +
-    '    <td><input type="number" id="sales-start" value="4"></td>' +
-    '    <td><input type="number" id="sales-end" value="7"></td>' +
-    '    <td><input type="number" id="sales-min" value="10000"></td>' +
-    '    <td><input type="number" id="sales-max" value="10000"></td>' +
+    '<tr data-id="{row-id}">' +
+    '    <td><input type="number" step="1" readonly data-id="curve-number" value="{row-number}"></td>' +
+    '    <td><input type="number" step="1" data-id="sales-start" value="4"></td>' +
+    '    <td><input type="number" step="1" data-id="sales-end" value="7"></td>' +
+    '    <td><input type="number" step="1" data-id="sales-min" value="10000"></td>' +
+    '    <td><input type="number" step="any" data-id="sales-max" value="10000"></td>' +
     '    <td>' +
-    '        <select name="choose-algorithm" id="choose-algorithm">' +
+    '        <select data-id="choose-algorithm">' +
     '            <option value="Linear">Linear</option>' +
     '            <option value="Exponential">Exponential</option>' +
     '        </select>' +
     '    </td>' +
-    '    <td><input type="number" id="angular-coefficient" value="0.9"></td>' +
-    '    <td><input type="number" id="risings-coefficient" value="0.7"></td>' +
+    '    <td><input type="number" step="any" data-id="angular-coefficient" value="0.9"></td>' +
+    '    <td><input type="number" step="any" data-id="risings-coefficient" value="0.7"></td>' +
     '    <td>' +
     '        <div class="calc-buttons">' +
-    '            <button class="calc" id="remove-row">–</button>' +
-    '            <button class="calc" id="append-row">+</button>' +
+    '            <button type="button" class="calc" data-action="delete">–</button>' +
+    '            <button type="button" class="calc" data-action="add">+</button>' +
     '        </div>' +
     '    </td>' +
-    '</tr>' +
-    '' +
-    '',
-
-    serviceNameOption: '<option id="{id}" value="{value}">{text}</option>',
+    '</tr>',
 
     //
 
     trAction:
-    '<tr id="{id}">' +
-    '    <td><input type="text" id="action-number" value="Action {number}"></td>' +
-    '    <td><input type="text" id="source" value=""></td>' +
+    '<tr data-id="{row-id}">' +
+    '    <td><input type="text" data-id="action-number" value="Action {row-number}"></td>' +
+    '    <td><input type="text" data-id="source" value=""></td>' +
     '    <td>' +
-    '       <select name="currency-type" id="currency-type">' +
-    '           {pool-types-options}' +
+    '       <select data-id="currency-type">' +
+    '           {pool-type-options}' +
     '        </select>' +
     '    </td>' +
-    '    <td><input type="text" id="value-percents" value="" placeholder="%"></td>' +
-    '    <td><input type="text" id="destination" value=""></td>' +
+    '    <td><input type="text" data-id="value-percents" value="" placeholder="%"></td>' +
+    '    <td><input type="text" data-id="destination" value=""></td>' +
     '    <td>' +
     '        <label>' +
-    '            <input type="checkbox" id="pre-condition">' +
+    '            <input type="checkbox" name="" data-id="pre-condition">' +
     '            Yes/No' +
     '        </label>' +
-    '</td>' +
+    '    </td>' +
     '    <td>' +
     '        <div class="calc-buttons">' +
-    '            <button class="calc" id="remove-row">–</button>' +
-    '            <button class="calc" id="append-row">+</button>' +
+    '            <button type="button" class="calc" data-action="delete">–</button>' +
+    '            <button type="button" class="calc" data-action="add">+</button>' +
     '        </div>' +
     '    </td>' +
-    '</tr>' +
-    '' +
-    '',
+    '</tr>',
 
     //
 
-    selectOption: '<option id="{id}" value="{value}">{text}</option>',
+    selectOption: '<option data-id="{id}" value="{value}">{text}</option>',
 }

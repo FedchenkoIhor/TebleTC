@@ -1,797 +1,985 @@
-class formData {
-    constructor() {
-        this.declareStructure()
-        this.initBaseEventListeners()
-        this.initRuledEventsListeners()
-    }
+const zbcc = new zbCryptoConstructor({
+    dataBlocksFormSelector: '.form-block[data-id="data-blocks"]'
+})
 
-    addTr(params) {
-        const dbName = params.dbName
-        const trsNumber = params.trsNumber
+zbcc.dataBlocksForm.addEventListener('submit', (e, formBlock) => {
+    e.preventDefault()
+    e.stopImmediatePropagation()
 
-        const dbId = params.dbId
-        const tableId = params.tableId
+    console.log(formBlock.getValues())
+})
 
-        if (this[dbName][trsNumber].value > this[dbName][trsNumber].prevValue) {
-            while (this[dbName][trsNumber].value > this[dbName][trsNumber].prevValue) {
-                $('#zbcc #' + dbId + ' #' + tableId + '').append(
-                    htmlTemplates.trPool
-                    .replace('{id}', this[dbName][trsNumber].prevValue)
-                    .replace('{number}', Number(this[dbName][trsNumber].prevValue) + 1)
-                )
-
-                this[dbName].poolsTable.value.push({
-                    id: this[dbName][trsNumber].prevValue,
-                    poolTitle: $('#zbcc #' + dbId + ' #' + tableId + ' tr#' + this[dbName][trsNumber].prevValue + '  #pool-title')[0].value,
-                    poolType: $('#zbcc #' + dbId + ' #' + tableId + ' tr#' + this[dbName][trsNumber].prevValue + '  #pool-type')[0].value,
-                    poolShare: $('#zbcc #' + dbId + ' #' + tableId + ' tr#' + this[dbName][trsNumber].prevValue + '  #pool-share')[0].value,
-                    amount: $('#zbcc #' + dbId + ' #' + tableId + ' tr#' + this[dbName][trsNumber].prevValue + '  #amount')[0].value,
-                })
-
-                this[dbName][trsNumber].prevValue++
-            }
-
-        } else if (this[dbName][trsNumber].value < this[dbName][trsNumber].prevValue) {
-            while (this[dbName][trsNumber].value < this[dbName][trsNumber].prevValue) {
-                this[dbName].poolsTable.value.pop()
-                $('#zbcc #' + dbId + ' #' + tableId + ' tr#' + (this[dbName][trsNumber].prevValue - 1)).remove()
-                this[dbName][trsNumber].prevValue--
-            }
-        }
-    }
-
-    declareStructure() {
-        this.initialData = {
+zbcc.dataBlocksForm.addDataBlock({
+    name: 'initialData',
+    object: new zbccDataBlock_InitialData({
+        inputsSelectors: {
+            totalTokensAmount: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="initial-data"] [data-id="total-tokens-amount"]',
+            initialTokenPrice: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="initial-data"] [data-id="initial-token-price"]',
+            exchangeType: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="initial-data"] [data-id="exchange-type"]',
+            tradingFunction: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="initial-data"] [data-id="trading-function"]',
+            duration: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="initial-data"] [data-id="duration"]',
+        },
+        inputsParams: {
             totalTokensAmount: {
-                prevValue: $('#zbcc #initial-data-db #total-tokens-amount')[0].value,
-                value: $('#zbcc #initial-data-db #total-tokens-amount')[0].value,
-                element: $('#zbcc #initial-data-db #total-tokens-amount')[0],
-                listeners: []
+                type: 'number',
+                dataType: 'integer',
             },
             initialTokenPrice: {
-                prevValue: $('#zbcc #initial-data-db #initial-token-price')[0].value,
-                value: $('#zbcc #initial-data-db #initial-token-price')[0].value,
-                element: $('#zbcc #initial-data-db #initial-token-price')[0],
-                listeners: []
+                type: 'number',
+                dataType: 'float',
             },
             exchangeType: {
-                prevValue: $('#zbcc #initial-data-db #exchange-type')[0].value,
-                value: $('#zbcc #initial-data-db #exchange-type')[0].value,
-                element: $('#zbcc #initial-data-db #exchange-type')[0],
-                listeners: []
+                type: 'select',
+                allowedValues: ['decentralized', 'centralized']
             },
             tradingFunction: {
-                prevValue: $('#zbcc #initial-data-db #trading-function')[0].value,
-                value: $('#zbcc #initial-data-db #trading-function')[0].value,
-                element: $('#zbcc #initial-data-db #trading-function')[0],
-                listeners: []
+                type: 'select',
+                allowedValues: ['increasing', 'decreasing', 'volatility']
             },
             duration: {
-                prevValue: $('#zbcc #initial-data-db #duration')[0].value,
-                value: $('#zbcc #initial-data-db #duration')[0].value,
-                element: $('#zbcc #initial-data-db #duration')[0],
-                listeners: []
+                type: 'number',
+                dataType: 'integer',
+            },
+        }
+    })
+})
+
+zbcc.dataBlocksForm.addDataBlock({
+    name: 'investmentRounds',
+    object: new zbccDataBlock_InvestmentRounds({
+        table: new NumerableTable({
+            elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="investment-rounds"] .inputs-table.numerable[data-id="rounds"] table',
+            controls: {
+                numerableInputSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="investment-rounds"] [data-id="rounds-number"]',
+            },
+            rowPreset: {
+                numOnInit: 1,
+                numOfMin: 1,
+                htmlTemplate: htmlTemplates.trInvestmentRound,
+                trSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="investment-rounds"] .inputs-table.numerable[data-id="rounds"] table tr[data-id]',
+                inputsSelectors: {
+                    roundTitle: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="investment-rounds"] .inputs-table.numerable[data-id="rounds"] table tr[data-id="{tr-id}"] [data-id="round-title"]',
+                    fiat: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="investment-rounds"] .inputs-table.numerable[data-id="rounds"] table tr[data-id="{tr-id}"] [data-id="fiat"]',
+                    tokenPrice: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="investment-rounds"] .inputs-table.numerable[data-id="rounds"] table tr[data-id="{tr-id}"] [data-id="token-price"]',
+                    tokensAmount: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="investment-rounds"] .inputs-table.numerable[data-id="rounds"] table tr[data-id="{tr-id}"] [data-id="tokens-amount"]',
+                    investorShare: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="investment-rounds"] .inputs-table.numerable[data-id="rounds"] table tr[data-id="{tr-id}"] [data-id="investor-share"]',
+                },
+                inputsParams: {
+                    roundTitle: {
+                        type: 'text',
+                    },
+                    fiat: {
+                        type: 'number',
+                        dataType: 'float',
+                    },
+                    tokenPrice: {
+                        type: 'number',
+                        dataType: 'float',
+                    },
+                    tokensAmount: {
+                        type: 'number',
+                        dataType: 'float',
+                    },
+                    investorShare: {
+                        type: 'number',
+                        dataType: 'float',
+                    },
+                },
+            }
+        })
+    })
+})
+
+zbcc.dataBlocksForm.addDataBlock({
+    name: 'agents',
+    object: new zbccDataBlock_Agents({
+        table: new NumerableTable({
+            elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="agents"] .inputs-table.numerable[data-id="agents"] table',
+            controls: {
+                numerableInputSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="agents"] [data-id="agents-number',
+            },
+            rowPreset: {
+                numOnInit: 1,
+                numOfMin: 1,
+                htmlTemplate: htmlTemplates.trAgent,
+                trSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="agents"] .inputs-table.numerable[data-id="agents"] table tr[data-id]',
+                inputsSelectors: {
+                    agentName: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="agents"] .inputs-table.numerable[data-id="agents"] table tr[data-id="{tr-id}"] [data-id="agent-name"]',
+                    agenShare: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="agents"] .inputs-table.numerable[data-id="agents"] table tr[data-id="{tr-id}"] [data-id="agent-share"]',
+                    tokensAmount: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="agents"] .inputs-table.numerable[data-id="agents"] table tr[data-id="{tr-id}"] [data-id="tokens-amount"]',
+                },
+                inputsParams: {
+                    agentName: {
+                        type: 'text',
+                    },
+                    agenShare: {
+                        type: 'number',
+                        dataType: 'float'
+                    },
+                    tokensAmount: {
+                        type: 'number',
+                        dataType: 'float'
+                    },
+                },
+                linksToDependableSelects: {
+                    agentName: {
+                        inputId: 'agent-name',
+                        optionHtmlTemplate: htmlTemplates.selectOption,
+                        optionSelector: 'option[value="{value}"][data-id="{id}"]',
+                        selects: [
+                            '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="vesting"] table tr[data-id] [data-id="agent-name"]',
+                            '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="unlocking"] table tr[data-id] [data-id="agent-name"]',
+                            '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="staking"] table tr[data-id] [data-id="agent-name"]',
+                            '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="farming"] table tr[data-id] [data-id="agent-name"]',
+                            '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id] table tr[data-id] [data-id="agent-name"]',
+                        ]
+                    }
+                }
+            }
+        })
+    })
+})
+
+zbcc.dataBlocksForm.addDataBlock({
+    name: 'pools',
+    object: new zbccDataBlock_Pools({
+        tables: {
+            poolTypes: new CalcableTable({
+                elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pool-types"] table',
+
+                controls: {
+                    calcAddBtnSelector: 'button.calc[data-action="add"]',
+                    calcDeleteBtnSelector: 'button.calc[data-action="delete"]',
+                },
+
+                rowPreset: {
+                    numOnInit: 1,
+                    numOfMin: 1,
+                    htmlTemplate: htmlTemplates.trPoolType,
+                    trSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pool-types"] table tr[data-id]',
+                    inputsSelectors: {
+                        poolNumber: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pool-types"] table tr[data-id="{tr-id}"] [data-id="pool-number"]',
+                        poolType: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pool-types"] table tr[data-id="{tr-id}"] [data-id="pool-type"]',
+                    },
+                    inputsParams: {
+                        poolNumber: {
+                            type: 'number',
+                            dataType: 'integer'
+                        },
+                        poolType: {
+                            type: 'text'
+                        },
+                    },
+                    linksToDependableSelects: {
+                        poolType: {
+                            inputId: 'pool-type',
+                            optionHtmlTemplate: htmlTemplates.selectOption,
+                            optionSelector: 'option[value="{value}"][data-id="{id}"]',
+                            selects: [
+                                '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pools"] table tr[data-id] [data-id="pool-type"]',
+                                '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="token-circulation"] .inputs-table.calcable.unhideable[data-id="actions"] table tr[data-id] [data-id="currency-type"]',
+                            ]
+                        },
+                    }
+                }
+            }),
+            pools: new CalcableTable({
+                elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pools"] table',
+
+                controls: {
+                    calcAddBtnSelector: 'button.calc[data-action="add"]',
+                    calcDeleteBtnSelector: 'button.calc[data-action="delete"]',
+                },
+
+                rowPreset: {
+                    numOnInit: 1,
+                    numOfMin: 1,
+                    htmlTemplate: htmlTemplates.trPool,
+                    trSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pools"] table tr[data-id]',
+                    inputsSelectors: {
+                        poolTitle: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pools"] table tr[data-id="{tr-id}"] [data-id="pool-title"]',
+                        poolType: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pools"] table tr[data-id="{tr-id}"] [data-id="pool-type"]',
+                        poolShare: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pools"] table tr[data-id="{tr-id}"] [data-id="pool-share"]',
+                        amount: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pools"] table tr[data-id="{tr-id}"] [data-id="amount"]',
+                    },
+                    inputsParams: {
+                        poolTitle: {
+                            type: 'text',
+                        },
+                        poolType: {
+                            type: 'select',
+                        },
+                        poolShare: {
+                            type: 'text',
+                        },
+                        amount: {
+                            type: 'text',
+                        },
+                    },
+                    linksToOptions: {
+                        poolTypes: {
+                            selector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pool-types"] table tr[data-id] [data-id="pool-type"]',
+                            optionHtmlTemplate: htmlTemplates.selectOption,
+                            mask: '{pool-type-options}',
+                        }
+                    },
+                    linksToDependableSelects: {
+                        poolTitle: {
+                            inputId: 'pool-title',
+                            optionHtmlTemplate: htmlTemplates.selectOption,
+                            optionSelector: 'option[value="{value}"][data-id="{id}"]',
+                            selects: [
+                                '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="vesting"] table tr[data-id] [data-id="pool-title"]',
+                                '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="staking"] table tr[data-id] [data-id="pool-for-rewards"]',
+                                '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="farming"] table tr[data-id] [data-id="pool-for-rewards"]',
+                                '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id] table tr[data-id] [data-id="pool-for-rewards"]',
+                                // '#zbcc-precond-popup .data-.form-blockblock[data-id="precond"]-popup .inputs [data-id="pool-threshold select[data-id="pool-threshold-easier-pool"]"]',
+                                // '#zbcc-precond-popup .data-.form-blockblock[data-id="precond"]-popup .inputs [data-id="pool-threshold select[data-id="pool-threshold-harder-pool"]"]',
+                            ]
+                        }
+                    }
+                }
+            })
+        }
+    })
+})
+
+zbcc.dataBlocksForm.addDataBlock({
+    name: 'vestingAndUnlocking',
+    object: new zbccDataBlock_VestingAndUnlocking({
+        cssActiveClass: 'unhidden',
+        unhiders: {
+            vesting: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] button.unhider[data-unhideableId="vesting"]',
+            unlocking: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] button.unhider[data-unhideableId="unlocking"]',
+        },
+        tables: {
+            vesting: new CalcableTable({
+                elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="vesting"] table',
+
+                controls: {
+                    calcAddBtnSelector: 'button.calc[data-action="add"]',
+                    calcDeleteBtnSelector: 'button.calc[data-action="delete"]',
+                },
+
+                rowPreset: {
+                    numOnInit: 1,
+                    numOfMin: 1,
+                    htmlTemplate: htmlTemplates.trVesting,
+                    trSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="vesting"] table tr[data-id]',
+                    inputsSelectors: {
+                        agentName: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="vesting"] table tr[data-id="{tr-id}"] [data-id="agent-name"]',
+                        poolTitle: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="vesting"] table tr[data-id="{tr-id}"] [data-id="pool-title"]',
+                        startVesting: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="vesting"] table tr[data-id="{tr-id}"] [data-id="start-vesting"]',
+                        endVesting: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="vesting"] table tr[data-id="{tr-id}"] [data-id="end-vesting"]',
+                        vestingCoefficient: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="vesting"] table tr[data-id="{tr-id}"] [data-id="vesting-coefficient"]',
+                    },
+                    inputsParams: {
+                        agentName: {
+                            type: 'text'
+                        },
+                        poolTitle: {
+                            type: 'select'
+                        },
+                        startVesting: {
+                            type: 'text'
+                        },
+                        endVesting: {
+                            type: 'text'
+                        },
+                        vestingCoefficient: {
+                            type: 'text'
+                        },
+                    },
+                    linksToOptions: {
+                        agentName: {
+                            selector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="agents"] .inputs-table.numerable[data-id="agents"] table tr[data-id] [data-id="agent-name"]',
+                            optionHtmlTemplate: htmlTemplates.selectOption,
+                            mask: '{agent-name-options}',
+                        },
+                        poolTitle: {
+                            selector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pools"] table tr[data-id] [data-id="pool-title"]',
+                            optionHtmlTemplate: htmlTemplates.selectOption,
+                            mask: '{pool-title-options}',
+                        }
+                    }
+                }
+            }),
+            unlocking: new CalcableTable({
+                elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="unlocking"] table',
+
+                controls: {
+                    calcAddBtnSelector: 'button.calc[data-action="add"]',
+                    calcDeleteBtnSelector: 'button.calc[data-action="delete"]',
+                },
+
+                rowPreset: {
+                    numOnInit: 1,
+                    numOfMin: 1,
+                    htmlTemplate: htmlTemplates.trUnlocking,
+                    trSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="unlocking"] table tr[data-id]',
+                    inputsSelectors: {
+                        agentName: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="unlocking"] table tr[data-id="{tr-id}"] [data-id="agent-name"]',
+                        startUnlocking: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="unlocking"] table tr[data-id="{tr-id}"] [data-id="start-unlocking"]',
+                        endUnlocking: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="unlocking"] table tr[data-id="{tr-id}"] [data-id="end-unlocking"]',
+                        initialUnlocking: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] .inputs-table.calcable.unhideable[data-id="unlocking"] table tr[data-id="{tr-id}"] [data-id="initial-unlocking"]',
+                    },
+                    inputsParams: {
+                        agentName: {
+                            type: 'text',
+                        },
+                        startUnlocking: {
+                            type: 'text',
+                        },
+                        endUnlocking: {
+                            type: 'text',
+                        },
+                        initialUnlocking: {
+                            type: 'text',
+                        },
+                    },
+                    linksToOptions: {
+                        agentName: {
+                            selector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="agents"] .inputs-table.numerable[data-id="agents"] table tr[data-id] [data-id="agent-name"]',
+                            optionHtmlTemplate: htmlTemplates.selectOption,
+                            mask: '{agent-name-options}',
+                        }
+                    }
+                }
+            })
+        }
+    })
+})
+
+zbcc.dataBlocksForm.addDataBlock({
+    name: 'projectServices',
+    object: new zbccDataBlock_ProjectServices({
+        tablesDataBlockSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .base-inputs',
+
+        unhideableActiveCssClass: 'unhidden',
+        unhideableCssClass: 'unhideable',
+        unhiders: {
+            staking: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] button.unhider[data-unhideableId="staking"]',
+            farming: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] button.unhider[data-unhideableId="farming"]',
+        },
+
+        choosableActiveCssClass: 'choosen',
+        choosableCssClass: 'choosable',
+        choosableTableSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id="{table-id}"]',
+
+        choosers: {
+            serviceNameInput: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .extra-inputs [data-id="service-name"]',
+            servicesSelectBox: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .extra-inputs [data-id="service-names"]',
+            addServiceBtn: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .extra-inputs [data-id="add"]',
+            serviceNameOptionSelector: 'option[id="{id}"]',
+            serviceNameOptionTemplate: htmlTemplates.selectOption,
+        },
+
+        htmlServiceTableTemplate: htmlTemplates.serviceTableTemplate,
+        htmlCurvesTableTemplate: htmlTemplates.curvesTableTemplate,
+
+        curveableActiveCssClass: 'curved',
+        curveableCssClass: 'curveable',
+        curveableTablesSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.curveable',
+
+        servicesNames: {
+            staking: 'Staking',
+            farming: 'Farming',
+        },
+
+        serviceTables: {
+            staking: new CalcableTable({
+                elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="staking"] table',
+
+                controls: {
+                    calcAddBtnSelector: 'button.calc[data-action="add"]',
+                    calcDeleteBtnSelector: 'button.calc[data-action="delete"]',
+                },
+
+                actionButtons: {
+                    addCurves: 'button.action[data-action="add-curves"]'
+                },
+
+                rowPreset: {
+                    numOnInit: 1,
+                    numOfMin: 1,
+                    htmlTemplate: htmlTemplates.trService,
+                    trSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="staking"] table tr[data-id]',
+                    inputsSelectors: {
+                        number: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="staking"] table tr[data-id="{tr-id}"] [data-id="number"]',
+                        agentName: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="staking"] table tr[data-id="{tr-id}"] [data-id="agent-name"]',
+                        agentShare: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="staking"] table tr[data-id="{tr-id}"] [data-id="agent-share"]',
+                        unstakingFactor: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="staking"] table tr[data-id="{tr-id}"] [data-id="unstaking-factor"]',
+                        rewardCoefficient: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="staking"] table tr[data-id="{tr-id}"] [data-id="reward-coefficient"]',
+                        poolForRewards: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="staking"] table tr[data-id="{tr-id}"] [data-id="pool-for-rewards"]',
+                    },
+                    inputsParams: {
+                        number: {
+                            type: 'number',
+                            dataType: 'integer'
+                        },
+                        agentName: {
+                            type: 'select'
+                        },
+                        agentShare: {
+                            type: 'text'
+                        },
+                        unstakingFactor: {
+                            type: 'text'
+                        },
+                        rewardCoefficient: {
+                            type: 'text'
+                        },
+                        poolForRewards: {
+                            type: 'select'
+                        },
+                    },
+                    linksToOptions: {
+                        agentName: {
+                            selector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="agents"] .inputs-table.numerable[data-id="agents"] table tr[data-id] [data-id="agent-name"]',
+                            optionHtmlTemplate: htmlTemplates.selectOption,
+                            mask: '{agent-name-options}',
+                        },
+                        poolTitle: {
+                            selector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pools"] table tr[data-id] [data-id="pool-title"]',
+                            optionHtmlTemplate: htmlTemplates.selectOption,
+                            mask: '{pool-title-options}',
+                        }
+                    }
+                }
+            }),
+            farming: new CalcableTable({
+                elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="farming"] table',
+
+                controls: {
+                    calcAddBtnSelector: 'button.calc[data-action="add"]',
+                    calcDeleteBtnSelector: 'button.calc[data-action="delete"]',
+                },
+
+                actionButtons: {
+                    addCurves: 'button.action[data-action="add-curves"]'
+                },
+
+                rowPreset: {
+                    numOnInit: 1,
+                    numOfMin: 1,
+                    htmlTemplate: htmlTemplates.trService,
+                    trSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="farming"] table tr[data-id]',
+                    inputsSelectors: {
+                        number: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="farming"] table tr[data-id="{tr-id}"] [data-id="number"]',
+                        agentName: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="farming"] table tr[data-id="{tr-id}"] [data-id="agent-name"]',
+                        agentShare: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="farming"] table tr[data-id="{tr-id}"] [data-id="agent-share"]',
+                        unstakingFactor: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="farming"] table tr[data-id="{tr-id}"] [data-id="unstaking-factor"]',
+                        rewardCoefficient: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="farming"] table tr[data-id="{tr-id}"] [data-id="reward-coefficient"]',
+                        poolForRewards: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="farming"] table tr[data-id="{tr-id}"] [data-id="pool-for-rewards"]',
+                    },
+                    inputsParams: {
+                        number: {
+                            type: 'number',
+                            dataType: 'integer'
+                        },
+                        agentName: {
+                            type: 'select'
+                        },
+                        agentShare: {
+                            type: 'text'
+                        },
+                        unstakingFactor: {
+                            type: 'text'
+                        },
+                        rewardCoefficient: {
+                            type: 'text'
+                        },
+                        poolForRewards: {
+                            type: 'select'
+                        },
+                    },
+                    linksToOptions: {
+                        agentName: {
+                            selector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="agents"] .inputs-table.numerable[data-id="agents"] table tr[data-id] [data-id="agent-name"]',
+                            optionHtmlTemplate: htmlTemplates.selectOption,
+                            mask: '{agent-name-options}',
+                        },
+                        poolTitle: {
+                            selector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pools"] table tr[data-id] [data-id="pool-title"]',
+                            optionHtmlTemplate: htmlTemplates.selectOption,
+                            mask: '{pool-title-options}',
+                        }
+                    }
+                }
+            })
+        },
+        curveTables: {
+        },
+        serviceTablePreset: {
+            elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id="{table-id}"] table',
+
+            controls: {
+                calcAddBtnSelector: 'button.calc[data-action="add"]',
+                calcDeleteBtnSelector: 'button.calc[data-action="delete"]',
+            },
+
+            actionButtons: {
+                addCurves: 'button.action[data-action="add-curves"]'
+            },
+
+            header: {
+                titleElement: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id="{table-id}"] header h3.table-title',
+                curvesTitleElement: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] header h3.table-title',
+                titlePreset: '{service-name}',
+                description: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id="{table-id}"] header div.table-description',
+            },
+
+            rowPreset: {
+                numOnInit: 1,
+                numOfMin: 1,
+                htmlTemplate: htmlTemplates.trService,
+                trSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id="{table-id}"] table tr[data-id]',
+                inputsSelectors: {
+                    number: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="number"]',
+                    agentName: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="agent-name"]',
+                    agentShare: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="agent-share"]',
+                    unstakingFactor: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="unstaking-factor"]',
+                    rewardCoefficient: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="reward-coefficient"]',
+                    poolForRewards: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="pool-for-rewards"]',
+                },
+                inputsParams: {
+                    number: {
+                        type: 'number',
+                        dataType: 'integer'
+                    },
+                    agentName: {
+                        type: 'select'
+                    },
+                    agentShare: {
+                        type: 'number',
+                        dataType: 'float'
+                    },
+                    unstakingFactor: {
+                        type: 'number',
+                        dataType: 'float'
+                    },
+                    rewardCoefficient: {
+                        type: 'number',
+                        dataType: 'float'
+                    },
+                    poolForRewards: {
+                        type: 'select'
+                    },
+                },
+                linksToOptions: {
+                    agentName: {
+                        mask: '{agent-name-options}',
+                        optionHtmlTemplate: htmlTemplates.selectOption,
+                        selector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="agents"] .inputs-table.numerable[data-id="agents"] table tr[data-id] [data-id="agent-name"]'
+                    },
+                    poolTitle: {
+                        mask: '{pool-title-options}',
+                        optionHtmlTemplate: htmlTemplates.selectOption,
+                        selector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pools"] table tr[data-id] [data-id="pool-title"]'
+                    }
+                }
+            }
+        },
+        curvesTablePreset: {
+            elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] table',
+
+            controls: {
+                calcAddBtnSelector: 'button.calc[data-action="add"]',
+                calcDeleteBtnSelector: 'button.calc[data-action="delete"]',
+            },
+
+            actionButtons: {
+                showService: 'button.action[data-action="show-service"]'
+            },
+
+            header: {
+                titleElement: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] header h3.table-title',
+                titlePreset: '"{service-name}" Income',
+                description: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] header div.table-description',
+            },
+
+            rowPreset: {
+                numOnInit: 1,
+                numOfMin: 1,
+                htmlTemplate: htmlTemplates.trCurve,
+                trSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] table tr[data-id]',
+                inputsSelectors: {
+                    curveNumber: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="curve-number"]',
+                    salesStart: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="sales-start"]',
+                    salesEnd: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="sales-end"]',
+                    salesMin: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="sales-min"]',
+                    salesMax: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="sales-max"]',
+                    chooseAlgorithm: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="choose-algorithm"]',
+                    angularCoefficient: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="angular-coefficient"]',
+                    risingsCoefficient: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.curveable[data-id="{table-id}"] table tr[data-id="{tr-id}"] [data-id="risings-coefficient"]',
+                },
+                inputsParams: {
+                    curveNumber: {
+                        type: 'number',
+                        dataType: 'integer'
+                    },
+                    salesStart: {
+                        type: 'number',
+                        dataType: 'integer'
+                    },
+                    salesEnd: {
+                        type: 'number',
+                        dataType: 'integer'
+                    },
+                    salesMin: {
+                        type: 'number',
+                        dataType: 'integer'
+                    },
+                    salesMax: {
+                        type: 'number',
+                        dataType: 'integer'
+                    },
+                    chooseAlgorithm: {
+                        type: 'select',
+                    },
+                    angularCoefficient: {
+                        type: 'number',
+                        dataType: 'float'
+                    },
+                    risingsCoefficient: {
+                        type: 'number',
+                        dataType: 'float'
+                    },
+                },
             }
         }
+    })
+})
 
-        this.investmentRounds = {
-            roundsNumber: {
-                prevValue: $('#zbcc #investment-rounds-db #rounds-number')[0].value,
-                value: $('#zbcc #investment-rounds-db #rounds-number')[0].value,
-                element: $('#zbcc #investment-rounds-db #rounds-number')[0],
-                listeners: []
-            },
-            roundsTable: {
-                value: [
-                    {
-                        id: 0,
-                        roundTitle: $('#zbcc #investment-rounds-db #rounds-table tr#0 #round-title')[0].value,
-                        fiat: $('#zbcc #investment-rounds-db #rounds-table tr#0 #fiat')[0].value,
-                        tokenPrice: $('#zbcc #investment-rounds-db #rounds-table tr#0 #token-price')[0].value,
-                        tokensAmount: $('#zbcc #investment-rounds-db #rounds-table tr#0 #tokens-amount')[0].value,
-                        investorShare: $('#zbcc #investment-rounds-db #rounds-table tr#0 #investor-share')[0].value
-                    },
-                    {
-                        id: 1,
-                        roundTitle: $('#zbcc #investment-rounds-db #rounds-table tr#1 #round-title')[0].value,
-                        fiat: $('#zbcc #investment-rounds-db #rounds-table tr#1 #fiat')[0].value,
-                        tokenPrice: $('#zbcc #investment-rounds-db #rounds-table tr#1 #token-price')[0].value,
-                        tokensAmount: $('#zbcc #investment-rounds-db #rounds-table tr#1 #tokens-amount')[0].value,
-                        investorShare: $('#zbcc #investment-rounds-db #rounds-table tr#1 #investor-share')[0].value
-                    }
-                ],
-                element: $('#zbcc #investment-rounds-db #rounds-table')[0],
-                listeners: []
-            }
-        }
+zbcc.dataBlocksForm.addDataBlock({
+    name: 'tokenCirculation',
+    object: new zbccDataBlock_TokenCirculation({
+        cssActiveClass: 'unhidden',
+        unhiders: {
+            actions: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="token-circulation"] button.unhider[data-unhideableId="actions"]',
+        },
+        tables: {
+            actions: new CalcableTable({
+                elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="token-circulation"] .inputs-table[data-id="actions"] table',
 
-        this.agents = {
-            agentsNumber: {
-                prevValue: $('#zbcc #agents-db #agents-number')[0].value,
-                value: $('#zbcc #agents-db #agents-number')[0].value,
-                element: $('#zbcc #agents-db #agents-number')[0],
-                listeners: []
-            },
-            agentsTable: {
-                value: [
-                    {
-                        id: 0,
-                        agentName: $('#zbcc #agents-db #agents-table tr#0 #agent-name')[0].value,
-                        agenShare: $('#zbcc #agents-db #agents-table tr#0 #agent-share')[0].value,
-                        tokensAmount: $('#zbcc #agents-db #agents-table tr#0 #tokens-amount')[0].value
-                    },
-                    {
-                        id: 1,
-                        agentName: $('#zbcc #agents-db #agents-table tr#1 #agent-name')[0].value,
-                        agenShare: $('#zbcc #agents-db #agents-table tr#1 #agent-share')[0].value,
-                        tokensAmount: $('#zbcc #agents-db #agents-table tr#1 #tokens-amount')[0].value
-                    }
-                ],
-                element: $('#zbcc #agents-db #agents-table')[0],
-                listeners: []
-            }
-        }
+                controls: {
+                    calcAddBtnSelector: 'button.calc[data-action="add"]',
+                    calcDeleteBtnSelector: 'button.calc[data-action="delete"]',
+                },
 
-        this.pools = {
-            poolsNumber: {
-                prevValue: $('#zbcc #pools-db #pools-number')[0].value,
-                value: $('#zbcc #pools-db #pools-number')[0].value,
-                element: $('#zbcc #pools-db #pools-number')[0],
-                listeners: []
-            },
-            poolType: {
-                prevValue: $('#zbcc #pools-db #pool-type')[0].value,
-                value: $('#zbcc #pools-db #pool-type')[0].value,
-                element: $('#zbcc #pools-db #pool-type')[0],
-                listeners: []
-            },
-            poolsTable: {
-                value: [
-                    {
-                        id: 0,
-                        poolTitle: $('#zbcc #pools-db #pools-table tr#0 #pool-title')[0].value,
-                        poolType: $('#zbcc #pools-db #pools-table tr#0 #pool-type')[0].value,
-                        poolShare: $('#zbcc #pools-db #pools-table tr#0 #pool-share')[0].value,
-                        amount: $('#zbcc #pools-db #pools-table tr#0 #amount')[0].value,
+                rowPreset: {
+                    numOnInit: 1,
+                    numOfMin: 1,
+                    htmlTemplate: htmlTemplates.trAction,
+                    trSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="token-circulation"] .inputs-table[data-id="actions"] table tr[data-id]',
+                    inputsSelectors: {
+                        actionNumber: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="token-circulation"] .inputs-table[data-id="actions"] table tr[data-id="{tr-id}"] [data-id="action-number"]',
+                        source: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="token-circulation"] .inputs-table[data-id="actions"] table tr[data-id="{tr-id}"] [data-id="source"]',
+                        currencyType: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="token-circulation"] .inputs-table[data-id="actions"] table tr[data-id="{tr-id}"] [data-id="currency-type"]',
+                        valuePercents: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="token-circulation"] .inputs-table[data-id="actions"] table tr[data-id="{tr-id}"] [data-id="value-percents"]',
+                        destionation: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="token-circulation"] .inputs-table[data-id="actions"] table tr[data-id="{tr-id}"] [data-id="destination"]',
+                        preCondition: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="token-circulation"] .inputs-table[data-id="actions"] table tr[data-id="{tr-id}"] [data-id="pre-condition"]',
                     },
-                    {
-                        id: 1,
-                        poolTitle: $('#zbcc #pools-db #pools-table tr#1 #pool-title')[0].value,
-                        poolType: $('#zbcc #pools-db #pools-table tr#1 #pool-type')[0].value,
-                        poolShare: $('#zbcc #pools-db #pools-table tr#1 #pool-share')[0].value,
-                        amount: $('#zbcc #pools-db #pools-table tr#1 #amount')[0].value,
-                    }
-                ],
-                element: $('#zbcc #pools-db #pools-table')[0],
-                listeners: []
-            }
+                    inputsParams: {
+                        actionNumber: {
+                            type: 'text'
+                        },
+                        source: {
+                            type: 'text'
+                        },
+                        currencyType: {
+                            type: 'select'
+                        },
+                        valuePercents: {
+                            type: 'text'
+                        },
+                        destionation: {
+                            type: 'text'
+                        },
+                        preCondition: {
+                            type: 'text'
+                        },
+                    },
+                    unicInputs: [
+                        'actionNumber'
+                    ],
+                    linksToOptions: {
+                        poolTypes: {
+                            selector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pool-types"] table tr[data-id] [data-id="pool-type"]',
+                            optionHtmlTemplate: htmlTemplates.selectOption,
+                            mask: '{pool-type-options}',
+                        }
+                    },
+                }
+            })
         }
+    })
+})
 
-        this.vestingAndUnlocking = {
-            vestingsNumber: {
-                prevValue: $('#zbcc #vesting-and-unlocking-db #vestings-number')[0].value,
-                value: $('#zbcc #vesting-and-unlocking-db #vestings-number')[0].value,
-                element: $('#zbcc #vesting-and-unlocking-db #vestings-number')[0],
-                listeners: []
-            },
-            unlockingsNumber: {
-                prevValue: $('#zbcc #vesting-and-unlocking-db #unlockings-number')[0].value,
-                value: $('#zbcc #vesting-and-unlocking-db #unlockings-number')[0].value,
-                element: $('#zbcc #vesting-and-unlocking-db #unlockings-number')[0],
-                listeners: []
-            },
-            vestingTable: {
-                value: [
-                    {
-                        id: 0,
-                        agentName: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#0 #agent-name')[0].value,
-                        pool: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#0 #pool')[0].value,
-                        startVesting: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#0 #start-vesting')[0].value,
-                        endVesting: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#0 #end-vesting')[0].value,
-                        vestingCoefficient: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#0 #vesting-coefficient')[0].value
-                    },
-                    {
-                        id: 1,
-                        agentName: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#1 #agent-name')[0].value,
-                        pool: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#1 #pool')[0].value,
-                        startVesting: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#1 #start-vesting')[0].value,
-                        endVesting: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#1 #end-vesting')[0].value,
-                        vestingCoefficient: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#1 #vesting-coefficient')[0].value
-                    }
-                ],
-                element: $('#zbcc #vesting-and-unlocking-db #vesting-table')[0],
-                listeners: []
-            },
-            unlockingTable: {
-                value: [
-                    {
-                        id: 0,
-                        agentName: $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#0 #agent-name')[0].value,
-                        startUnlocking: $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#0 #start-unlocking')[0].value,
-                        endUnlocking: $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#0 #end-unlocking')[0].value,
-                        initialUnlocking: $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#0 #initial-unlocking')[0].value
-                    },
-                    {
-                        id: 1,
-                        agentName: $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#1 #agent-name')[0].value,
-                        startUnlocking: $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#1 #start-unlocking')[0].value,
-                        endUnlocking: $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#1 #end-unlocking')[0].value,
-                        initialUnlocking: $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#1 #initial-unlocking')[0].value
-                    }
-                ],
-                element: $('#zbcc #vesting-and-unlocking-db #unlocking-table')[0],
-                listeners: []
-            }
-        }
 
-        this.projectServices = {
-            staking: {
-                prevValue: $('#zbcc #project-services-db #staking')[0].value,
-                value: $('#zbcc #project-services-db #staking')[0].value,
-                element: $('#zbcc #project-services-db #staking')[0],
-                listeners: []
-            },
-            farming: {
-                prevValue: $('#zbcc #project-services-db #farming')[0].value,
-                value: $('#zbcc #project-services-db #farming')[0].value,
-                element: $('#zbcc #project-services-db #farming')[0],
-                listeners: []
-            },
-            serviceName: {
-                prevValue: $('#zbcc #project-services-db #service-name')[0].value,
-                value: $('#zbcc #project-services-db #service-name')[0].value,
-                element: $('#zbcc #project-services-db #service-name')[0],
-                listeners: []
-            },
-            projectServicesTable: {
-                value: [
-                    {
-                        id: 0,
-                        curveNumber: $('#zbcc #project-services-db #project-services-table tr#0 #curve-number')[0].value,
-                        salesStart: $('#zbcc #project-services-db #project-services-table tr#0 #sales-start')[0].value,
-                        salesEnd: $('#zbcc #project-services-db #project-services-table tr#0 #sales-end')[0].value,
-                        salesMin: $('#zbcc #project-services-db #project-services-table tr#0 #sales-min')[0].value,
-                        salesMax: $('#zbcc #project-services-db #project-services-table tr#0 #sales-max')[0].value,
-                        chooseAlgorithm: $('#zbcc #project-services-db #project-services-table tr#0 #choose-algorithm')[0].value,
-                        angularCoefficient: $('#zbcc #project-services-db #project-services-table tr#0 #angular-coefficient')[0].value,
-                        risingsCoefficient: $('#zbcc #project-services-db #project-services-table tr#0 #risings-coefficient')[0].value,
-                    },
-                    {
-                        id: 1,
-                        curveNumber: $('#zbcc #project-services-db #project-services-table tr#1 #curve-number')[0].value,
-                        salesStart: $('#zbcc #project-services-db #project-services-table tr#1 #sales-start')[0].value,
-                        salesEnd: $('#zbcc #project-services-db #project-services-table tr#1 #sales-end')[0].value,
-                        salesMin: $('#zbcc #project-services-db #project-services-table tr#1 #sales-min')[0].value,
-                        salesMax: $('#zbcc #project-services-db #project-services-table tr#1 #sales-max')[0].value,
-                        chooseAlgorithm: $('#zbcc #project-services-db #project-services-table tr#1 #choose-algorithm')[0].value,
-                        angularCoefficient: $('#zbcc #project-services-db #project-services-table tr#1 #angular-coefficient')[0].value,
-                        risingsCoefficient: $('#zbcc #project-services-db #project-services-table tr#1 #risings-coefficient')[0].value,
-                    },
-                    {
-                        id: 2,
-                        curveNumber: $('#zbcc #project-services-db #project-services-table tr#2 #curve-number')[0].value,
-                        salesStart: $('#zbcc #project-services-db #project-services-table tr#2 #sales-start')[0].value,
-                        salesEnd: $('#zbcc #project-services-db #project-services-table tr#2 #sales-end')[0].value,
-                        salesMin: $('#zbcc #project-services-db #project-services-table tr#2 #sales-min')[0].value,
-                        salesMax: $('#zbcc #project-services-db #project-services-table tr#2 #sales-max')[0].value,
-                        chooseAlgorithm: $('#zbcc #project-services-db #project-services-table tr#2 #choose-algorithm')[0].value,
-                        angularCoefficient: $('#zbcc #project-services-db #project-services-table tr#2 #angular-coefficient')[0].value,
-                        risingsCoefficient: $('#zbcc #project-services-db #project-services-table tr#2 #risings-coefficient')[0].value,
-                    }
-                ],
-                element: $('#zbcc #project-services-db #project-services-table')[0],
-                listeners: []
-            },
-        }
 
-        this.tokenCirculation = {
-            actionsNumber: {
-                prevValue: $('#zbcc #token-circulation-db #actions-number')[0].value,
-                value: $('#zbcc #token-circulation-db #actions-number')[0].value,
-                element: $('#zbcc #token-circulation-db #actions-number')[0],
-                listeners: []
-            },
-            actionsTable: {
-                value: [
-                    {
-                        id: 0,
-                        actionNumber: $('#zbcc #token-circulation-db #token-circulation-table tr#0 #action-number')[0].value,
-                        source: $('#zbcc #token-circulation-db #token-circulation-table tr#0 #source')[0].value,
-                        currencyType: $('#zbcc #token-circulation-db #token-circulation-table tr#0 #currency-type')[0].value,
-                        valuePercents: $('#zbcc #token-circulation-db #token-circulation-table tr#0 #value-percents')[0].value,
-                        destination: $('#zbcc #token-circulation-db #token-circulation-table tr#0 #destination')[0].value,
-                        preCondition: $('#zbcc #token-circulation-db #token-circulation-table tr#0 #pre-condition')[0].value,
-                    },
-                    {
-                        id: 1,
-                        actionNumber: $('#zbcc #token-circulation-db #token-circulation-table tr#1 #action-number')[0].value,
-                        source: $('#zbcc #token-circulation-db #token-circulation-table tr#1 #source')[0].value,
-                        currencyType: $('#zbcc #token-circulation-db #token-circulation-table tr#1 #currency-type')[0].value,
-                        valuePercents: $('#zbcc #token-circulation-db #token-circulation-table tr#1 #value-percents')[0].value,
-                        destination: $('#zbcc #token-circulation-db #token-circulation-table tr#1 #destination')[0].value,
-                        preCondition: $('#zbcc #token-circulation-db #token-circulation-table tr#1 #pre-condition')[0].value,
-                    },
-                    {
-                        id: 2,
-                        actionNumber: $('#zbcc #token-circulation-db #token-circulation-table tr#2 #action-number')[0].value,
-                        source: $('#zbcc #token-circulation-db #token-circulation-table tr#2 #source')[0].value,
-                        currencyType: $('#zbcc #token-circulation-db #token-circulation-table tr#2 #currency-type')[0].value,
-                        valuePercents: $('#zbcc #token-circulation-db #token-circulation-table tr#2 #value-percents')[0].value,
-                        destination: $('#zbcc #token-circulation-db #token-circulation-table tr#2 #destination')[0].value,
-                        preCondition: $('#zbcc #token-circulation-db #token-circulation-table tr#2 #pre-condition')[0].value,
-                    }
-                ],
-                element: $('#zbcc #token-circulation-db #token-circulation-table')[0],
-                listeners: []
-            }
-        }
+
+
+
+
+
+$('#zbcc > .form-block[data-id="precond"]').on('submit', e => {
+    e.preventDefault()
+    $('#zbcc > .form-block[data-id="precond"]').hide()
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-select"]').prop('checked', false)
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-cb1"]').val('0')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-inpx"]').val('')
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb1"]').val('0')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpx"]').val('')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb2"]').val('0')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpy"]').val('')
+
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly"]').prop('disabled', true)
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-cb1"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-inpx"]').prop('disabled', true)
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb1"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpx"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb2"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpy"]').prop('disabled', true)
+
+    //
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-select"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-andor"]').val('0')
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-cb1"]').val('0')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-inpx"]').val('')
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb1"]').val('0')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpx"]').val('')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb2"]').val('0')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpy"]').val('')
+
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-andor"]').prop('disabled', true)
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-cb1"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-inpx"]').prop('disabled', true)
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb1"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpx"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb2"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpy"]').prop('disabled', true)
+
+    //
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-select"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-andor"]').val('0')
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-cb1"]').val('0')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-inpx"]').val('')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-pool"]').val('0')
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb1"]').val('0')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpx"]').val('')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb2"]').val('0')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpy"]').val('')
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-pool"]').val('0')
+
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-andor"]').prop('disabled', true)
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-cb1"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-inpx"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-pool"]').prop('disabled', true)
+
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb1"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpx"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb2"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpy"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-pool"]').prop('disabled', true)
+})
+
+$('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-select"]').on('change', e => {
+    if (e.currentTarget.checked) {
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly"]').prop('disabled', false)
+
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-cb1"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-inpx"]').prop('disabled', false)
+
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb1"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpx"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb2"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpy"]').prop('disabled', false)
+    } else {
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly"]').prop('disabled', true)
+
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-cb1"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-inpx"]').prop('disabled', true)
+
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb1"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpx"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb2"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpy"]').prop('disabled', true)
     }
+})
 
-    initBaseEventListeners() {
-        // Initial Data //
+$('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-select"]').on('change', e => {
+    if (e.currentTarget.checked) {
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-andor"]').prop('disabled', false)
 
-        // on change in inputs
-        Object.keys(this.initialData).forEach(key => {
-            $(this.initialData[key].element).on('change', e => {
-                this.initialData[key].prevValue = this.initialData[key].value
-                this.initialData[key].value = e.currentTarget.value
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-cb1"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-inpx"]').prop('disabled', false)
 
-                this.initialData[key].listeners.forEach(func => {
-                    func(e)
-                })
-            })
-        })
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb1"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpx"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb2"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpy"]').prop('disabled', false)
+    } else {
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-andor"]').prop('disabled', true)
 
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-cb1"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-inpx"]').prop('disabled', true)
 
-        // Investment Rounds //
-
-        // on change rounds-number
-        $(this.investmentRounds.roundsNumber.element).on('change', e => {
-            this.investmentRounds.roundsNumber.prevValue = this.investmentRounds.roundsNumber.value
-            this.investmentRounds.roundsNumber.value = e.currentTarget.value
-
-            this.investmentRounds.roundsNumber.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-        // on change in table
-        $(this.investmentRounds.roundsTable.element).on('change', e => {
-            this.investmentRounds.roundsTable.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-
-        // Agents //
-
-        // on change rounds-number
-        $(this.agents.agentsNumber.element).on('change', e => {
-            this.agents.agentsNumber.prevValue = this.agents.agentsNumber.value
-            this.agents.agentsNumber.value = e.currentTarget.value
-
-            this.agents.agentsNumber.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-        // on change in table
-        $(this.agents.agentsTable.element).on('change', e => {
-            this.agents.agentsTable.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-
-        // Pools //
-
-        // on change pools-number
-        $(this.pools.poolsNumber.element).on('change', e => {
-            this.pools.poolsNumber.prevValue = this.pools.poolsNumber.value
-            this.pools.poolsNumber.value = e.currentTarget.value
-
-            this.pools.poolsNumber.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-        // on change pool-type
-        $(this.pools.poolType.element).on('change', e => {
-            this.pools.poolType.prevValue = this.pools.poolType.value
-            this.pools.poolType.value = e.currentTarget.value
-
-            this.pools.poolType.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-        // on change in table
-        $(this.pools.poolsTable.element).on('change', e => {
-            this.pools.poolsTable.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-
-        // Vesting And Unlocking //
-
-        // vesting
-        $(this.vestingAndUnlocking.vestingsNumber.element).on('change', e => {
-            this.vestingAndUnlocking.vestingsNumber.prevValue = this.vestingAndUnlocking.vestingsNumber.value
-            this.vestingAndUnlocking.vestingsNumber.value = e.currentTarget.value
-
-            this.vestingAndUnlocking.vestingsNumber.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-        // unlocking
-        $(this.vestingAndUnlocking.unlockingsNumber.element).on('change', e => {
-            this.vestingAndUnlocking.unlockingsNumber.prevValue = this.vestingAndUnlocking.unlockingsNumber.value
-            this.vestingAndUnlocking.unlockingsNumber.value = e.currentTarget.value
-
-            this.vestingAndUnlocking.unlockingsNumber.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-        // vesting table
-        $(this.vestingAndUnlocking.vestingTable.element).on('change', e => {
-            this.vestingAndUnlocking.vestingTable.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-        // unlocking table
-        $(this.vestingAndUnlocking.unlockingTable.element).on('change', e => {
-            this.vestingAndUnlocking.unlockingTable.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-
-        // Project Services //
-
-        // stacking
-        $(this.projectServices.staking.element).on('change', e => {
-            this.projectServices.staking.prevValue = this.projectServices.staking.value
-            this.projectServices.staking.value = e.currentTarget.value
-
-            this.projectServices.staking.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-        // farming
-        $(this.projectServices.farming.element).on('change', e => {
-            this.projectServices.farming.prevValue = this.projectServices.farming.value
-            this.projectServices.farming.value = e.currentTarget.value
-
-            this.projectServices.farming.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-        // serviceName
-        $(this.projectServices.serviceName.element).on('change', e => {
-            this.projectServices.serviceName.prevValue = this.projectServices.serviceName.value
-            this.projectServices.serviceName.value = e.currentTarget.value
-
-            this.projectServices.serviceName.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-        // project-services-table
-        $(this.projectServices.projectServicesTable.element).on('change', e => {
-            this.projectServices.projectServicesTable.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-
-        // Token Circulation
-
-        // add action
-        $(this.tokenCirculation.actionsNumber.element).on('change', e => {
-            this.tokenCirculation.actionsNumber.prevValue = this.tokenCirculation.actionsNumber.value
-            this.tokenCirculation.actionsNumber.value = e.currentTarget.value
-
-            this.tokenCirculation.actionsNumber.listeners.forEach(func => {
-                func(e)
-            })
-        })
-
-        // table
-        $(this.tokenCirculation.actionsTable.element).on('change', e => {
-            this.tokenCirculation.actionsTable.listeners.forEach(func => {
-                func(e)
-            })
-        })
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb1"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpx"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb2"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpy"]').prop('disabled', true)
     }
-
-    initRuledEventsListeners() {
-        // Initial Data //
-
-        this.initialData.totalTokensAmount.listeners.push(e => {
-            // this.investmentRounds.roundsTable.value.forEach(round => {
-            //     if (this.investmentRounds.roundsTable.value[round.id].tokenPrice !== '' && this.investmentRounds.roundsTable.value[round.id].investorShare !== '%') {
-            //         $('#zbcc #investment-rounds-db #rounds-table tr#' + round.id + ' #tokens-amount').value(
-            //             (this.initialData.totalTokensAmount * this.investmentRounds.roundsTable.value[round.id].investorShare) / 100
-            //         )
-            //         $('#zbcc #investment-rounds-db #rounds-table tr#' + round.id + ' #fiat').value(
-            //             (this.initialData.totalTokensAmount * this.investmentRounds.roundsTable.value[round.id].investorShare) / 100 * this.investmentRounds.roundsTable.value[round.id].tokenPrice
-            //         )
-            //     } else if (true) {
-            //     }
-            // })
-        })
-
-        this.initialData.initialTokenPrice.listeners.push(e => {
-            console.log(e)
-        })
-
-        this.initialData.exchangeType.listeners.push(e => {
-            console.log(e)
-
-        })
-
-        this.initialData.tradingFunction.listeners.push(e => {
-            console.log(e)
-
-        })
-
-        this.initialData.duration.listeners.push(e => {
-            console.log(e)
-
-        })
-
-
-        // Investment Rounds //
-
-        this.investmentRounds.roundsNumber.listeners.push(e => {
-            if (this.investmentRounds.roundsNumber.value > this.investmentRounds.roundsNumber.prevValue) {
-                while (this.investmentRounds.roundsNumber.value > this.investmentRounds.roundsNumber.prevValue) {
-                    $('#zbcc  #investment-rounds-db #rounds-table').append(
-                        htmlTemplates.trRound
-                        .replace('{id}', this.investmentRounds.roundsNumber.prevValue)
-                        .replace('{number}', Number(this.investmentRounds.roundsNumber.prevValue) + 1)
-                    )
-
-                    this.investmentRounds.roundsTable.value.push({
-                        id: this.investmentRounds.roundsNumber.prevValue,
-                        roundTitle: $('#zbcc #investment-rounds-db #rounds-table tr#' + this.investmentRounds.roundsNumber.prevValue + ' #round-title')[0].value,
-                        fiat: $('#zbcc #investment-rounds-db #rounds-table tr#' + this.investmentRounds.roundsNumber.prevValue + ' #fiat')[0].value,
-                        tokenPrice: $('#zbcc #investment-rounds-db #rounds-table tr#' + this.investmentRounds.roundsNumber.prevValue + ' #token-price')[0].value,
-                        tokensAmount: $('#zbcc #investment-rounds-db #rounds-table tr#' + this.investmentRounds.roundsNumber.prevValue + ' #tokens-amount')[0].value,
-                        investorShare: $('#zbcc #investment-rounds-db #rounds-table tr#' + this.investmentRounds.roundsNumber.prevValue + ' #investor-share')[0].value
-                    })
-
-                    this.investmentRounds.roundsNumber.prevValue++
-                }
-
-            } else if (this.investmentRounds.roundsNumber.value < this.investmentRounds.roundsNumber.prevValue) {
-                while (this.investmentRounds.roundsNumber.value < this.investmentRounds.roundsNumber.prevValue) {
-                    this.investmentRounds.roundsTable.value.pop()
-                    $('#zbcc #investment-rounds-db #rounds-table tr#' + (this.investmentRounds.roundsNumber.prevValue - 1)).remove()
-                    this.investmentRounds.roundsNumber.prevValue--
-                }
-            }
-        })
-
-        this.investmentRounds.roundsTable.listeners.push(e => {
-            // console.log(e)
-            console.log(e.target.parentElement.parentElement.id)
-        })
-
-
-        // Agents //
-
-        this.agents.agentsNumber.listeners.push(e => {
-            if (this.agents.agentsNumber.value > this.agents.agentsNumber.prevValue) {
-                while (this.agents.agentsNumber.value > this.agents.agentsNumber.prevValue) {
-                    $('#zbcc #agents-db #agents-table').append(
-                        htmlTemplates.trAgent
-                        .replace('{id}', this.agents.agentsNumber.prevValue)
-                        .replace('{number}', Number(this.agents.agentsNumber.prevValue) + 1)
-                    )
-
-                    this.agents.agentsTable.value.push({
-                        id: this.agents.agentsNumber.prevValue,
-                        agentName: $('#zbcc #agents-db #agents-table tr#' + this.agents.agentsNumber.prevValue + ' #agent-name')[0].value,
-                        agenShare: $('#zbcc #agents-db #agents-table tr#' + this.agents.agentsNumber.prevValue + ' #agent-share')[0].value,
-                        tokensAmount: $('#zbcc #agents-db #agents-table tr#' + this.agents.agentsNumber.prevValue + ' #tokens-amount')[0].value
-                    })
-
-                    this.agents.agentsNumber.prevValue++
-                }
-
-            } else if (this.agents.agentsNumber.value < this.agents.agentsNumber.prevValue) {
-                while (this.agents.agentsNumber.value < this.agents.agentsNumber.prevValue) {
-                    this.agents.agentsTable.value.pop()
-                    $('#zbcc #agents-db #agents-table tr#' + (this.agents.agentsNumber.prevValue - 1)).remove()
-                    this.agents.agentsNumber.prevValue--
-                }
-            }
-        })
-
-        this.agents.agentsTable.listeners.push(e => {
-
-        })
-
-
-        // Pools //
-
-        this.pools.poolsNumber.listeners.push(e => {
-            if (this.pools.poolsNumber.value > this.pools.poolsNumber.prevValue) {
-                while (this.pools.poolsNumber.value > this.pools.poolsNumber.prevValue) {
-                    $('#zbcc #pools-db #pools-table').append(
-                        htmlTemplates.trPool
-                        .replace('{id}', this.pools.poolsNumber.prevValue)
-                        .replace('{number}', Number(this.pools.poolsNumber.prevValue) + 1)
-                    )
-
-                    this.pools.poolsTable.value.push({
-                        id: this.pools.poolsNumber.prevValue,
-                        poolTitle: $('#zbcc #pools-db #pools-table tr#' + this.pools.poolsNumber.prevValue + '  #pool-title')[0].value,
-                        poolType: $('#zbcc #pools-db #pools-table tr#' + this.pools.poolsNumber.prevValue + '  #pool-type')[0].value,
-                        poolShare: $('#zbcc #pools-db #pools-table tr#' + this.pools.poolsNumber.prevValue + '  #pool-share')[0].value,
-                        amount: $('#zbcc #pools-db #pools-table tr#' + this.pools.poolsNumber.prevValue + '  #amount')[0].value,
-                    })
-
-                    this.pools.poolsNumber.prevValue++
-                }
-
-            } else if (this.pools.poolsNumber.value < this.pools.poolsNumber.prevValue) {
-                while (this.pools.poolsNumber.value < this.pools.poolsNumber.prevValue) {
-                    this.pools.poolsTable.value.pop()
-                    $('#zbcc #pools-db #pools-table tr#' + (this.pools.poolsNumber.prevValue - 1)).remove()
-                    this.pools.poolsNumber.prevValue--
-                }
-            }
-        })
-
-        this.pools.poolType.listeners.push(e => {
-
-        })
-
-        this.pools.poolsTable.listeners.push(e => {
-
-        })
-
-
-        // Vesting And Unlocking //
-
-        this.vestingAndUnlocking.vestingsNumber.listeners.push(e => {
-            if (this.vestingAndUnlocking.vestingsNumber.value > this.vestingAndUnlocking.vestingsNumber.prevValue) {
-                while (this.vestingAndUnlocking.vestingsNumber.value > this.vestingAndUnlocking.vestingsNumber.prevValue) {
-                    $('#zbcc #vesting-and-unlocking-db #vesting-table').append(
-                        htmlTemplates.trVesting
-                        .replace('{id}', this.vestingAndUnlocking.vestingsNumber.prevValue)
-                        .replace('{number}', Number(this.vestingAndUnlocking.vestingsNumber.prevValue) + 1)
-                    )
-
-                    this.vestingAndUnlocking.vestingTable.value.push({
-                        id: this.vestingAndUnlocking.vestingsNumber.prevValue,
-                        agentName: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#' + this.vestingAndUnlocking.vestingsNumber.prevValue + ' #agent-name'),
-                        pool: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#' + this.vestingAndUnlocking.vestingsNumber.prevValue + ' #pool'),
-                        startVesting: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#' + this.vestingAndUnlocking.vestingsNumber.prevValue + ' #start-vesting'),
-                        endVesting: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#' + this.vestingAndUnlocking.vestingsNumber.prevValue + ' #end-vesting'),
-                        vestingCoefficient: $('#zbcc #vesting-and-unlocking-db #vesting-table tr#' + this.vestingAndUnlocking.vestingsNumber.prevValue + ' #vesting-coefficient')
-                    })
-
-                    this.vestingAndUnlocking.vestingsNumber.prevValue++
-                }
-
-            } else if (this.vestingAndUnlocking.vestingsNumber.value < this.vestingAndUnlocking.vestingsNumber.prevValue) {
-                while (this.vestingAndUnlocking.vestingsNumber.value < this.vestingAndUnlocking.vestingsNumber.prevValue) {
-                    this.vestingAndUnlocking.vestingTable.value.pop()
-                    $('#zbcc #vesting-and-unlocking-db #vesting-table tr#' + (this.vestingAndUnlocking.vestingsNumber.prevValue - 1)).remove()
-                    this.vestingAndUnlocking.vestingsNumber.prevValue--
-                }
-            }
-        })
-
-        this.vestingAndUnlocking.unlockingsNumber.listeners.push(e => {
-            if (this.vestingAndUnlocking.unlockingsNumber.value > this.vestingAndUnlocking.unlockingsNumber.prevValue) {
-                while (this.vestingAndUnlocking.unlockingsNumber.value > this.vestingAndUnlocking.unlockingsNumber.prevValue) {
-                    $('#zbcc #vesting-and-unlocking-db #unlocking-table').append(
-                        htmlTemplates.trUnlocking
-                        .replace('{id}', this.vestingAndUnlocking.unlockingsNumber.prevValue)
-                        .replace('{number}', Number(this.vestingAndUnlocking.unlockingsNumber.prevValue) + 1)
-                    )
-
-                    this.vestingAndUnlocking.unlockingTable.value.push({
-                        id: this.vestingAndUnlocking.unlockingsNumber.prevValue,
-                        agentName: $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#' + this.vestingAndUnlocking.unlockingsNumber.prevValue + ' #agent-name'),
-                        startUnlocking: $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#' + this.vestingAndUnlocking.unlockingsNumber.prevValue + ' #start-unlocking'),
-                        endUnlocking: $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#' + this.vestingAndUnlocking.unlockingsNumber.prevValue + ' #end-unlocking'),
-                        initialUnlocking: $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#' + this.vestingAndUnlocking.unlockingsNumber.prevValue + ' #initial-unlocking')
-                    })
-
-                    this.vestingAndUnlocking.unlockingsNumber.prevValue++
-                }
-
-            } else if (this.vestingAndUnlocking.unlockingsNumber.value < this.vestingAndUnlocking.unlockingsNumber.prevValue) {
-                while (this.vestingAndUnlocking.unlockingsNumber.value < this.vestingAndUnlocking.unlockingsNumber.prevValue) {
-                    this.vestingAndUnlocking.unlockingTable.value.pop()
-                    $('#zbcc #vesting-and-unlocking-db #unlocking-table tr#' + (this.vestingAndUnlocking.unlockingsNumber.prevValue - 1)).remove()
-                    this.vestingAndUnlocking.unlockingsNumber.prevValue--
-                }
-            }
-        })
-
-        this.vestingAndUnlocking.vestingTable.listeners.push(e => {
-
-        })
-
-        this.vestingAndUnlocking.unlockingTable.listeners.push(e => {
-
-        })
-
-
-        // Project Services //
-
-        this.projectServices.staking.listeners.push(e => {
-
-        })
-
-        this.projectServices.farming.listeners.push(e => {
-
-        })
-
-        this.projectServices.serviceName.listeners.push(e => {
-
-        })
-
-        this.projectServices.projectServicesTable.listeners.push(e => {
-
-        })
-
-
-        // Token Circulation //
-
-        this.tokenCirculation.actionsNumber.listeners.push(e => {
-            if (this.tokenCirculation.actionsNumber.value > this.tokenCirculation.actionsNumber.prevValue) {
-                while (this.tokenCirculation.actionsNumber.value > this.tokenCirculation.actionsNumber.prevValue) {
-                    $('#zbcc #token-circulation-db #token-circulation-table').append(
-                        htmlTemplates.trAction
-                        .replace('{id}', this.tokenCirculation.actionsNumber.prevValue)
-                        .replace('{number}', Number(this.tokenCirculation.actionsNumber.prevValue) + 1)
-                    )
-
-                    this.tokenCirculation.actionsTable.value.push({
-                        id: this.tokenCirculation.actionsNumber.prevValue,
-
-                        actionNumber: $('#zbcc #token-circulation-db #token-circulation-table tr#' + this.tokenCirculation.actionsNumber.prevValue + ' #action-number')[0].value,
-                        source: $('#zbcc #token-circulation-db #token-circulation-table tr#' + this.tokenCirculation.actionsNumber.prevValue + ' #source')[0].value,
-                        currencyType: $('#zbcc #token-circulation-db #token-circulation-table tr#' + this.tokenCirculation.actionsNumber.prevValue + ' #currency-type')[0].value,
-                        valuePercents: $('#zbcc #token-circulation-db #token-circulation-table tr#' + this.tokenCirculation.actionsNumber.prevValue + ' #value-percents')[0].value,
-                        destination: $('#zbcc #token-circulation-db #token-circulation-table tr#' + this.tokenCirculation.actionsNumber.prevValue + ' #destination')[0].value,
-                        preCondition: $('#zbcc #token-circulation-db #token-circulation-table tr#' + this.tokenCirculation.actionsNumber.prevValue + ' #pre-condition')[0].value,
-                    })
-
-                    this.tokenCirculation.actionsNumber.prevValue++
-                }
-
-            } else if (this.tokenCirculation.actionsNumber.value < this.tokenCirculation.actionsNumber.prevValue) {
-                while (this.tokenCirculation.actionsNumber.value < this.tokenCirculation.actionsNumber.prevValue) {
-                    this.tokenCirculation.actionsTable.value.pop()
-                    $('#zbcc #token-circulation-db #token-circulation-table tr#' + (this.tokenCirculation.actionsNumber.prevValue - 1)).remove()
-                    this.tokenCirculation.actionsNumber.prevValue--
-                }
-            }
-        })
-
-        this.tokenCirculation.actionsTable.listeners.push(e => {
-
-        })
+})
+
+$('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-select"]').on('change', e => {
+    if (e.currentTarget.checked) {
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-andor"]').prop('disabled', false)
+
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-cb1"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-inpx"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-pool"]').prop('disabled', false)
+
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb1"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpx"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb2"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpy"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-pool"]').prop('disabled', false)
+    } else {
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-andor"]').prop('disabled', true)
+
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-cb1"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-inpx"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-pool"]').prop('disabled', true)
+
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb1"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpx"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb2"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpy"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-pool"]').prop('disabled', true)
+    }
+})
+
+
+
+zbcc.dataBlocksForm.dataBlocks['initialData'].inputs.totalTokensAmount.addEventListener('change', (e, input) => {
+    let ids = Object.keys(zbcc.dataBlocksForm.dataBlocks['investmentRounds'].table.rows)
+    console.log('tta changed:', ids)
+    for (let rowId = 0; rowId < Object.keys(zbcc.dataBlocksForm.dataBlocks['investmentRounds'].table.rows).length; rowId++) {
+        console.log('changing row:', rowId)
+        calculateInvestmentRoundForRow(rowId, zbcc.dataBlocksForm.dataBlocks['investmentRounds'].table)
+    }
+    // console.log(zbcc.dataBlocksForm.dataBlocks['investmentRounds'].table.rows)
+})
+
+zbcc.dataBlocksForm.dataBlocks['investmentRounds'].table.addEventListener('change', (e, dataBlock) => {
+    console.log('')
+    console.log('')
+    console.log('rounds table changed')
+    let rowId = e.target.parentNode.parentNode.dataset.id
+
+    calculateInvestmentRoundForRow(rowId, dataBlock)
+})
+
+function calculateInvestmentRoundForRow(rowId, dataBlock) {
+    let db = dataBlock.rows[rowId]
+    let tta = zbcc.dataBlocksForm.dataBlocks['initialData'].inputs.totalTokensAmount.value
+
+    console.log('')
+    console.log('')
+    console.log('')
+    console.log('—————————————')
+
+    Object.keys(db).forEach(key => {
+        if (key === 'id' || key === 'roundTitle')
+            return
+
+        console.log('')
+        console.log('key:', key)
+        console.log('value:', db[key].value)
+        console.log('element:', db[key].element)
+        console.log('element value:', db[key].element.value)
+    })
+    // console.log(db.map(e => {return e.value}))
+
+    if (db.tokenPrice.value !== undefined && db.investorShare.value !== undefined) {
+        db.tokensAmount.element.value = tta * db.investorShare.value / 100
+        db.tokensAmount.syncValue()
+        db.fiat.element.value = tta * db.investorShare.value / 100 * db.tokenPrice.value
+        db.fiat.syncValue()
+    } else if (db.tokenPrice.value !== undefined && db.tokensAmount.value !== undefined) {
+        db.investorShare.element.value = db.tokensAmount.value * 100 / tta
+        db.investorShare.syncValue()
+        db.fiat.element.value = db.tokensAmount.value / db.tokenPrice.value
+        db.fiat.syncValue()
+    } else if (db.tokenPrice.value !== undefined && db.fiat.value !== undefined) {
+        db.tokensAmount.element.value = db.fiat.value * db.tokenPrice.value
+        db.tokensAmount.syncValue()
+        db.investorShare.element.value = db.fiat.value * db.tokenPrice.value * 100 / tta
+        db.investorShare.syncValue()
+    } else if (db.fiat.value !== undefined && db.tokensAmount.value !== undefined) {
+        db.investorShare.element.value = db.tokensAmount.value * 100 / tta
+        db.investorShare.syncValue()
+        db.tokenPrice.element.value = db.fiat.value / db.tokensAmount.value
+        db.tokenPrice.syncValue()
+    } else if (db.fiat.value !== undefined && db.investorShare.value !== undefined) {
+        db.tokensAmount.element.value = tta * db.investorShare.value / 100
+        db.tokensAmount.syncValue()
+        db.tokenPrice.element.value = db.fiat.value / ((tta * db.investorShare.value) / 100)
+        db.tokenPrice.syncValue()
+    } else {
+        console.log('')
+        console.log('not enough data for auto calculate')
+        console.log('')
     }
 }
-
-
-const form = new formData()
-console.log(form)
-// $(document).ready(() => {
-
-// })

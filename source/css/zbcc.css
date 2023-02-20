@@ -1,26 +1,70 @@
+#zbcc {
+    width: 100%;
+    height: 100%;
+}
 
 
 /*  */
 
-/* asdasdasd */
+
+#zbcc .form-block.inline {
+    width: 100%;
+    height: fit-content;
+}
+
+#zbcc .form-block.popup {
+    width: 100vw;
+    height: 100vh;
+
+    display: none;
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+
+    overflow-y: scroll;
+    backdrop-filter: blur(40px);
+}
 
 
 /*  */
 
 
-form section.data-block {
+#zbcc > .form-block[data-id="data-blocks"] form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 100px;
+}
+
+#zbcc > .form-block form {
     width: 80%;
     margin: auto;
+}
+
+#zbcc > .form-block form section.data-block {
+    width: 100%;
 
     overflow: hidden;
     border: 1px white solid;
     border-radius: 50px;
     background-color: white;
-
     color: black;
 }
 
-form section.data-block > header {
+#zbcc > .form-block form section.data-block:first-of-type {
+    margin-top: 200px;
+}
+
+#zbcc > .form-block form section.data-block:last-of-type {
+    margin-bottom: 200px;
+}
+
+
+/*  */
+
+
+#zbcc > .form-block form section.data-block > header {
     padding: 50px;
 
     display: flex;
@@ -31,11 +75,11 @@ form section.data-block > header {
     color: white;
 }
 
-form section.data-block > header h3.block-title {
-    /* font-weight: bold; */
+#zbcc > .form-block form section.data-block > header h3.block-title {
+    font-weight: bold;
 }
 
-form section.data-block > header .block-description {
+#zbcc > .form-block form section.data-block > header .block-description {
     width: 70%;
 }
 
@@ -43,98 +87,76 @@ form section.data-block > header .block-description {
 /*  */
 
 
-form section.data-block > .inputs .calc-buttons {
-    width: fit-content;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+#zbcc > .form-block form section.data-block > .input-data input {
+    border: 0;
+    border-radius: 5px;
+    text-align: center;
 }
 
-form section.data-block > .inputs table th {
-    text-align: left;
+#zbcc > .form-block form section.data-block > .input-data input:disabled {
+    opacity: 0.5;
 }
 
-form input[type="text"] {
+#zbcc > .form-block form section.data-block > .input-data input[type="text"] {
     padding: 4px 10px;
-
-    border: 0;
-    border-radius: 5px;
-    appearance: none;
-    text-align: center;
 }
 
-form input[type="number"] {
+#zbcc > .form-block form section.data-block > .input-data input[type="number"] {
     padding: 4px 0px 4px 14px;
-
-    border: 0;
-    border-radius: 5px;
-    appearance: none;
-    text-align: center;
 }
 
-form select {
+#zbcc > .form-block form section.data-block > .input-data input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+}
+
+
+#zbcc > .form-block form section.data-block > .input-data select {
     padding: 4px 20px 4px 25px;
     border: 0;
     border-radius: 5px;
     text-align: center;
 }
 
-form button {
+#zbcc > .form-block form section.data-block > .input-data select:disabled {
+    opacity: 0.5;
+}
+
+
+#zbcc > .form-block form section.data-block > .input-data button {
     border: 0;
 }
 
-form button:active {
+#zbcc > .form-block form section.data-block > .input-data button:active {
     opacity: 0.75;
 }
 
-form section.data-block > .inputs button.calc {
 
+#zbcc > .form-block form section.data-block > .input-data button.unhider {
     padding: 4px 10px;
 }
 
-form section.data-block > .inputs button.unhidder {
-    /* content: "+"; */
-    /* line-height: 100px; */
-    /* display: block; */
-    /* margin: 0 auto; */
-
-
+#zbcc > .form-block form section.data-block > .input-data button.calc {
     padding: 4px 10px;
 }
 
-form section.data-block > .inputs button.unhidder.unhidden {
-    content: '–';
+#zbcc > .form-block form section.data-block > .input-data .calc-buttons {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-form section.data-block > .inputs .inputs-table.unhiddable {
-    display: none;
-}
 
-form section.data-block > .inputs .inputs-table.unhiddable.unhidden {
-    display: inherit !important;
-}
-
-form section.data-block > .inputs .inputs-table.choosable {
-    display: none;
-}
-
-form section.data-block > .inputs .inputs-table.choosable.choosen {
-    display: inherit !important;
-}
-
-form section.data-block > .inputs .inputs-table.curveable {
-    display: none;
-}
-
-form section.data-block > .inputs .inputs-table.curveable.curved {
-    display: inherit !important;
+#zbcc > .form-block form section.data-block > .input-data table th {
+    text-align: left;
 }
 
 
 /*  */
 
 
-form section.data-block > .extra-inputs {
+#zbcc > .form-block form section.data-block > .input-data .extra-inputs {
     width: fit-content;
     padding: 0 20px 20px 80px;
 
@@ -148,26 +170,21 @@ form section.data-block > .extra-inputs {
     color: white;
 }
 
-form section.data-block > .extra-inputs input {
+
+/*  */
+
+
+#zbcc > .form-block form section.data-block > .input-data .extra-inputs input {
     background-color: #262627;
     color: #f5f5f5;
 }
 
-form section.data-block > .extra-inputs select {
+#zbcc > .form-block form section.data-block > .input-data .extra-inputs select {
     background-color: #262627;
     color: #f5f5f5;
 }
 
-form section.data-block > .extra-inputs button.calc {
-    background-color: black;
-    color: white;
-}
-
-form section.data-block > .extra-inputs button.calc:hover {
-    background-color: #262627;
-}
-
-form section.data-block > .extra-inputs button.unhidder {
+#zbcc > .form-block form section.data-block > .input-data .extra-inputs button.unhider {
     width: 100%;
     min-width: 100px;
     margin-top: 2px;
@@ -182,11 +199,20 @@ form section.data-block > .extra-inputs button.unhidder {
     color: #f5f5f5;
 }
 
+#zbcc > .form-block form section.data-block > .input-data .extra-inputs button.calc {
+    background-color: black;
+    color: white;
+}
+
+#zbcc > .form-block form section.data-block > .input-data .extra-inputs button.calc:hover {
+    background-color: #262627;
+}
+
 
 /*  */
 
 
-form section.data-block > .base-inputs {
+#zbcc > .form-block form section.data-block > .input-data .base-inputs {
     padding: 50px;
 
     overflow-x: auto;
@@ -196,37 +222,45 @@ form section.data-block > .base-inputs {
     color: black;
 }
 
-form section.data-block > .base-inputs table {
+
+/*  */
+
+
+#zbcc > .form-block form section.data-block > .input-data .base-inputs table {
     width: 100%;
     margin: auto;
 }
 
-form section.data-block > .base-inputs input {
+#zbcc > .form-block form section.data-block > .input-data .base-inputs input {
     background-color: #dee1e3;
     color: #0c0c0c;
 }
 
-form section.data-block > .base-inputs select {
+#zbcc > .form-block form section.data-block > .input-data .base-inputs select {
     background-color: #dee1e3;
     color: #0c0c0c;
 }
-form section.data-block > .base-inputs input:disabled {
+
+#zbcc > .form-block form section.data-block > .input-data .base-inputs input:disabled {
     opacity: 0.5;
 }
 
-form section.data-block > .base-inputs select:disabled {
-    opacity: 0.5;
-}
-
-form section.data-block > .base-inputs button.calc {
+#zbcc > .form-block form section.data-block > .input-data .base-inputs button.calc {
     background-color: white;
     color: black;
 }
-form section.data-block > .base-inputs button.calc:hover {
+
+#zbcc > .form-block form section.data-block > .input-data .base-inputs button.calc:hover {
     background-color: #dee1e3;
 }
 
-form section.data-block > .base-inputs button.submit {
+#zbcc > .form-block form section.data-block > .input-data .base-inputs .action-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#zbcc > .form-block form section.data-block > .input-data .base-inputs button.action {
     padding: 10px 50px;
     margin: auto;
     margin-top: 30px;
@@ -242,67 +276,16 @@ form section.data-block > .base-inputs button.submit {
 /*  */
 
 
-form#zbcc-inputs {
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    gap: 100px;
-}
-
-form#zbcc-inputs section.data-block:first-of-type {
-    margin-top: 200px;
-}
-
-form#zbcc-inputs section.data-block:last-of-type {
-    margin-bottom: 200px;
-}
-
-
-/*  */
-
-
-form#zbcc-precond-popup {
-    width: 100%;
-    min-height: 100%;
+#zbcc > .form-block form section.data-block > .input-data .base-inputs .inputs-table.unhideable,
+#zbcc > .form-block form section.data-block > .input-data .base-inputs .inputs-table.choosable,
+#zbcc > .form-block form section.data-block > .input-data .base-inputs .inputs-table.curveable {
     display: none;
-    /* padding-top: 100px; */
-
-    top: 0;
-    bottom: 0;
-    position: fixed;
-    overflow-y: scroll;
-    overflow-x: hidden;
-
-
-    backdrop-filter: blur(40px);
 }
 
-form#zbcc-precond-popup .inputs {
-    width: 100%;
-    margin: auto;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    gap: 40px;
-}
-form#zbcc-precond-popup .inputs.base-inputs {
-    padding: 20px;
+.unhidden, .choosen, .curved {
+    display: inherit !important;
 }
 
-form#zbcc-precond-popup .inputs input, form#zbcc-precond-popup .inputs select {
-    margin: 0 5px;
-}
-
-form#zbcc-precond-popup .inputs ul {
-    list-style-type: none;
-}
-
-label, tr {
-    min-width: 120px;
-    width: fit-content;
+.form-block[data-id="precond"] .base-inputs > div {
+    margin: 50px auto;
 }
