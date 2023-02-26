@@ -17,7 +17,6 @@ let form = {
                         description: '',
                         inputs: {
                             htmlTemplateName: '',
-
                             inputs: [
                                 {
                                     htmlTemplateName: '',
