@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,8 +37,8 @@
                                             <th>Duration</th>
                                         </tr>
                                         <tr>
-                                            <td><input type="number" value="" min="1" step="1" data-id="total-tokens-amount" placeholder="x"></td>
-                                            <td><input type="number" value="" min="1" step="1" data-id="initial-token-price" placeholder="x"></td>
+                                            <td><input type="number" data-id="total-tokens-amount" placeholder="x" value="" min="1" step="1"></td>
+                                            <td><input type="number" data-id="initial-token-price" placeholder="x" value="" min="1" step="1"></td>
                                             <td>
                                                 <select data-id="exchange-type">
                                                     <option value="decentralized">Decentralized</option>
@@ -51,7 +52,7 @@
                                                     <option value="volatility">Volatility</option>
                                                 </select>
                                             </td>
-                                            <td><input type="number" value="" min="1" step="1" data-id="duration" placeholder="x"></td>
+                                            <td><input type="number" data-id="duration" placeholder="x" value="" min="1" step="1"></td>
                                         </tr>
                                     </table>
 
@@ -77,7 +78,7 @@
                             <div class="extra-inputs">
                                 <label>
                                     <p>Rounds Number</p>
-                                    <input type="number" value="1" min="1" step="1" data-id="rounds-number">
+                                    <input type="number" data-id="rounds-number" placeholder="Enter rounds number" value="1" min="1" step="1">
                                 </label>
                             </div>
 
@@ -120,7 +121,7 @@
                             <div class="extra-inputs">
                                 <label>
                                     <p>Agents Number</p>
-                                    <input type="number" value="1" min="1" step="1" data-id="agents-number">
+                                    <input type="number" data-id="agents-number" placeholder="Enter agents number" value="1" min="1" step="1">
                                 </label>
                             </div>
 
@@ -276,7 +277,7 @@
                                     <select data-id="service-names">
                                     </select>
                                     <!-- <button type="button" class="service-chooser" data-id="delete">-</button> -->
-                                    <input type="text" data-id="service-name" placeholder="enter Service name">
+                                    <input type="text" data-id="service-name" placeholder="Enter Service name">
                                     <button type="button" class="service-chooser" data-id="add">+</button>
                                 </div>
                             </div>
@@ -381,9 +382,9 @@
                 </form>
             </div>
 
-            <div class="form-block popup" data-id="precond">
+            <div class="form-block popup" data-id="pre-condition">
                 <form>
-                    <section class="data-block" data-id="precond">
+                    <section class="data-block" data-id="pre-condition">
                         <header>
                             <h3 class="block-title">Add pre-condition</h3>
                             <div class="block-description"></div>
@@ -411,7 +412,7 @@
                                                 <option value="==">==</option>
                                                 <option value="!=">!=</option>
                                             </select>
-                                            <input disabled type="number" min="1" step="1" data-id="time-monthly-harder-inpx">
+                                            <input disabled type="min="1" number" step="1" data-id="time-monthly-harder-inpx">
                                         </li>
                                         <li>
                                             <input disabled type="radio" data-id="time-monthly-harder">
@@ -425,7 +426,7 @@
                                                 <option value="==">==</option>
                                                 <option value="!=">!=</option>
                                             </select>
-                                            <input disabled type="number" min="1" step="1" data-id="time-monthly-harder-inpx">
+                                            <input disabled type="min="1" number" step="1" data-id="time-monthly-harder-inpx">
                                             and
                                             <select disabled data-id="time-monthly-harder-cb1">
                                                 <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
@@ -436,7 +437,7 @@
                                                 <option value="==">==</option>
                                                 <option value="!=">!=</option>
                                             </select>
-                                            <input disabled type="number" min="1" step="1" data-id="time-monthly-harder-inpy">
+                                            <input disabled type="min="1" number" step="1" data-id="time-monthly-harder-inpy">
                                         </li>
                                     </ul>
                                 </div>
@@ -463,7 +464,7 @@
                                                 <option value="==">==</option>
                                                 <option value="!=">!=</option>
                                             </select>
-                                            <input disabled type="number" min="1" step="1" data-id="token-price-easier-inpx">
+                                            <input disabled type="min="1" number" step="1" data-id="token-price-easier-inpx">
                                         </li>
                                         <li>
                                             <input disabled type="radio" data-id="token-price-harder">
@@ -477,7 +478,7 @@
                                                 <option value="==">==</option>
                                                 <option value="!=">!=</option>
                                             </select>
-                                            <input disabled type="number" min="1" step="1" data-id="token-price-harder-inpx">
+                                            <input disabled type="min="1" number" step="1" data-id="token-price-harder-inpx">
                                             and
                                             <select disabled data-id="token-price-harder-cb2">
                                                 <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
@@ -488,7 +489,7 @@
                                                 <option value="==">==</option>
                                                 <option value="!=">!=</option>
                                             </select>
-                                            <input disabled type="number" min="1" step="1" data-id="token-price-harder-inpy">
+                                            <input disabled type="min="1" number" step="1" data-id="token-price-harder-inpy">
                                         </li>
                                     </ul>
                                 </div>
@@ -520,7 +521,7 @@
                                                 <option value="==">==</option>
                                                 <option value="!=">!=</option>
                                             </select>
-                                            <input disabled type="number" min="1" step="1" data-id="pool-threshold-easier-inpx">
+                                            <input disabled type="min="1" number" step="1" data-id="pool-threshold-easier-inpx">
                                         </li>
                                         <li>
                                             <input disabled type="radio" data-id="pool-threshold-harder">
@@ -539,7 +540,7 @@
                                                 <option value="==">==</option>
                                                 <option value="!=">!=</option>
                                             </select>
-                                            <input disabled type="number" min="1" step="1" data-id="pool-threshold-harder-inpx">
+                                            <input disabled type="min="1" number" step="1" data-id="pool-threshold-harder-inpx">
                                             and
                                             <select disabled data-id="pool-threshold-harder-cb2">
                                                 <option value="0" disabled selected>&lt;/&lt;=/&gt;=/&gt;/==/!=</option>
@@ -550,7 +551,7 @@
                                                 <option value="==">==</option>
                                                 <option value="!=">!=</option>
                                             </select>
-                                            <input disabled type="number" min="1" step="1" data-id="pool-threshold-harder-inpy">
+                                            <input disabled type="min="1" number" step="1" data-id="pool-threshold-harder-inpy">
                                         </li>
                                     </ul>
                                 </div>
@@ -570,15 +571,12 @@
     </main>
 
     <script src="source/lib/js/jquery.min.js"></script>
-
     <script src="source/js/htmlTemplates.js"></script>
-
     <script src="source/js/zbcc/functions.js"></script>
     <script src="source/js/zbcc/htmlElements.js"></script>
     <script src="source/js/zbcc/htmlTables.js"></script>
     <script src="source/js/zbcc/constructor.js"></script>
     <script src="source/js/zbcc/dataBlocks.js"></script>
-
     <script src="source/js/main.js"></script>
 </body>
 

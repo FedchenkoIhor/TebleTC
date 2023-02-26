@@ -1,3 +1,153 @@
+class zbccDataBlock {
+    constructor(params) {}
+
+    getValues() { return {} }
+}
+
+
+
+class zbccNumerableDataBlock extends zbccDataBlock {
+    constructor(params) {
+        super(params)
+
+        this.table = params.table
+    }
+
+    getValues() {
+        let values = {}
+
+        values.numerableInput = this.table.controls.numerableInput.value
+        values.tableRows = {}
+
+        ov(this.table.rows).forEach(row => {
+            let inputs = {}
+
+            ok(row).forEach(inputKey => {
+                if (inputKey !== 'id')
+                    inputs[inputKey] = row[inputKey].value
+            })
+
+            values.tableRows[row.id] = inputs
+        })
+
+        return values
+    }
+}
+
+
+
+class zbccCalcableDataBlock extends zbccDataBlock {
+    constructor(params) {
+        super(params)
+
+        this.tables = params.tables
+    }
+
+    getValues() {
+        let values = { tables: {} }
+
+        ok(this.tables).forEach(tableKey => {
+            let tableRows = {}
+
+            ov(this.tables[tableKey].rows).forEach(row => {
+                let inputs = {}
+
+                ok(row).forEach(inputKey => {
+                    if (inputKey !== 'id') {
+                        if (row[inputKey].type !== 'select')
+                            inputs[inputKey] = row[inputKey].value
+                        else
+                            inputs[inputKey] = row[inputKey].linkId
+                    }
+                })
+
+                tableRows[row.id] = inputs
+            })
+
+            values.tables[tableKey] = tableRows
+        })
+
+        return values
+    }
+}
+
+
+
+class zbccUnhideableDataBlock extends zbccDataBlock {
+    constructor(params) {
+        super(params)
+
+        this.activeTableId = undefined
+        this.cssActiveClass = params.cssActiveClass
+        this.unhiders = params.unhiders
+        this.tables = params.tables
+
+        this.listenOnUnhide()
+    }
+
+    listenOnUnhide() {
+        ok(this.unhiders).forEach(unhiderName => {
+            $(this.unhiders[unhiderName]).on('click', e => {
+                if ( af(e.currentTarget.classList).includes(this.cssActiveClass)) {
+                    this.activeTableId = unhiderName
+                    $(this.tables[unhiderName].element).parent().removeClass(this.cssActiveClass)
+                    this.tables[unhiderName].clearData()
+
+                    $(this.unhiders[unhiderName]).removeClass(this.cssActiveClass)
+                    $(this.unhiders[unhiderName]).html('+')
+
+                } else {
+                    this.activeTableId = unhiderName
+                    $(this.unhiders[unhiderName]).addClass(this.cssActiveClass)
+                    $(this.unhiders[unhiderName]).html('-')
+                    $(this.tables[unhiderName].element).parent().addClass(this.cssActiveClass)
+
+                    ok(this.unhiders).forEach(unhiderName2 => {
+                        if (unhiderName2 !== unhiderName) {
+                            $(this.tables[unhiderName2].element).parent().removeClass(this.cssActiveClass)
+                            $(this.unhiders[unhiderName2]).removeClass(this.cssActiveClass)
+                            $(this.unhiders[unhiderName2]).html('+')
+                        }
+                    })
+                }
+            })
+        })
+    }
+
+    getValues() {
+        let values = { activeTableId: this.activeTableId, tables: {} }
+
+        ok(this.tables).forEach(tableKey => {
+            let tableRows = {}
+
+            ov(this.tables[tableKey].rows).forEach(row => {
+                let inputs = {}
+
+                ok(row).forEach(inputKey => {
+                    if (inputKey !== 'id') {
+                        if (row[inputKey].type !== 'select')
+                            inputs[inputKey] = row[inputKey].value
+                        else
+                            inputs[inputKey] = row[inputKey].linkId
+                    }
+                })
+
+                tableRows[row.id] = inputs
+            })
+
+            values.tables[tableKey] = tableRows
+        })
+
+        return values
+    }
+}
+
+
+
+//
+
+
+
 class zbccDataBlock_InitialData extends zbccDataBlock {
     constructor(params) {
         super(params)
@@ -76,6 +226,7 @@ class zbccDataBlock_ProjectServices extends zbccDataBlock {
         this.tablesDataBlockSelector = params.tablesDataBlockSelector
         this.htmlServiceTableTemplate = params.htmlServiceTableTemplate
         this.htmlCurvesTableTemplate = params.htmlCurvesTableTemplate
+        this.htmlCurvesTableTemplateAlternative = params.htmlCurvesTableTemplateAlternative
 
         this.unhideableActiveCssClass = params.unhideableActiveCssClass
         this.unhideableCssClass = params.unhideableCssClass
@@ -160,23 +311,9 @@ class zbccDataBlock_ProjectServices extends zbccDataBlock {
 
         // add service
         $(this.choosers.addServiceBtn).on('click', e => {
-            let newServiceId = ov(this.serviceTables).length - 2
+            let newServiceId = ov(this.curveTables).length - 2
             let serviceName = $(this.choosers.serviceNameInput).val()
             $(this.choosers.serviceNameInput).val('')
-
-            $(this.tablesDataBlockSelector).append(this.htmlServiceTableTemplate
-                .replace('{table-id}', newServiceId)
-                .replace('{table-title}', serviceName)
-            )
-
-            this.servicesNames[newServiceId] = serviceName
-            this.serviceTables[newServiceId] = new CalcableTable(Object.assign(this.serviceTablePreset, { tableId: newServiceId }))
-
-            console.log(this.serviceTables[newServiceId])
-
-            this.serviceTables[newServiceId].addActionBtnsListener('addCurves', (e, f) => {
-                this.onAddCurves(e)
-            })
 
             ok(this.unhiders).forEach(unhiderName => {
                 $(this.serviceTables[unhiderName].element).parent().removeClass(this.unhideableActiveCssClass)
@@ -186,12 +323,29 @@ class zbccDataBlock_ProjectServices extends zbccDataBlock {
 
             ok(this.serviceTables).forEach(serviceTableKey => {
                 if (serviceTableKey != newServiceId)
-                    $(this.serviceTables[serviceTableKey].element).parent().removeClass(this.choosableActiveCssClass).removeClass(this.unhideableActiveCssClass)
+                    $(this.serviceTables[serviceTableKey].element).parent().removeClass(this.choosableActiveCssClass)
             })
 
             ok(this.curveTables).forEach(serviceTableKey => {
-                $(this.curveTables[serviceTableKey].element).parent().removeClass(this.curveableActiveCssClass)
+                if (serviceTableKey != newServiceId)
+                    $(this.curveTables[serviceTableKey].element).parent().removeClass(this.curveableActiveCssClass)
             })
+
+            $(this.tablesDataBlockSelector).append(this.htmlCurvesTableTemplateAlternative
+                .replace('{table-id}', newServiceId)
+                .replace('{service-name}', serviceName)
+            )
+
+            this.curveTables[newServiceId] = new CalcableTable(Object.assign(this.curvesTablePreset, { tableId: newServiceId }))
+
+            // this.curveTables[newServiceId].addActionBtnsListener('showService', (e, f) => {
+            //     $(this.curveTables[newServiceId].element).parent().removeClass(this.curveableActiveCssClass)
+
+            //     if (($(this.serviceTables[newServiceId].element).parent().attr('class').split(/\s+/)).includes(this.unhideableCssClass))
+            //         $(this.serviceTables[newServiceId].element).parent().addClass(this.unhideableActiveCssClass)
+            //     else if (($(this.serviceTables[newServiceId].element).parent().attr('class').split(/\s+/)).includes(this.choosableCssClass))
+            //         $(this.serviceTables[newServiceId].element).parent().addClass(this.choosableActiveCssClass)
+            // })
 
             $(this.choosers.servicesSelectBox).append(this.choosers.serviceNameOptionTemplate
                 .replaceAll('{id}', newServiceId)
@@ -221,9 +375,14 @@ class zbccDataBlock_ProjectServices extends zbccDataBlock {
                 $(this.curveTables[serviceTableKey].element).parent().removeClass(this.curveableActiveCssClass)
             })
 
-            $(this.serviceTables[
+            $(this.curveTables[
                 Number( $(this.choosers.servicesSelectBox).find(':selected').attr('data-id'))
-            ].element).parent().addClass(this.choosableActiveCssClass)
+            ].element).parent().addClass(this.curveableActiveCssClass)
+            // if (Number( $(this.choosers.servicesSelectBox).find(':selected').attr('data-id') ) !== 0) {
+            //     $(this.serviceTables[
+            //         Number( $(this.choosers.servicesSelectBox).find(':selected').attr('data-id'))
+            //     ].element).parent().addClass(this.choosableActiveCssClass)
+            // }
         })
 
         // select another service
@@ -242,14 +401,17 @@ class zbccDataBlock_ProjectServices extends zbccDataBlock {
             })
 
             ok(this.curveTables).forEach(serviceTableKey => {
-                $(this.curveTables[serviceTableKey].element).parent().removeClass(this.choosableActiveCssClass)
+                $(this.curveTables[serviceTableKey].element).parent().removeClass(this.curveableActiveCssClass)
             })
 
-            $(this.serviceTables[
-                Number(
-                    $(this.choosers.servicesSelectBox).find(':selected').attr('data-id')
-                    )
-                ].element).parent().addClass(this.choosableActiveCssClass)
+            $(this.curveTables[
+                Number( $(this.choosers.servicesSelectBox).find(':selected').attr('data-id'))
+            ].element).parent().addClass(this.curveableActiveCssClass)
+            // if (Number( $(this.choosers.servicesSelectBox).find(':selected').attr('data-id') ) !== 0) {
+            //     $(this.serviceTables[
+            //         Number( $(this.choosers.servicesSelectBox).find(':selected').attr('data-id'))
+            //     ].element).parent().addClass(this.choosableActiveCssClass)
+            // }
         })
 
         //
@@ -295,17 +457,8 @@ class zbccDataBlock_ProjectServices extends zbccDataBlock {
                     $(this.serviceTables[newCurvesTableId].element).parent().addClass(this.unhideableActiveCssClass)
                 else if (($(this.serviceTables[newCurvesTableId].element).parent().attr('class').split(/\s+/)).includes(this.choosableCssClass))
                     $(this.serviceTables[newCurvesTableId].element).parent().addClass(this.choosableActiveCssClass)
-
-                console.log(($(this.serviceTables[newCurvesTableId].element).parent().attr('class').split(/\s+/)).includes(this.unhideableCssClass))
-                console.log(($(this.serviceTables[newCurvesTableId].element).parent().attr('class').split(/\s+/)).includes(this.choosableCssClass))
-                console.log($(this.serviceTables[newCurvesTableId].element).parent())
-                console.log(this.unhideableActiveCssClass)
-                console.log(this.choosableActiveCssClass)
             })
         }
-
-
-        // console.log(this.serviceTables[newCurvesTableId])
 
         // this.serviceTables[newCurvesTableId].addActionBtnsListener('addCurves', (e, f) => {
         //     this.onAddCurves(e)
@@ -325,7 +478,7 @@ class zbccDataBlock_TokenCirculation extends zbccUnhideableDataBlock {
 
         this.tables.actions.addRowChangeListener((e, table) => {
             if (e.target.dataset.id === 'pre-condition' && e.target.checked == true)
-                $('#zbcc .form-block[data-id="precond"]').show()
+                $('#zbcc .form-block[data-id="pre-condition"]').show()
         })
     }
 }

@@ -124,7 +124,7 @@ class NumberInput extends htmlInput {
             this.previousValue = this.value
             this.value = Number(this.element.value)
         } else {
-            this.element.value = this.previousValue ?? this.valuesHistory[this.valuesHistory.length - 1].previousValue ?? this.defaultValue ?? ''
+            this.element.value = this.previousValue ?? this.valuesHistory[this.valuesHistory.length - 1].previousValue ?? this.defaultValue ?? this.min ?? 1
         }
     }
 
@@ -132,7 +132,7 @@ class NumberInput extends htmlInput {
         if (value === undefined)
             return false
 
-        if (isNaN( Number(value) ))
+        if (isNaN( Number(value) ) || value === '')
             return false
 
         if (isNaN( Number(Math.round(value)) ))

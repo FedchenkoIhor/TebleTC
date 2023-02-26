@@ -97,7 +97,7 @@ const htmlTemplates = {
 
     trService:
     '<tr data-id="{row-id}">' +
-    '    <td><input type="number" step="any" value="{row-number}" data-id="number"></td>' +
+    '    <td><input type="number" step="any" value="{row-number}" data-id="number" readonly></td>' +
     '    <td>' +
     '        <select data-id="agent-name">' +
     '            {agent-name-options}' +
@@ -162,6 +162,29 @@ const htmlTemplates = {
     '    </table>' +
     '    <div class="action-buttons">' +
         '    <button type="button" class="action" data-action="show-service">Back to service</button>' +
+    '    </div>' +
+    '</div>',
+
+    curvesTableTemplateAlternative:
+    '<div class="inputs-table curveable calcable curved" data-id="{table-id}">' +
+    '    <header>' +
+    '        <h3 class="table-title">"{service-name}" Income</h3>' +
+    '        <div class="table-description">(Incomes - marketing functions for planned project services)</div>' +
+    '    </header>' +
+    '    <table>' +
+    '        <tr>' +
+    '            <th>Curve №</th>' +
+    '            <th>Sales Start</th>' +
+    '            <th>Sales End</th>' +
+    '            <th>Sales Min (USD)</th>' +
+    '            <th>Sales Max (USD)</th>' +
+    '            <th>Choose Algorithm</th>' +
+    '            <th>Angular Coefficient</th>' +
+    '            <th>Rising\'s Coefficient</th>' +
+    '            <th></th>' +
+    '        </tr>' +
+    '    </table>' +
+    '    <div class="action-buttons">' +
     '    </div>' +
     '</div>',
 

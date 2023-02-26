@@ -1,5 +1,7 @@
 const zbcc = new zbCryptoConstructor({
-    dataBlocksFormSelector: '.form-block[data-id="data-blocks"]'
+    dataBlocksFormSelector: '.form-block[data-id="data-blocks"]',
+    preConditionFormSelector: '.form-block[data-id="pre-condition"]',
+    buildedSchemeFormSelector: '.form-block[data-id="builded-scheme"]',
 })
 
 zbcc.dataBlocksForm.addEventListener('submit', (e, formBlock) => {
@@ -9,9 +11,7 @@ zbcc.dataBlocksForm.addEventListener('submit', (e, formBlock) => {
     console.log(formBlock.getValues())
 })
 
-zbcc.dataBlocksForm.addDataBlock({
-    name: 'initialData',
-    object: new zbccDataBlock_InitialData({
+zbcc.dataBlocksForm.addDataBlocks({ initialData: new zbccDataBlock_InitialData({
         inputsSelectors: {
             totalTokensAmount: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="initial-data"] [data-id="total-tokens-amount"]',
             initialTokenPrice: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="initial-data"] [data-id="initial-token-price"]',
@@ -44,9 +44,7 @@ zbcc.dataBlocksForm.addDataBlock({
     })
 })
 
-zbcc.dataBlocksForm.addDataBlock({
-    name: 'investmentRounds',
-    object: new zbccDataBlock_InvestmentRounds({
+zbcc.dataBlocksForm.addDataBlocks({ investmentRounds: new zbccDataBlock_InvestmentRounds({
         table: new NumerableTable({
             elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="investment-rounds"] .inputs-table.numerable[data-id="rounds"] table',
             controls: {
@@ -90,9 +88,7 @@ zbcc.dataBlocksForm.addDataBlock({
     })
 })
 
-zbcc.dataBlocksForm.addDataBlock({
-    name: 'agents',
-    object: new zbccDataBlock_Agents({
+zbcc.dataBlocksForm.addDataBlocks({ agents: new zbccDataBlock_Agents({
         table: new NumerableTable({
             elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="agents"] .inputs-table.numerable[data-id="agents"] table',
             controls: {
@@ -140,9 +136,7 @@ zbcc.dataBlocksForm.addDataBlock({
     })
 })
 
-zbcc.dataBlocksForm.addDataBlock({
-    name: 'pools',
-    object: new zbccDataBlock_Pools({
+zbcc.dataBlocksForm.addDataBlocks({ pools: new zbccDataBlock_Pools({
         tables: {
             poolTypes: new CalcableTable({
                 elementSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="pools"] .inputs-table.calcable[data-id="pool-types"] table',
@@ -233,8 +227,8 @@ zbcc.dataBlocksForm.addDataBlock({
                                 '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="staking"] table tr[data-id] [data-id="pool-for-rewards"]',
                                 '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.unhideable[data-id="farming"] table tr[data-id] [data-id="pool-for-rewards"]',
                                 '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .inputs-table.calcable.choosable[data-id] table tr[data-id] [data-id="pool-for-rewards"]',
-                                '#zbcc > .form-block[data-id="precond"] .input-data [data-id="pool-threshold"] select[data-id="pool-threshold-easier-pool"]',
-                                '#zbcc > .form-block[data-id="precond"] .input-data [data-id="pool-threshold"] select[data-id="pool-threshold-harder-pool"]',
+                                '#zbcc > .form-block[data-id="pre-condition"] .input-data [data-id="pool-threshold"] select[data-id="pool-threshold-easier-pool"]',
+                                '#zbcc > .form-block[data-id="pre-condition"] .input-data [data-id="pool-threshold"] select[data-id="pool-threshold-harder-pool"]',
                             ]
                         }
                     }
@@ -244,9 +238,7 @@ zbcc.dataBlocksForm.addDataBlock({
     })
 })
 
-zbcc.dataBlocksForm.addDataBlock({
-    name: 'vestingAndUnlocking',
-    object: new zbccDataBlock_VestingAndUnlocking({
+zbcc.dataBlocksForm.addDataBlocks({ vestingAndUnlocking: new zbccDataBlock_VestingAndUnlocking({
         cssActiveClass: 'unhidden',
         unhiders: {
             vesting: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="vesting-and-unlocking"] button.unhider[data-unhideableId="vesting"]',
@@ -350,9 +342,7 @@ zbcc.dataBlocksForm.addDataBlock({
     })
 })
 
-zbcc.dataBlocksForm.addDataBlock({
-    name: 'projectServices',
-    object: new zbccDataBlock_ProjectServices({
+zbcc.dataBlocksForm.addDataBlocks({ projectServices: new zbccDataBlock_ProjectServices({
         tablesDataBlockSelector: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="project-services"] .base-inputs',
 
         unhideableActiveCssClass: 'unhidden',
@@ -376,6 +366,7 @@ zbcc.dataBlocksForm.addDataBlock({
 
         htmlServiceTableTemplate: htmlTemplates.serviceTableTemplate,
         htmlCurvesTableTemplate: htmlTemplates.curvesTableTemplate,
+        htmlCurvesTableTemplateAlternative: htmlTemplates.curvesTableTemplateAlternative,
 
         curveableActiveCssClass: 'curved',
         curveableCssClass: 'curveable',
@@ -651,9 +642,7 @@ zbcc.dataBlocksForm.addDataBlock({
     })
 })
 
-zbcc.dataBlocksForm.addDataBlock({
-    name: 'tokenCirculation',
-    object: new zbccDataBlock_TokenCirculation({
+zbcc.dataBlocksForm.addDataBlocks({ tokenCirculation: new zbccDataBlock_TokenCirculation({
         cssActiveClass: 'unhidden',
         unhiders: {
             actions: '#zbcc > .form-block[data-id="data-blocks"] .data-block[data-id="token-circulation"] button.unhider[data-unhideableId="actions"]',
@@ -723,190 +712,190 @@ zbcc.dataBlocksForm.addDataBlock({
 
 
 
-$('#zbcc > .form-block[data-id="precond"]').on('submit', e => {
+$('#zbcc > .form-block[data-id="pre-condition"]').on('submit', e => {
     e.preventDefault()
-    $('#zbcc > .form-block[data-id="precond"]').hide()
+    $('#zbcc > .form-block[data-id="pre-condition"]').hide()
 
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-select"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-select"]').prop('checked', false)
 
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly"]').prop('checked', false)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier"]').prop('checked', false)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-cb1"]').val('0')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-inpx"]').val('')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-easier"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-easier-cb1"]').val('0')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-easier-inpx"]').val('')
 
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder"]').prop('checked', false)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb1"]').val('0')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpx"]').val('')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb2"]').val('0')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpy"]').val('')
-
-
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly"]').prop('disabled', true)
-
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-cb1"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-inpx"]').prop('disabled', true)
-
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb1"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpx"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb2"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpy"]').prop('disabled', true)
-
-    //
-
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-select"]').prop('checked', false)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-andor"]').val('0')
-
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price"]').prop('checked', false)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier"]').prop('checked', false)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-cb1"]').val('0')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-inpx"]').val('')
-
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder"]').prop('checked', false)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb1"]').val('0')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpx"]').val('')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb2"]').val('0')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpy"]').val('')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb1"]').val('0')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpx"]').val('')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb2"]').val('0')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpy"]').val('')
 
 
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-andor"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly"]').prop('disabled', true)
 
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-cb1"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-inpx"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-easier"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-easier-cb1"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-easier-inpx"]').prop('disabled', true)
 
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb1"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpx"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb2"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpy"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb1"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpx"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb2"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpy"]').prop('disabled', true)
 
     //
 
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-select"]').prop('checked', false)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-andor"]').val('0')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-select"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-andor"]').val('0')
 
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold"]').prop('checked', false)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier"]').prop('checked', false)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-cb1"]').val('0')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-inpx"]').val('')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-pool"]').val('0')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-easier"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-easier-cb1"]').val('0')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-easier-inpx"]').val('')
 
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder"]').prop('checked', false)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb1"]').val('0')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpx"]').val('')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb2"]').val('0')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpy"]').val('')
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-pool"]').val('0')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb1"]').val('0')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpx"]').val('')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb2"]').val('0')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpy"]').val('')
 
 
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-andor"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-andor"]').prop('disabled', true)
 
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-cb1"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-inpx"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-pool"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-easier"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-easier-cb1"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-easier-inpx"]').prop('disabled', true)
 
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb1"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpx"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb2"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpy"]').prop('disabled', true)
-    $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-pool"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb1"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpx"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb2"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpy"]').prop('disabled', true)
+
+    //
+
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-select"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-andor"]').val('0')
+
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-cb1"]').val('0')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-inpx"]').val('')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-pool"]').val('0')
+
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder"]').prop('checked', false)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb1"]').val('0')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpx"]').val('')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb2"]').val('0')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpy"]').val('')
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-pool"]').val('0')
+
+
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-andor"]').prop('disabled', true)
+
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-cb1"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-inpx"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-pool"]').prop('disabled', true)
+
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb1"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpx"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb2"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpy"]').prop('disabled', true)
+    $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-pool"]').prop('disabled', true)
 })
 
-$('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-select"]').on('change', e => {
+$('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-select"]').on('change', e => {
     if (e.currentTarget.checked) {
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly"]').prop('disabled', false)
 
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-cb1"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-inpx"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-easier"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-easier-cb1"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-easier-inpx"]').prop('disabled', false)
 
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb1"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpx"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb2"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpy"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb1"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpx"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb2"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpy"]').prop('disabled', false)
     } else {
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly"]').prop('disabled', true)
 
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-cb1"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-easier-inpx"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-easier"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-easier-cb1"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-easier-inpx"]').prop('disabled', true)
 
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb1"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpx"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb2"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpy"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb1"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpx"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-cb2"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="time"] [data-id="time-monthly-harder-inpy"]').prop('disabled', true)
     }
 })
 
-$('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-select"]').on('change', e => {
+$('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-select"]').on('change', e => {
     if (e.currentTarget.checked) {
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-andor"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-andor"]').prop('disabled', false)
 
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-cb1"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-inpx"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-easier"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-easier-cb1"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-easier-inpx"]').prop('disabled', false)
 
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb1"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpx"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb2"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpy"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb1"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpx"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb2"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpy"]').prop('disabled', false)
     } else {
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-andor"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-andor"]').prop('disabled', true)
 
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-cb1"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-easier-inpx"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-easier"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-easier-cb1"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-easier-inpx"]').prop('disabled', true)
 
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb1"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpx"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb2"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpy"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb1"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpx"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-cb2"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="token-price"] [data-id="token-price-harder-inpy"]').prop('disabled', true)
     }
 })
 
-$('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-select"]').on('change', e => {
+$('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-select"]').on('change', e => {
     if (e.currentTarget.checked) {
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-andor"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-andor"]').prop('disabled', false)
 
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-cb1"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-inpx"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-pool"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-cb1"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-inpx"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-pool"]').prop('disabled', false)
 
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb1"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpx"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb2"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpy"]').prop('disabled', false)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-pool"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb1"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpx"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb2"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpy"]').prop('disabled', false)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-pool"]').prop('disabled', false)
     } else {
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-andor"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-andor"]').prop('disabled', true)
 
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-cb1"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-inpx"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-pool"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-cb1"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-inpx"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-easier-pool"]').prop('disabled', true)
 
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb1"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpx"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb2"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpy"]').prop('disabled', true)
-        $('#zbcc > .form-block[data-id="precond"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-pool"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb1"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpx"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-cb2"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-inpy"]').prop('disabled', true)
+        $('#zbcc > .form-block[data-id="pre-condition"] .input-data div[data-id="pool-threshold"] [data-id="pool-threshold-harder-pool"]').prop('disabled', true)
     }
 })
 

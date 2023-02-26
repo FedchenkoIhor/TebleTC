@@ -286,6 +286,6 @@
     display: inherit !important;
 }
 
-.form-block[data-id="precond"] .base-inputs > div {
+.form-block[data-id="pre-condition"] .base-inputs > div {
     margin: 50px auto;
 }
